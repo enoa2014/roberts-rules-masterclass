@@ -1,668 +1,198 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>议起读教师培训 | 第一期：议事规则的基础机制</title>
-    <meta name="description" content="议起读教师培训第一期课程，学习议事规则的基础机制，掌握老友议事规则十二条，培养理性对话能力。">
+    <title>议起读 | 议事规则基础</title>
+    <meta name="description" content="理性、平等、尊重的议事规则入门课程。">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-    <!-- 导航栏 -->
-    <nav class="nav-bar" id="navbar">
-        <div class="nav-container">
-            <a href="#" class="nav-logo">📚 议起读</a>
-            <div class="nav-links">
-                <a href="#goals">学习目标</a>
-                <a href="#history">历史起源</a>
-                <a href="#rules">十二条规则</a>
-                <a href="#practice">实战演练</a>
-                <a href="#summary">核心收获</a>
-            </div>
-            <button class="nav-toggle" id="navToggle">☰</button>
+    <!-- 顶部极简导航 -->
+    <nav class="navbar">
+        <div class="nav-brand">议起读</div>
+        <div class="nav-links">
+            <a href="#intro" class="nav-link">精神</a>
+            <a href="#history" class="nav-link">历史</a>
+            <a href="#rules" class="nav-link">规则</a>
+            <a href="#practice" class="nav-link">演练</a>
         </div>
     </nav>
 
-    <!-- Hero 区域 -->
-    <header class="hero" id="hero">
-        <div class="hero-bg"></div>
-        <div class="hero-content">
-            <div class="hero-badge">第一期培训</div>
-            <h1 class="hero-title">
-                <span class="title-highlight">议事规则</span>的基础机制
-            </h1>
-            <p class="hero-subtitle">议起读 = 议事规则 + 阅读思辨</p>
-            <div class="hero-instructor">
-                <div class="instructor-avatar">👩‍🏫</div>
-                <div class="instructor-info">
-                    <span class="instructor-name">王静</span>
-                    <span class="instructor-title">公共议事规则专家</span>
+    <main class="content-wrapper">
+        <!-- 1. Hero: 极简大标题 -->
+        <header class="section hero" id="intro">
+            <div class="hero-content fade-in">
+                <p class="hero-kicker">教师培训第一期</p>
+                <h1 class="hero-title">理性与<br>共识的艺术</h1>
+                <p class="hero-desc">探索议事规则的基础机制，<br>在对话中重塑平等的价值。</p>
+                <div class="hero-scroll-hint">↓</div>
+            </div>
+
+            <div class="hero-visual fade-in delay-200">
+                <div class="abstract-shape">
+                    <div class="circle c1"></div>
+                    <div class="circle c2"></div>
                 </div>
             </div>
-            <a href="#goals" class="hero-cta">开始学习 ↓</a>
-        </div>
-        <div class="hero-decoration">
-            <div class="float-icon float-1">🗣️</div>
-            <div class="float-icon float-2">🤝</div>
-            <div class="float-icon float-3">⚖️</div>
-            <div class="float-icon float-4">📋</div>
-        </div>
-    </header>
+        </header>
 
-    <!-- 学习目标 -->
-    <section class="section goals" id="goals">
-        <div class="container">
-            <h2 class="section-title">
-                <span class="title-icon">🎯</span>
-                今日学习目标
-            </h2>
-            <div class="goals-grid">
-                <div class="goal-card" data-aos="fade-up">
-                    <div class="goal-number">01</div>
-                    <div class="goal-icon">📜</div>
-                    <h3>了解历史</h3>
-                    <p>议事规则的起源与发展</p>
+        <!-- 2. 核心理念: 网格布局 -->
+        <section class="section philosophy">
+            <div class="container">
+                <div class="section-header">
+                    <h2>核心精神</h2>
+                    <p class="section-sub">规则不是束缚，而是保护权益的边界。</p>
                 </div>
-                <div class="goal-card" data-aos="fade-up" data-delay="100">
-                    <div class="goal-number">02</div>
-                    <div class="goal-icon">📖</div>
-                    <h3>掌握规则</h3>
-                    <p>老友议事规则十二条</p>
-                </div>
-                <div class="goal-card" data-aos="fade-up" data-delay="200">
-                    <div class="goal-number">03</div>
-                    <div class="goal-icon">🎭</div>
-                    <h3>体验实践</h3>
-                    <p>通过演练体验规则的作用</p>
-                </div>
-                <div class="goal-card" data-aos="fade-up" data-delay="300">
-                    <div class="goal-number">04</div>
-                    <div class="goal-icon">💡</div>
-                    <h3>提炼精神</h3>
-                    <p>总结规则背后的核心精神</p>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- 为什么需要规则 -->
-    <section class="section why-rules">
-        <div class="container">
-            <h2 class="section-title">
-                <span class="title-icon">❓</span>
-                为什么需要规则？
-            </h2>
-            <div class="principle-card glass-card">
-                <div class="principle-visual">
-                    <div class="overlap-circles">
-                        <div class="circle c1">个人权益</div>
-                        <div class="circle c2">个人权益</div>
-                        <div class="circle c3">个人权益</div>
-                        <div class="circle c4">个人权益</div>
+                <div class="clean-grid">
+                    <div class="grid-card">
+                        <div class="card-icon">⚖️</div>
+                        <h3>平等</h3>
+                        <p>每个人都有发言权，弱势声音必须被听见。</p>
                     </div>
-                </div>
-                <div class="principle-text">
-                    <h3>权益边界原则</h3>
-                    <p class="highlight-quote">
-                        若无规则，每个人都盲目扩张自己的权益，<br>
-                        其结果是，<strong>无人能长久保护自己的权益。</strong>
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 历史时间轴 -->
-    <section class="section history" id="history">
-        <div class="container">
-            <h2 class="section-title">
-                <span class="title-icon">📜</span>
-                议事规则的历史演进
-            </h2>
-            <div class="timeline">
-                <div class="timeline-item" data-year="1876">
-                    <div class="timeline-content glass-card">
-                        <h3>罗伯特议事规则 第1版</h3>
-                        <p>Henry M. Robert 发布首版议事规则手册</p>
+                    <div class="grid-card highlight">
+                        <div class="card-icon">🤝</div>
+                        <h3>尊重</h3>
+                        <p>理解比赢更重要。<br>倾听是尊重的最高形式。</p>
                     </div>
-                </div>
-                <div class="timeline-item" data-year="1915">
-                    <div class="timeline-content glass-card">
-                        <h3>第4版发布</h3>
-                        <p>规则体系日趋完善</p>
-                    </div>
-                </div>
-                <div class="timeline-item" data-year="1917">
-                    <div class="timeline-content glass-card featured">
-                        <h3>《民权初步》</h3>
-                        <p>孙中山将议事规则引入中国，作为《建国方略》社会建设篇</p>
-                        <blockquote>
-                            "夫议事之学，西人童而习之，至中学程度，则已成为第二之天性矣。"
-                        </blockquote>
-                    </div>
-                </div>
-                <div class="timeline-item" data-year="2008">
-                    <div class="timeline-content glass-card">
-                        <h3>首个中文全译本</h3>
-                        <p>议事规则正式进入中国公众视野</p>
-                    </div>
-                </div>
-                <div class="timeline-item" data-year="2024">
-                    <div class="timeline-content glass-card">
-                        <h3>第12版中文版</h3>
-                        <p>最新版本，持续服务现代社会治理</p>
+                    <div class="grid-card">
+                        <div class="card-icon">🧠</div>
+                        <h3>理性</h3>
+                        <p>对事不对人。<br>用逻辑与证据构建对话。</p>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- 三大精神 -->
-    <section class="section spirits">
-        <div class="container">
-            <h2 class="section-title">
-                <span class="title-icon">✨</span>
-                议事规则的三大精神
-            </h2>
-            <div class="spirits-grid">
-                <div class="spirit-card" data-spirit="equality">
-                    <div class="spirit-icon">⚖️</div>
-                    <h3>平等</h3>
-                    <p>每个人都有发言权<br>保护弱势声音</p>
+        <!-- 3. 历史时间轴: 极简列表 -->
+        <section class="section history" id="history">
+            <div class="container">
+                <div class="section-header">
+                    <h2>历史演进</h2>
                 </div>
-                <div class="spirit-card" data-spirit="respect">
-                    <div class="spirit-icon">🤝</div>
-                    <h3>尊重</h3>
-                    <p>倾听比说服重要<br>理解比赢更重要</p>
-                </div>
-                <div class="spirit-card" data-spirit="rationality">
-                    <div class="spirit-icon">🧠</div>
-                    <h3>理性</h3>
-                    <p>对事不对人<br>用理由而非情绪</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 十二条规则 -->
-    <section class="section rules" id="rules">
-        <div class="container">
-            <h2 class="section-title">
-                <span class="title-icon">📋</span>
-                老友议事规则十二条
-            </h2>
-            <p class="section-desc">点击卡片查看详细说明</p>
-            <div class="rules-grid">
-                <div class="rule-card" data-rule="1">
-                    <div class="rule-front">
-                        <span class="rule-num">1</span>
-                        <span class="rule-name">主持中立</span>
+                <div class="timeline-clean">
+                    <div class="timeline-row">
+                        <div class="time-year">1876</div>
+                        <div class="time-content">
+                            <h4>罗伯特议事规则</h4>
+                            <p>Henry M. Robert 将议会程序标准化，发布不仅适用于议会，也适用于普通社团的规则。</p>
+                        </div>
                     </div>
-                    <div class="rule-back">
-                        <p>主持人不参与辩论，只负责维护秩序，确保程序公正</p>
+                    <div class="timeline-row">
+                        <div class="time-year">1917</div>
+                        <div class="time-content">
+                            <h4>民权初步</h4>
+                            <p>孙中山先生引入议事规则，将其视为社会建设与民权发达的第一步。</p>
+                        </div>
                     </div>
-                </div>
-                <div class="rule-card" data-rule="2">
-                    <div class="rule-front">
-                        <span class="rule-num">2</span>
-                        <span class="rule-name">服从裁判</span>
-                    </div>
-                    <div class="rule-back">
-                        <p>尊重主持人的裁决，规则面前人人平等</p>
-                    </div>
-                </div>
-                <div class="rule-card" data-rule="3">
-                    <div class="rule-front">
-                        <span class="rule-num">3</span>
-                        <span class="rule-name">举手发言</span>
-                    </div>
-                    <div class="rule-back">
-                        <p>发言前先举手示意，获得许可后再发言</p>
-                    </div>
-                </div>
-                <div class="rule-card" data-rule="4">
-                    <div class="rule-front">
-                        <span class="rule-num">4</span>
-                        <span class="rule-name">面向主持</span>
-                    </div>
-                    <div class="rule-back">
-                        <p>发言时面向主持人，避免直接对峙</p>
-                    </div>
-                </div>
-                <div class="rule-card" data-rule="5">
-                    <div class="rule-front">
-                        <span class="rule-num">5</span>
-                        <span class="rule-name">先提问后观点</span>
-                    </div>
-                    <div class="rule-back">
-                        <p>先通过提问理解对方，再表达自己观点</p>
-                    </div>
-                </div>
-                <div class="rule-card" data-rule="6">
-                    <div class="rule-front">
-                        <span class="rule-num">6</span>
-                        <span class="rule-name">机会均等</span>
-                    </div>
-                    <div class="rule-back">
-                        <p>每个人都有平等的发言机会和次数</p>
-                    </div>
-                </div>
-                <div class="rule-card" data-rule="7">
-                    <div class="rule-front">
-                        <span class="rule-num">7</span>
-                        <span class="rule-name">不超时</span>
-                    </div>
-                    <div class="rule-back">
-                        <p>遵守约定的发言时间限制</p>
-                    </div>
-                </div>
-                <div class="rule-card" data-rule="8">
-                    <div class="rule-front">
-                        <span class="rule-num">8</span>
-                        <span class="rule-name">不打断</span>
-                    </div>
-                    <div class="rule-back">
-                        <p>他人发言时不得打断或插话</p>
-                    </div>
-                </div>
-                <div class="rule-card" data-rule="9">
-                    <div class="rule-front">
-                        <span class="rule-num">9</span>
-                        <span class="rule-name">不跑题</span>
-                    </div>
-                    <div class="rule-back">
-                        <p>发言内容必须与当前议题相关</p>
-                    </div>
-                </div>
-                <div class="rule-card" data-rule="10">
-                    <div class="rule-front">
-                        <span class="rule-num">10</span>
-                        <span class="rule-name">不攻击</span>
-                    </div>
-                    <div class="rule-back">
-                        <p>对事不对人，不进行人身攻击</p>
-                    </div>
-                </div>
-                <div class="rule-card" data-rule="11">
-                    <div class="rule-front">
-                        <span class="rule-num">11</span>
-                        <span class="rule-name">充分讨论</span>
-                    </div>
-                    <div class="rule-back">
-                        <p>在表决前确保每个人都有机会发言</p>
-                    </div>
-                </div>
-                <div class="rule-card" data-rule="12">
-                    <div class="rule-front">
-                        <span class="rule-num">12</span>
-                        <span class="rule-name">过半通过</span>
-                    </div>
-                    <div class="rule-back">
-                        <p>赞成票 > 反对票 即为通过，平局为否决</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 发言规则 -->
-    <section class="section speaking">
-        <div class="container">
-            <h2 class="section-title">
-                <span class="title-icon">🎤</span>
-                理性发言指南
-            </h2>
-            <div class="speaking-columns">
-                <div class="speaking-card glass-card">
-                    <h3>📝 发言四步骤</h3>
-                    <ol class="steps-list">
-                        <li><span class="step-icon">1</span> 举手请求发言</li>
-                        <li><span class="step-icon">2</span> 获得许可后开始</li>
-                        <li><span class="step-icon">3</span> 面向主持人发言</li>
-                        <li><span class="step-icon">4</span> 完成后示意结束</li>
-                    </ol>
-                </div>
-                <div class="speaking-card glass-card">
-                    <h3>🚫 发言四大铁律</h3>
-                    <ul class="rules-list">
-                        <li><span class="rule-icon">✗</span> 不超时</li>
-                        <li><span class="rule-icon">✗</span> 不打断</li>
-                        <li><span class="rule-icon">✗</span> 不跑题</li>
-                        <li><span class="rule-icon">✗</span> 不攻击</li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- 改写攻击性发言 -->
-            <div class="rewrite-section">
-                <h3>💬 如何避免攻击性发言？</h3>
-                <p class="rewrite-intro">将攻击性语言转化为理性表达：</p>
-                <div class="rewrite-cards">
-                    <div class="rewrite-card">
-                        <div class="before">❌ "你这个人就是自私"</div>
-                        <div class="arrow">→</div>
-                        <div class="after">✓ "这个方案可能没有充分考虑到其他人的需求"</div>
-                    </div>
-                    <div class="rewrite-card">
-                        <div class="before">❌ "你就是想控制孩子"</div>
-                        <div class="arrow">→</div>
-                        <div class="after">✓ "我担心这种做法可能会限制孩子的自主性"</div>
-                    </div>
-                    <div class="rewrite-card">
-                        <div class="before">❌ "你这想法太天真了"</div>
-                        <div class="arrow">→</div>
-                        <div class="after">✓ "这个想法在实施时可能会遇到一些困难"</div>
-                    </div>
-                    <div class="rewrite-card">
-                        <div class="before">❌ "你就是不懂教育"</div>
-                        <div class="arrow">→</div>
-                        <div class="after">✓ "我对这个方案有不同看法"</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 表决机制 -->
-    <section class="section voting">
-        <div class="container">
-            <h2 class="section-title">
-                <span class="title-icon">🗳️</span>
-                表决机制详解
-            </h2>
-            
-            <div class="voting-tabs">
-                <button class="voting-tab active" data-tab="timing">表决时机</button>
-                <button class="voting-tab" data-tab="process">表决流程</button>
-                <button class="voting-tab" data-tab="ratio">表决比例</button>
-            </div>
-
-            <div class="voting-content">
-                <div class="voting-panel active" id="timing">
-                    <div class="glass-card">
-                        <h3>什么时候可以发起表决？</h3>
-                        <div class="timing-rule">
-                            <p class="rule-highlight">充分讨论规则</p>
-                            <ul>
-                                <li>等到约定的发言次数都已用尽</li>
-                                <li>虽然没有用尽，但没人再要求发言</li>
-                                <li>一个议题约定的总辩论时间用尽</li>
-                                <li>会议同意"结束辩论"后由主持人发起表决</li>
-                            </ul>
+                    <div class="timeline-row">
+                        <div class="time-year">2024</div>
+                        <div class="time-content">
+                            <h4>现代应用</h4>
+                            <p>第12版发布。从社区治理到家庭会议，规则正在重塑我们的公共生活。</p>
                         </div>
                     </div>
                 </div>
+            </div>
+        </section>
 
-                <div class="voting-panel" id="process">
-                    <div class="glass-card">
-                        <h3>正确的表决流程</h3>
-                        <div class="process-steps">
-                            <div class="process-step">
-                                <span class="step-badge">1</span>
-                                <p>"所有赞成的请举手…（等待几秒），请放下。"</p>
-                            </div>
-                            <div class="process-step">
-                                <span class="step-badge">2</span>
-                                <p>"所有反对的请举手…（等待几秒），请放下。"</p>
-                            </div>
-                            <div class="process-step warning">
-                                <span class="step-badge">!</span>
-                                <p><strong>不要</strong>请弃权的举手</p>
-                            </div>
-                            <div class="process-step">
-                                <span class="step-badge">3</span>
-                                <p>主持人如果有表决权又希望表决，必须<strong>最后表态</strong></p>
-                            </div>
-                        </div>
-                    </div>
+        <!-- 4. 十二条规则: 瑞士风格排版 -->
+        <section class="section rules" id="rules">
+            <div class="container">
+                <div class="section-header">
+                    <h2>十二条规则</h2>
+                    <p class="section-sub">老友议事规则核心体系</p>
                 </div>
 
-                <div class="voting-panel" id="ratio">
-                    <div class="glass-card">
-                        <h3>表决比例计算器</h3>
-                        <p class="calc-intro">过半通过规则：赞成票 > 反对票 即为通过</p>
-                        <div class="calculator">
-                            <div class="calc-inputs">
-                                <div class="input-group">
-                                    <label>👍 赞成</label>
-                                    <input type="number" id="voteFor" value="4" min="0">
-                                </div>
-                                <div class="input-group">
-                                    <label>👎 反对</label>
-                                    <input type="number" id="voteAgainst" value="3" min="0">
-                                </div>
-                                <div class="input-group">
-                                    <label>🤷 弃权</label>
-                                    <input type="number" id="voteAbstain" value="2" min="0">
-                                </div>
-                            </div>
-                            <button class="calc-btn" id="calculateBtn">计算结果</button>
-                            <div class="calc-result" id="calcResult">
-                                <span class="result-icon">✓</span>
-                                <span class="result-text">通过</span>
+                <div class="rules-masonry">
+                    <div class="rule-item">
+                        <span class="rule-num">01</span>
+                        <h4>主持中立</h4>
+                        <p>裁判不参赛。</p>
+                    </div>
+                    <div class="rule-item">
+                        <span class="rule-num">02</span>
+                        <h4>服从裁判</h4>
+                        <p>规则面前人人平等。</p>
+                    </div>
+                    <div class="rule-item">
+                        <span class="rule-num">03</span>
+                        <h4>举手发言</h4>
+                        <p>秩序是自由的前提。</p>
+                    </div>
+                    <div class="rule-item">
+                        <span class="rule-num">04</span>
+                        <h4>面向主持</h4>
+                        <p>避免直接且情绪化的对峙。</p>
+                    </div>
+                    <div class="rule-item">
+                        <span class="rule-num">05</span>
+                        <h4>先问后点</h4>
+                        <p>通过提问确认理解正确。</p>
+                    </div>
+                    <div class="rule-item">
+                        <span class="rule-num">06</span>
+                        <h4>机会均等</h4>
+                        <p>确保每个人都有机会。</p>
+                    </div>
+                    <!-- 更多规则省略部分文字以保持极简 -->
+                    <div class="rule-item muted">
+                        <span class="rule-num">...</span>
+                        <h4>充分讨论，过半通过</h4>
+                        <p>程序正义保障实体正义。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. 模拟演练: 干净的场景展示 -->
+        <section class="section practice" id="practice">
+            <div class="container">
+                <div class="practice-layout">
+                    <div class="practice-info">
+                        <h2>家庭会议实战</h2>
+                        <p class="practice-desc">场景：孩子用奶奶给的钱充值游戏，引发了家庭关于“零花钱自主权”的讨论。</p>
+                        <div class="practice-tags">
+                            <span>#权益边界</span>
+                            <span>#家庭教育</span>
+                        </div>
+                        <button class="btn-primary" id="startSimBtn">开始模拟对话</button>
+                    </div>
+                    <div class="practice-visual">
+                        <div class="chat-container inactive" id="chatContainer">
+                            <!-- 动态对话将在这里生成 -->
+                            <div class="chat-placeholder">
+                                <span class="placeholder-icon">💬</span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- 模拟演练 -->
-    <section class="section practice" id="practice">
-        <div class="container">
-            <h2 class="section-title">
-                <span class="title-icon">🎭</span>
-                模拟家庭会议演练
-            </h2>
-            
-            <div class="scenario">
-                <div class="scenario-header glass-card">
-                    <img src="images/family_meeting.png" alt="家庭会议" class="scenario-img">
-                    <div class="scenario-info">
-                        <h3>场景：发现孩子充游戏卡</h3>
-                        <div class="scenario-tags">
-                            <span class="tag">10岁孩子</span>
-                            <span class="tag">四年级</span>
-                            <span class="tag">零花钱争议</span>
-                        </div>
-                        <p>妈妈发现孩子用奶奶给的300元现金偷偷充值了200元游戏卡，家里规定不能玩游戏。召开家庭会议讨论"孩子的零花钱有多大的自主权"。</p>
-                    </div>
+        <!-- 6. 页脚 -->
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-quote">
+                    "自由的精神，是尽力去理解别人的精神。"
                 </div>
-
-                <div class="roles-grid">
-                    <div class="role-card" data-role="mom">
-                        <div class="role-avatar">👩</div>
-                        <h4>妈妈</h4>
-                        <p class="role-stance">认为大额支出应先商量，游戏卡绝对禁止</p>
-                    </div>
-                    <div class="role-card" data-role="child">
-                        <div class="role-avatar">👦</div>
-                        <h4>孩子</h4>
-                        <p class="role-stance">"这是我的钱，我可以自己决定怎么花"</p>
-                    </div>
-                    <div class="role-card" data-role="grandma">
-                        <div class="role-avatar">👵</div>
-                        <h4>奶奶</h4>
-                        <p class="role-stance">孩子学习辛苦，给点零花钱没什么不好</p>
-                    </div>
-                    <div class="role-card" data-role="dad">
-                        <div class="role-avatar">👨</div>
-                        <h4>爸爸</h4>
-                        <p class="role-stance">双方都有道理，根本原因是当初规则没说清楚</p>
-                    </div>
-                </div>
-
-                <div class="discussion-focus glass-card">
-                    <h4>🎯 会议议题</h4>
-                    <ul>
-                        <li>孩子可以完全自主决定怎么花吗？</li>
-                        <li>某些支出需要经过家长允许吗？</li>
-                        <li>如果需要允许，多少金额以上算"大额"？</li>
-                        <li>有没有"禁止购买"的东西？</li>
-                    </ul>
-                </div>
-
-                <div class="practice-reminder glass-card">
-                    <h4>📌 演练要点</h4>
-                    <div class="reminder-grid">
-                        <div class="reminder-item">
-                            <strong>主持人</strong>
-                            <p>保持中立、机会均等、打断违规发言</p>
-                        </div>
-                        <div class="reminder-item">
-                            <strong>发言者</strong>
-                            <p>举手发言、先提问后观点、不打断不跑题不攻击</p>
-                        </div>
-                    </div>
-                    <p class="reminder-quote">💡 记住：规则不是限制，而是保护！</p>
+                <div class="footer-meta">
+                    <span>议起读教师培训</span>
+                    <span>2024</span>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- 规则精神 -->
-    <section class="section spirit-summary">
-        <div class="container">
-            <h2 class="section-title">
-                <span class="title-icon">🌟</span>
-                从规则到精神
-            </h2>
-            <div class="spirit-values">
-                <div class="value-item"><span class="check">✓</span> 平等 - 每个声音都重要</div>
-                <div class="value-item"><span class="check">✓</span> 尊重 - 尊重人格，对事不对人</div>
-                <div class="value-item"><span class="check">✓</span> 倾听与理解 - 真正听懂对方</div>
-                <div class="value-item"><span class="check">✓</span> 谦逊 - 承认"我可能是错的"</div>
-                <div class="value-item"><span class="check">✓</span> 妥协 - 寻找大家都能接受的方案</div>
-                <div class="value-item"><span class="check">✓</span> 理性 - 用理由而非情绪</div>
-            </div>
-            
-            <div class="judge-quote glass-card">
-                <blockquote>
-                    <p>对于什么是自由的精神，我也不那么确定，它大概是：</p>
-                    <ol>
-                        <li>是对于正确不那么确定的精神</li>
-                        <li>是尽力去理解别人的精神</li>
-                        <li>是将自己的观点和他人的观点不带偏见地一并考虑的精神</li>
-                    </ol>
-                    <cite>—— 汉德法官</cite>
-                </blockquote>
-            </div>
-        </div>
-    </section>
-
-    <!-- 核心收获 -->
-    <section class="section summary" id="summary">
-        <div class="container">
-            <h2 class="section-title">
-                <span class="title-icon">🏆</span>
-                今天的核心收获
-            </h2>
-            <div class="summary-hero glass-card">
-                <h3>议事规则 = 保护每个人的声音</h3>
-                <p class="summary-sub">主持人是裁判员，保护规则，规则保护所有人</p>
-            </div>
-            <div class="summary-points">
-                <div class="summary-point">
-                    <span class="point-check">✓</span>
-                    <span>议事规则的历史</span>
-                </div>
-                <div class="summary-point">
-                    <span class="point-check">✓</span>
-                    <span>十二条规则的内容和应用</span>
-                </div>
-                <div class="summary-point">
-                    <span class="point-check">✓</span>
-                    <span>通过演练体验规则的作用</span>
-                </div>
-                <div class="summary-point">
-                    <span class="point-check">✓</span>
-                    <span>提炼出规则背后的精神</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 课后作业 -->
-    <section class="section homework">
-        <div class="container">
-            <h2 class="section-title">
-                <span class="title-icon">📝</span>
-                课后作业
-            </h2>
-            <div class="homework-cards">
-                <div class="homework-card required glass-card">
-                    <div class="hw-badge">必做</div>
-                    <h3>🏠 家庭会议实践</h3>
-                    <ul>
-                        <li>在家组织一次家庭会议</li>
-                        <li>使用今天学到的规则</li>
-                        <li>记录体验，下次课分享</li>
-                    </ul>
-                </div>
-                <div class="homework-card optional glass-card">
-                    <div class="hw-badge">选做</div>
-                    <h3>📚 拓展阅读</h3>
-                    <ul>
-                        <li>观察孩子们的自然讨论</li>
-                        <li>阅读《罗伯特议事规则》简明版</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 下期预告 -->
-    <section class="section preview">
-        <div class="container">
-            <h2 class="section-title">
-                <span class="title-icon">📅</span>
-                下次课预告
-            </h2>
-            <div class="preview-list glass-card">
-                <div class="preview-item">
-                    <span class="preview-icon">✓</span>
-                    <span>完整的议事流程：动议→讨论→表决→决议</span>
-                </div>
-                <div class="preview-item">
-                    <span class="preview-icon">✓</span>
-                    <span>修正案机制</span>
-                </div>
-                <div class="preview-item">
-                    <span class="preview-icon">✓</span>
-                    <span>完整的家庭会议演练（带表决）</span>
-                </div>
-                <div class="preview-item">
-                    <span class="preview-icon">✓</span>
-                    <span>十二条如何转化为议起读六条</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 页脚 -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-brand">
-                    <span class="footer-logo">📚 议起读</span>
-                    <p>议事规则 + 阅读思辨</p>
-                    <p class="footer-slogan">培养目标：思考能力 · 对话能力 · 协作能力</p>
-                </div>
-                <div class="footer-info">
-                    <p>萝卜（北京）咨询有限公司</p>
-                    <p>袁天鹏议事规则工作室</p>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>© 2024 议起读教师培训 | 第一期：议事规则的基础机制</p>
-            </div>
-        </div>
-    </footer>
+        </footer>
+    </main>
 
     <script src="script.js"></script>
 </body>
+
 </html>
