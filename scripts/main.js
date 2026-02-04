@@ -201,3 +201,77 @@ function setDark(enable) {
         if (btn) btn.innerHTML = '🌙';
     }
 }
+
+/* ========================================================
+   Learning Progress Tracking
+   ======================================================== */
+function initProgress() {
+    // Mark current page as visited
+    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+    markPageVisited(currentPage);
+
+    // Update sidebar with progress indicators
+    updateProgressUI();
+}
+
+function markPageVisited(pageName) {
+    const progress = JSON.parse(localStorage.getItem('courseProgress') || '{}');
+    progress[pageName] = true;
+    localStorage.setItem('courseProgress', JSON.stringify(progress));
+}
+
+function updateProgressUI() {
+    const progress = JSON.parse(localStorage.getItem('courseProgress') || '{}');
+    const links = document.querySelectorAll('.nav-link');
+    let visitedCount = 0;
+
+    links.forEach(link => {
+        const href = link.getAttribute('href');
+        const pageName = href.split('/').pop().split('#')[0];
+
+        if (progress[pageName]) {
+            // Add check mark if not already present
+            if (!link.querySelector('.check')) {
+                const check = document.createElement('span');
+                check.className = 'check';
+                check.textContent = '✓';
+                link.appendChild(check);
+            }
+            visitedCount++;
+        }
+    });
+
+    // Update progress widget if exists
+    const progressWidget = document.querySelector('.progress-widget');
+    if (progressWidget && links.length > 0) {
+        const percent = Math.round((visitedCount / links.length) * 100);
+        progressWidget.innerHTML = `进度: ${percent}%`;
+    }
+}
+
+function getProgressPercent() {
+    const progress = JSON.parse(localStorage.getItem('courseProgress') || '{}');
+    const totalPages = 6; // index + 5 modules
+    const visitedCount = Object.keys(progress).length;
+    return Math.round((visitedCount / totalPages) * 100);
+}
+
+/* ========================================================
+   Keyboard Navigation
+   ======================================================== */
+function initKeyboardNav() {
+    document.addEventListener('keydown', (e) => {
+        // Arrow keys for navigation
+        if (e.key === 'ArrowRight' && e.altKey) {
+            const nextBtn = document.querySelector('a.btn[href*="module"]');
+            if (nextBtn) nextBtn.click();
+        }
+    });
+}
+
+// Initialize progress tracking after DOM load
+document.addEventListener('DOMContentLoaded', () => {
+    initProgress();
+    initKeyboardNav();
+});
+

@@ -408,3 +408,207 @@ hr {
 .fade-in {
     animation: fadeIn 0.5s ease-in-out;
 }
+
+/* =========================================
+   Enhanced Interactions & Animations
+   ========================================= */
+
+/* Button Click Feedback */
+.btn:active,
+.choice-btn:active,
+.nav-link:active {
+    transform: scale(0.97);
+}
+
+/* Page Content Fade In */
+.content {
+    animation: fadeIn 0.4s ease-out;
+}
+
+/* Cards Stagger Animation */
+.card-grid .card {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: slideUp 0.5s ease forwards;
+}
+
+.card-grid .card:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.card-grid .card:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.card-grid .card:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+.card-grid .card:nth-child(4) {
+    animation-delay: 0.4s;
+}
+
+.card-grid .card:nth-child(5) {
+    animation-delay: 0.5s;
+}
+
+.card-grid .card:nth-child(6) {
+    animation-delay: 0.6s;
+}
+
+@keyframes slideUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Focus Styles for Accessibility */
+.nav-link:focus,
+.btn:focus,
+.choice-btn:focus,
+.quiz-opt:focus {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+/* Skip Link for Screen Readers */
+.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: var(--accent);
+    color: white;
+    padding: 8px 16px;
+    z-index: 1000;
+    text-decoration: none;
+    border-radius: 0 0 4px 0;
+}
+
+.skip-link:focus {
+    top: 0;
+}
+
+/* Rule Cards Animation */
+.rule-card {
+    opacity: 0;
+    transform: translateX(-10px);
+    animation: slideRight 0.4s ease forwards;
+}
+
+.rule-card:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.rule-card:nth-child(2) {
+    animation-delay: 0.15s;
+}
+
+.rule-card:nth-child(3) {
+    animation-delay: 0.2s;
+}
+
+.rule-card:nth-child(4) {
+    animation-delay: 0.25s;
+}
+
+@keyframes slideRight {
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Typing Indicator */
+.typing {
+    display: flex;
+    gap: 4px;
+    padding: 12px 16px;
+}
+
+.typing span {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: #cbd5e1;
+    border-radius: 50%;
+    animation: bounce 1.4s infinite ease-in-out;
+}
+
+.typing span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.typing span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes bounce {
+
+    0%,
+    80%,
+    100% {
+        transform: translateY(0);
+    }
+
+    40% {
+        transform: translateY(-8px);
+    }
+}
+
+/* Progress Check Mark */
+.nav-link .check {
+    color: #22c55e;
+    margin-left: 5px;
+}
+
+/* Insight Card (for case analysis) */
+.insight-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--accent);
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 0 8px 8px 0;
+}
+
+.insight-card h4 {
+    margin-top: 0;
+    color: var(--accent);
+}
+
+/* FAQ Item */
+.faq-item {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    padding: 25px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+}
+
+.faq-item h4 {
+    margin-top: 0;
+    color: var(--text-heading);
+}
+
+.script-box {
+    background: #f8fafc;
+    border: 1px dashed var(--border);
+    padding: 15px;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    margin: 15px 0;
+}
+
+[data-theme="dark"] .script-box {
+    background: #1e293b;
+}
+
+/* Error Card Style */
+.error-card {
+    border-left-color: #ef4444 !important;
+}
+
+.error-card h4 {
+    color: #ef4444;
+}
