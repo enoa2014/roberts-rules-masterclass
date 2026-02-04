@@ -35,8 +35,7 @@ const courseStructure = [
     {
         title: "Module 4: 实战演练",
         items: [
-            { text: "4.1 家庭会议", id: "m4-1", page: "module-4.html", folder: "pages" },
-            { text: "4.2 业主委员会", id: "m4-2", page: "module-4.html", hash: "", folder: "pages" }
+            { text: "4.1 家庭会议", id: "m4-1", page: "module-4.html", folder: "pages" }
         ]
     },
     {
