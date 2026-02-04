@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>模块五：工具箱 | 议事规则大师课</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@700&family=Noto+Sans+SC:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <style>
+        .template-box {
+            background: #fff;
+            border: 1px solid var(--border);
+            padding: 40px;
+            font-family: "Courier New", Courier, monospace;
+            font-size: 0.9rem;
+            margin: 20px 0;
+            white-space: pre-wrap;
+            position: relative;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 5px 10px;
+            font-size: 0.8rem;
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="sidebar"></nav>
+
+    <div class="main-wrapper">
+        <header class="top-bar">
+            <div class="breadcrumbs">大师课 > 模块五 > 工具箱</div>
+            <div class="progress-widget">第 5 / 5 章</div>
+        </header>
+
+        <main class="content">
+            <h1>模块五：文书与工具箱</h1>
+            <p class="lead">好的会议是从准备文书开始的。这里提供了经过罗伯特议事规则标准化的模版，你可以直接复制使用。</p>
+
+            <hr>
+
+            <section id="agenda">
+                <h2>5.1 标准会议议程 (Standard Agenda)</h2>
+                <p>如果你不给参会者发议程，就等于邀请他们来浪费时间。</p>
+
+                <div class="template-box">
+                    <button class="copy-btn" onclick="copyText(this)">复制</button>
+                    【会议名称】会议议程
+                    日期：YYYY/MM/DD | 时间：00:00 - 00:00 | 地点：XXX
+
+                    一、宣布开会 (Call to Order)
+                    - 主持人核实法定人数 (Quorum)
+                    - 宣布会议开始
+
+                    二、审批事项
+                    1. 审批本次议程
+                    2. 审批上次会议纪要
+
+                    三、报告环节 (Reports)
+                    1. 财务报告（张三，5分钟）
+                    2. 项目B进展报告（李四，5分钟）
+
+                    四、未决事项 (Old Business)
+                    1. 关于年会场地的选定（上次会议遗留）
+
+                    五、新事项 (New Business) - *核心讨论区*
+                    1. [动议] 采购新咖啡机的提议（提案人：王五）
+                    2. [动议] 修改考勤制度的提议
+
+                    六、通知与预告 (Announcements)
+
+                    七、宣布散会 (Adjournment)
+                </div>
+            </section>
+
+            <section id="voting">
+                <h2>5.2 表决算法 (The Algorithm of Vote)</h2>
+                <div class="highlight-box">
+                    <strong>核心规则：</strong> 多数决 (Majority Vote) <br>
+                    <strong>定义：</strong> 赞成票 > 反对票 = 通过。<br>
+                    <strong>注意：</strong> 弃权票不计入总数（即不作为分母）。
+                </div>
+
+                <div class="card-grid">
+                    <div class="card">
+                        <h4>案例计算</h4>
+                        <p>假设委员会11人，出席9人（满足法定人数）。</p>
+                        <ul>
+                            <li>赞成：4票</li>
+                            <li>反对：3票</li>
+                            <li>弃权：2票</li>
+                        </ul>
+                        <p><strong>结果：</strong> 4 > 3，<strong>通过！</strong><br>
+                            <span style="font-size:0.8rem; color:#64748b;">(虽然4票不到出席人数9人的一半，但超过了有效票7票的一半)</span>
+                        </p>
+                    </div>
+                    <div class="card">
+                        <h4>平局即否决</h4>
+                        <p>如果 4票赞成 vs 4票反对：</br>
+                            <strong>结果：</strong> 方案<strong>未通过</strong> (Fail)。<br>
+                            (维持现状是默认值，改变现状需要多数支持)
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="script">
+                <h2>5.3 主持人"保命"话术卡</h2>
+                <p>当场面失控时，请朗读以下台词（保持面无表情，声音平稳）：</p>
+
+                <div class="card-grid">
+                    <div class="card">
+                        <h4>必须打断某人时</h4>
+                        <p>“这位成员请暂停。请注意，您现在的发言已经偏离了‘是否购买咖啡机’这一当前议题。请回到议题上来，或者我们先处理当前动议。”</p>
+                    </div>
+                    <div class="card">
+                        <h4>有人开始人身攻击时</h4>
+                        <p>“秩序问题（敲槌）。请各位成员注意，根据规则，我们只讨论观点，不评论个人的动机或性格。刚才关于‘某人自私’的言论是违规的，请收回。”</p>
+                    </div>
+                    <div class="card">
+                        <h4>大家都在吵架时</h4>
+                        <p>“（敲槌）现在会场秩序混乱，无法进行有效讨论。我宣布休会10分钟，请大家冷静后再继续。”</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="reframing">
+                <h2>5.4 语言净化器：攻击性言论改写表</h2>
+                <div class="card-grid">
+                    <div class="card">
+                        <div style="color:#ef4444; margin-bottom:5px;">❌ 攻击性说法</div>
+                        <div style="font-weight:bold;">"你这个人就是自私！"</div>
+                    </div>
+                    <div class="card" style="border-left-color: #22c55e;">
+                        <div style="color:#22c55e; margin-bottom:5px;">✅ 议事规则说法</div>
+                        <div>"这个方案可能没有充分考虑到其他人的需求。"</div>
+                    </div>
+
+                    <div class="card">
+                        <div style="color:#ef4444; margin-bottom:5px;">❌ 攻击性说法</div>
+                        <div style="font-weight:bold;">"你就是想控制孩子！"</div>
+                    </div>
+                    <div class="card" style="border-left-color: #22c55e;">
+                        <div style="color:#22c55e; margin-bottom:5px;">✅ 议事规则说法</div>
+                        <div>"我担心这种做法可能会限制孩子的自主性。"</div>
+                    </div>
+
+                    <div class="card">
+                        <div style="color:#ef4444; margin-bottom:5px;">❌ 攻击性说法</div>
+                        <div style="font-weight:bold;">"你这想法太天真了！"</div>
+                    </div>
+                    <div class="card" style="border-left-color: #22c55e;">
+                        <div style="color:#22c55e; margin-bottom:5px;">✅ 议事规则说法</div>
+                        <div>"这个想法在实施时可能会遇到一些困难。"</div>
+                    </div>
+                </div>
+            </section>
+
+            <div
+                style="margin-top: 60px; text-align: center; padding: 40px; background: #fffcf0; border: 2px dashed #d97706;">
+                <h2 style="margin-top:0; color:#92400e;">🏆 课程完结</h2>
+                <p>恭喜你完成了所有核心模块的学习。议事规则是一门实践的艺术，请在下一次会议中尝试使用。</p>
+                <a href="../index.html" class="btn">返回首页</a>
+            </div>
+
+        </main>
+    </div>
+
+    <script src="../scripts/main.js"></script>
+    <script>
+        function copyText(btn) {
+            const text = btn.parentElement.innerText.replace('复制', '').trim();
+            navigator.clipboard.writeText(text);
+            btn.innerText = '已复制!';
+            setTimeout(() => btn.innerText = '复制', 2000);
+        }
+    </script>
+</body>
+
+</html>

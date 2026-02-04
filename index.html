@@ -4,195 +4,235 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>议起读 | 议事规则基础</title>
-    <meta name="description" content="理性、平等、尊重的议事规则入门课程。">
+    <title>议事规则大师课 | 精通权力的艺术</title>
+    <link rel="stylesheet" href="styles/main.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@700&family=Noto+Sans+SC:wght@400;500;700&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <style>
+        .hero {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #fff;
+            padding: 80px 40px;
+            border-radius: 12px;
+            margin-bottom: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .hero h1 {
+            color: #fff;
+            border: none;
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .hero p {
+            color: #cbd5e1;
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto 30px;
+            font-size: 1.3rem;
+            position: relative;
+        }
+
+        .cta-btn {
+            background: var(--accent);
+            color: #fff;
+            padding: 15px 40px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            display: inline-block;
+            transition: transform 0.2s;
+            position: relative;
+            box-shadow: 0 4px 15px rgba(217, 119, 6, 0.3);
+        }
+
+        .cta-btn:hover {
+            transform: scale(1.05);
+            background: #b45309;
+        }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 50px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 30px;
+            position: relative;
+        }
+
+        .stat-item h3 {
+            color: #fff;
+            font-size: 2rem;
+            margin: 0;
+        }
+
+        .stat-item p {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            margin: 0;
+            text-align: center;
+        }
+
+        .module-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .module-item {
+            display: flex;
+            align-items: center;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 25px;
+            margin-bottom: 20px;
+            border-radius: 12px;
+            transition: all 0.2s;
+        }
+
+        .module-item:hover {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            transform: translateY(-3px);
+            border-color: var(--accent);
+        }
+
+        .mod-num {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--border);
+            margin-right: 30px;
+            width: 60px;
+        }
+
+        .mod-info h3 {
+            margin: 0;
+            font-size: 1.3rem;
+            color: var(--text-heading);
+        }
+
+        .mod-info p {
+            margin: 8px 0 0;
+            color: #64748b;
+            font-size: 1rem;
+        }
+
+        .mod-tag {
+            margin-left: auto;
+            background: var(--bg-body);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: var(--text-main);
+            font-weight: 600;
+            border: 1px solid var(--border);
+        }
+    </style>
 </head>
 
 <body>
-    <!-- 顶部极简导航 -->
-    <nav class="navbar">
-        <div class="nav-brand">议起读</div>
-        <div class="nav-links">
-            <a href="#intro" class="nav-link">精神</a>
-            <a href="#history" class="nav-link">历史</a>
-            <a href="#rules" class="nav-link">规则</a>
-            <a href="#practice" class="nav-link">演练</a>
-        </div>
-    </nav>
+    <nav class="sidebar"></nav>
 
-    <main class="content-wrapper">
-        <!-- 1. Hero: 极简大标题 -->
-        <header class="section hero" id="intro">
-            <div class="hero-content fade-in">
-                <p class="hero-kicker">教师培训第一期</p>
-                <h1 class="hero-title">理性与<br>共识的艺术</h1>
-                <p class="hero-desc">探索议事规则的基础机制，<br>在对话中重塑平等的价值。</p>
-                <div class="hero-scroll-hint">↓</div>
-            </div>
+    <div class="main-wrapper">
+        <main class="content">
+            <div class="hero">
+                <h1>议事规则大师课</h1>
+                <p>从混沌的争吵到理性的决策。这是一套深度实战训练系统，旨在通过"沉浸式模拟"重塑你的会议认知。</p>
+                <a href="pages/module-1.html" class="cta-btn">开始进阶之旅</a>
 
-            <div class="hero-visual fade-in delay-200">
-                <div class="abstract-shape">
-                    <div class="circle c1"></div>
-                    <div class="circle c2"></div>
-                </div>
-            </div>
-        </header>
-
-        <!-- 2. 核心理念: 网格布局 -->
-        <section class="section philosophy">
-            <div class="container">
-                <div class="section-header">
-                    <h2>核心精神</h2>
-                    <p class="section-sub">规则不是束缚，而是保护权益的边界。</p>
-                </div>
-
-                <div class="clean-grid">
-                    <div class="grid-card">
-                        <div class="card-icon">⚖️</div>
-                        <h3>平等</h3>
-                        <p>每个人都有发言权，弱势声音必须被听见。</p>
+                <div class="stat-grid">
+                    <div class="stat-item">
+                        <h3>12+</h3>
+                        <p>核心规则深度解析</p>
                     </div>
-                    <div class="grid-card highlight">
-                        <div class="card-icon">🤝</div>
-                        <h3>尊重</h3>
-                        <p>理解比赢更重要。<br>倾听是尊重的最高形式。</p>
+                    <div class="stat-item">
+                        <h3>Pro</h3>
+                        <p>多轮次实战模拟</p>
                     </div>
-                    <div class="grid-card">
-                        <div class="card-icon">🧠</div>
-                        <h3>理性</h3>
-                        <p>对事不对人。<br>用逻辑与证据构建对话。</p>
+                    <div class="stat-item">
+                        <h3>∞</h3>
+                        <p>终身受用的软技能</p>
                     </div>
                 </div>
             </div>
-        </section>
 
-        <!-- 3. 历史时间轴: 极简列表 -->
-        <section class="section history" id="history">
-            <div class="container">
-                <div class="section-header">
-                    <h2>历史演进</h2>
-                </div>
-                <div class="timeline-clean">
-                    <div class="timeline-row">
-                        <div class="time-year">1876</div>
-                        <div class="time-content">
-                            <h4>罗伯特议事规则</h4>
-                            <p>Henry M. Robert 将议会程序标准化，发布不仅适用于议会，也适用于普通社团的规则。</p>
+            <h2>精修课程路线图</h2>
+            <div class="module-list">
+                <a href="pages/module-1.html" style="text-decoration:none;">
+                    <li class="module-item">
+                        <span class="mod-num">01</span>
+                        <div class="mod-info">
+                            <h3>权力的游戏与规则的诞生</h3>
+                            <p>理解"多数决"的数学原理与历史演变。</p>
                         </div>
-                    </div>
-                    <div class="timeline-row">
-                        <div class="time-year">1917</div>
-                        <div class="time-content">
-                            <h4>民权初步</h4>
-                            <p>孙中山先生引入议事规则，将其视为社会建设与民权发达的第一步。</p>
+                        <span class="mod-tag">核心理论</span>
+                    </li>
+                </a>
+
+                <a href="pages/module-2.html" style="text-decoration:none;">
+                    <li class="module-item">
+                        <span class="mod-num">02</span>
+                        <div class="mod-info">
+                            <h3>核心十二条 (The 12 Rules)</h3>
+                            <p>秩序、效率与决策的三重奏。</p>
                         </div>
-                    </div>
-                    <div class="timeline-row">
-                        <div class="time-year">2024</div>
-                        <div class="time-content">
-                            <h4>现代应用</h4>
-                            <p>第12版发布。从社区治理到家庭会议，规则正在重塑我们的公共生活。</p>
+                        <span class="mod-tag">必修</span>
+                    </li>
+                </a>
+
+                <a href="pages/module-3.html" style="text-decoration:none;">
+                    <li class="module-item">
+                        <span class="mod-num">03</span>
+                        <div class="mod-info">
+                            <h3>高阶动议体系 (Advanced Motions)</h3>
+                            <p>掌握优先权体系，学会如何打断、如何修正、如何阻击。</p>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+                        <span class="mod-tag">进阶</span>
+                    </li>
+                </a>
 
-        <!-- 4. 十二条规则: 瑞士风格排版 -->
-        <section class="section rules" id="rules">
-            <div class="container">
-                <div class="section-header">
-                    <h2>十二条规则</h2>
-                    <p class="section-sub">老友议事规则核心体系</p>
-                </div>
-
-                <div class="rules-masonry">
-                    <div class="rule-item">
-                        <span class="rule-num">01</span>
-                        <h4>主持中立</h4>
-                        <p>裁判不参赛。</p>
-                    </div>
-                    <div class="rule-item">
-                        <span class="rule-num">02</span>
-                        <h4>服从裁判</h4>
-                        <p>规则面前人人平等。</p>
-                    </div>
-                    <div class="rule-item">
-                        <span class="rule-num">03</span>
-                        <h4>举手发言</h4>
-                        <p>秩序是自由的前提。</p>
-                    </div>
-                    <div class="rule-item">
-                        <span class="rule-num">04</span>
-                        <h4>面向主持</h4>
-                        <p>避免直接且情绪化的对峙。</p>
-                    </div>
-                    <div class="rule-item">
-                        <span class="rule-num">05</span>
-                        <h4>先问后点</h4>
-                        <p>通过提问确认理解正确。</p>
-                    </div>
-                    <div class="rule-item">
-                        <span class="rule-num">06</span>
-                        <h4>机会均等</h4>
-                        <p>确保每个人都有机会。</p>
-                    </div>
-                    <!-- 更多规则省略部分文字以保持极简 -->
-                    <div class="rule-item muted">
-                        <span class="rule-num">...</span>
-                        <h4>充分讨论，过半通过</h4>
-                        <p>程序正义保障实体正义。</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 5. 模拟演练: 干净的场景展示 -->
-        <section class="section practice" id="practice">
-            <div class="container">
-                <div class="practice-layout">
-                    <div class="practice-info">
-                        <h2>家庭会议实战</h2>
-                        <p class="practice-desc">场景：孩子用奶奶给的钱充值游戏，引发了家庭关于“零花钱自主权”的讨论。</p>
-                        <div class="practice-tags">
-                            <span>#权益边界</span>
-                            <span>#家庭教育</span>
+                <a href="pages/module-4.html" style="text-decoration:none;">
+                    <li class="module-item">
+                        <span class="mod-num">04</span>
+                        <div class="mod-info">
+                            <h3>沉浸式实战演练场</h3>
+                            <p>多轮次、多结局的家庭会议与职场博弈模拟。</p>
                         </div>
-                        <button class="btn-primary" id="startSimBtn">开始模拟对话</button>
-                    </div>
-                    <div class="practice-visual">
-                        <div class="chat-container inactive" id="chatContainer">
-                            <!-- 动态对话将在这里生成 -->
-                            <div class="chat-placeholder">
-                                <span class="placeholder-icon">💬</span>
-                            </div>
+                        <span class="mod-tag">实战</span>
+                    </li>
+                </a>
+
+                <a href="pages/module-5.html" style="text-decoration:none;">
+                    <li class="module-item">
+                        <span class="mod-num">05</span>
+                        <div class="mod-info">
+                            <h3>文书与工具箱</h3>
+                            <p>下载标准议程、会议纪要模版与主持人脚本。</p>
                         </div>
-                    </div>
-                </div>
+                        <span class="mod-tag">工具</span>
+                    </li>
+                </a>
             </div>
-        </section>
+        </main>
+    </div>
 
-        <!-- 6. 页脚 -->
-        <footer class="footer">
-            <div class="container">
-                <div class="footer-quote">
-                    "自由的精神，是尽力去理解别人的精神。"
-                </div>
-                <div class="footer-meta">
-                    <span>议起读教师培训</span>
-                    <span>2024</span>
-                </div>
-            </div>
-        </footer>
-    </main>
-
-    <script src="script.js"></script>
+    <script src="scripts/main.js"></script>
 </body>
 
 </html>

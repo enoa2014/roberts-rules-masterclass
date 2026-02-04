@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>模块四：沉浸式实战演练场 | 议事规则大师课</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@700&family=Noto+Sans+SC:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <style>
+        .sim-wrapper {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            height: 700px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        [data-theme="dark"] .sim-wrapper {
+            background: var(--bg-card);
+        }
+
+        .chat-pane {
+            display: flex;
+            flex-direction: column;
+            background: #f8fafc;
+        }
+
+        [data-theme="dark"] .chat-pane {
+            background: #0f172a;
+        }
+
+        .chat-header {
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border);
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            background: #fff;
+        }
+
+        [data-theme="dark"] .chat-header {
+            background: var(--bg-card);
+        }
+
+        .chat-log {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .msg {
+            max-width: 80%;
+            padding: 12px 16px;
+            border-radius: 12px;
+            line-height: 1.6;
+            font-size: 0.95rem;
+            position: relative;
+            animation: slideIn 0.3s ease;
+        }
+
+        .msg-npc {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-bottom-left-radius: 2px;
+            align-self: flex-start;
+        }
+
+        [data-theme="dark"] .msg-npc {
+            background: var(--bg-card);
+            border-color: var(--border);
+        }
+
+        .msg-player {
+            background: var(--accent);
+            color: #fff;
+            border-bottom-right-radius: 2px;
+            align-self: flex-end;
+        }
+
+        .msg-system {
+            align-self: center;
+            background: rgba(0, 0, 0, 0.05);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: #64748b;
+        }
+
+        .control-pane {
+            background: #fff;
+            border-left: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+        }
+
+        [data-theme="dark"] .control-pane {
+            background: var(--bg-card);
+        }
+
+        .status-bar {
+            padding: 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: #e2e8f0;
+            border-radius: 3px;
+            overflow: hidden;
+            margin-top: 4px;
+        }
+
+        .fill {
+            height: 100%;
+            background: var(--accent);
+            transition: width 0.5s;
+        }
+
+        .options-area {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .choice-btn {
+            background: transparent;
+            border: 1px solid var(--border);
+            padding: 15px;
+            text-align: left;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+            color: var(--text-main);
+        }
+
+        .choice-btn:hover {
+            background: var(--accent-bg);
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Mobile */
+        @media (max-width: 800px) {
+            .sim-wrapper {
+                grid-template-columns: 1fr;
+                height: auto;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .chat-pane {
+                height: 400px;
+            }
+
+            .control-pane {
+                min-height: 300px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="sidebar"></nav>
+
+    <div class="main-wrapper">
+        <header class="top-bar">
+            <div class="breadcrumbs">大师课 > 模块四 > 沉浸式实战</div>
+        </header>
+
+        <main class="content" style="max-width: 1200px;">
+            <div style="margin-bottom: 20px;">
+                <h1>模块四：沉浸式实战演练</h1>
+                <p>本模块基于《议起读教师培训》真实案例改编。你将扮演家庭会议的主持人（爸爸），引导一场关于"压岁钱与游戏充值"的危机公关。</p>
+            </div>
+
+            <!-- Launcher -->
+            <div id="launcher" style="display:grid; grid-template-columns: 1fr; gap:20px; margin-bottom:30px;">
+                <div class="card" style="cursor:pointer; border-left: 5px solid var(--accent);"
+                    onclick="startEngine('family')">
+                    <h3 style="margin-top:0">🏡 深度案例：谁动了我的压岁钱？</h3>
+                    <p><strong>背景信息：</strong></p>
+                    <ul style="font-size: 0.9rem; color: #64748b;">
+                        <li><strong>主角：</strong> 10岁儿子（四年级），喜欢玩某款流行手游。</li>
+                        <li><strong>导火索：</strong> 奶奶私下奖励了孙子300元现金。孩子用借来的手机充值了200元游戏卡。</li>
+                        <li><strong>冲突点：</strong> 妈妈发现后大怒。孩子认为"这是一年前约定好的归我管理的钱"。</li>
+                        <li><strong>你的任务：</strong> 运用"改写攻击性语言"技巧，引导大家理性表达，最后完成一次有效的"多数决"。</li>
+                    </ul>
+                    <button class="btn" style="margin-top:10px">开始模拟</button>
+                </div>
+            </div>
+
+            <!-- Simulation Interface -->
+            <div id="simInterface" class="sim-wrapper" style="display:none;">
+                <div class="chat-pane">
+                    <div class="chat-header">
+                        <span id="sceneTitle">家庭会议</span>
+                        <span style="font-size:0.8rem; color:#64748b;">Round <span id="roundNum">1</span></span>
+                    </div>
+                    <div id="chatLog" class="chat-log"></div>
+                </div>
+                <div class="control-pane">
+                    <div class="status-bar">
+                        <div class="stat-row">
+                            <span>🏛 秩序值 (Order)</span>
+                            <span id="scoreOrder">50</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div id="barOrder" class="fill" style="width:50%"></div>
+                        </div>
+                        <div style="height:15px"></div>
+                        <div class="stat-row">
+                            <span>🤝 理性值 (Reason)</span>
+                            <span id="scoreConsensus">50</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div id="barConsensus" class="fill" style="width:50%; background:#22c55e;"></div>
+                        </div>
+                    </div>
+                    <div id="optionsArea" class="options-area"></div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script src="../scripts/main.js"></script>
+    <script>
+        const SCENE = {
+            title: "家庭会议：游戏充值风波",
+            init: { order: 50, consensus: 40 },
+            nodes: {
+                start: {
+                    text: "【Round 1: 爆发】\n\n晚饭后，妈妈把手机拍在桌子上。\n妈妈：'气死我了！才四年级就敢充200块钱游戏！这孩子废了！'\n\n孩子缩在沙发角，奶奶护着孩子：'哎呀，是我给他的奖励，孩子玩玩怎么了。'\n\n作为爸爸（主持人），你的第一句话至关重要。",
+                    opts: [
+                        { txt: "附和妈妈：'慈母多败儿！妈你也真是的！'", next: 'f_bias', dOrder: -20, dConsensus: -20 },
+                        { txt: "敲击水杯：'现在召开家庭会议。请大家坐好，我们按规则来谈。'", next: 'f_intro', dOrder: 20, dConsensus: 10 }
+                    ]
+                },
+                f_intro: {
+                    text: "大家虽然不情愿，但还是坐到了桌边。\n\n你：'今天的议题是关于孩子游戏充值的事。根据【不攻击原则】，我们只谈行为，不贴标签。'\n\n妈妈立刻忍不住了：'什么不贴标签？他这就是自私！只顾自己爽，不管大人赚钱辛苦！'\n\n系统提示：这是一个【攻击性发言】，你需要引导妈妈【改写】它。",
+                    opts: [
+                        { txt: "打断妈妈：'你违规了！闭嘴！'", next: 'f_rude', dOrder: 10, dConsensus: -20 },
+                        { txt: "温和引导：'妈妈，请把[自私]这个评价，改成具体的[事实]和你的[感受]。'", next: 'f_rewrite_1', dOrder: 10, dConsensus: 20 }
+                    ]
+                },
+                f_rewrite_1: {
+                    text: "妈妈深吸一口气，试着改写。\n\n妈妈：'好吧... 我的意思是，这个方案没有充分考虑到家庭的整体开支。200块是我们一周的买菜钱。'\n\n孩子听了，头抬起来一点：'可是去年生日你们说过，零花钱归我自己管。'\n\n妈妈又急了：'你就是想控制一切！不想让我们管你！'\n\n再次触发【改写任务】。你如何引导？",
+                    opts: [
+                        { txt: "无视，让孩子反击", next: 'f_fight', dOrder: -10, dConsensus: -10 },
+                        { txt: "引导：'妈妈是担心这种做法会限制我们对你的引导，而不是想控制你。'", next: 'f_rewrite_2', dOrder: 20, dConsensus: 20 }
+                    ]
+                },
+                f_rewrite_2: {
+                    text: "通过两次改写，火药味散去了，大家开始讨论事情本身。\n\n孩子：'我知道钱很辛苦，但我以为那300块是我的。而且我借同学手机玩，是因为我想融入集体。'\n\n这就是【理性】的力量。大家听到了彼此的需求。\n\n现在进入动议环节。孩子提议：'以后我充值前先申请。' \n妈妈提议：'没收剩下100元，作为惩罚。'\n奶奶：'我弃权，我不懂。'\n\n现在进行表决（假设只有爸妈孩3人有票）。\n你支持谁？",
+                    opts: [
+                        { txt: "支持妈妈 (2票赞成，1票反对)", next: 'f_result_mom', dOrder: 0, dConsensus: -10 },
+                        { txt: "提出修正案：'不没收，但冻结3个月' (寻找折中)", next: 'f_adjourn', dOrder: 20, dConsensus: 30 }
+                    ]
+                },
+                f_bias: { text: "你失去了中立。奶奶拉着孩子进屋了，会议解散。\n【Game Over】", end: true },
+                f_rude: { text: "由于你态度粗暴，妈妈气哭了。会议无法进行。\n【Game Over】", end: true },
+                f_result_mom: { text: "决议通过。孩子虽然不服，但承认程序是公正的。\n【结局：程序正义】", end: true },
+                f_adjourn: {
+                    text: "这是一个高明的【修正案】。孩子觉得钱还在，妈妈觉得有惩罚。\n\n最后表决：\n主持人：'所有赞成的请举手...'\n（爸爸、孩子举手）\n主持人：'所有反对的请举手...'\n（妈妈举手）\n\n结果：2票赞成 > 1票反对。\n根据【多数决】规则，决议通过！\n\n【完美结局：理性的胜利】",
+                    end: true
+                }
+            }
+        };
+
+        let state = {
+            scene: null,
+            order: 50,
+            con: 50,
+            log: []
+        };
+
+        function startEngine(sceneId) {
+            document.getElementById('launcher').style.display = 'none';
+            document.getElementById('simInterface').style.display = 'grid';
+
+            state.scene = SCENE;
+            // Reset state
+            state.order = SCENE.init.order;
+            state.con = SCENE.init.consensus;
+
+            document.getElementById('sceneTitle').innerText = SCENE.title;
+            updateStats();
+            renderNode('start');
+        }
+
+        function renderNode(nodeId) {
+            const data = state.scene.nodes[nodeId];
+            const chatLog = document.getElementById('chatLog');
+
+            // Add NPC Msg
+            const msgDiv = document.createElement('div');
+            msgDiv.className = 'msg msg-npc';
+            msgDiv.innerText = data.text;
+            chatLog.appendChild(msgDiv);
+            chatLog.scrollTop = chatLog.scrollHeight;
+
+            // Options
+            const optsArea = document.getElementById('optionsArea');
+            optsArea.innerHTML = '';
+
+            if (data.end) {
+                const btn = document.createElement('button');
+                btn.className = 'choice-btn';
+                btn.innerText = '🔄 模拟结束，返回';
+                btn.style.background = '#e2e8f0';
+                btn.onclick = () => location.reload();
+                optsArea.appendChild(btn);
+            } else {
+                data.opts.forEach(opt => {
+                    const btn = document.createElement('button');
+                    btn.className = 'choice-btn';
+                    btn.innerText = opt.txt;
+                    btn.onclick = () => {
+                        // Update Stats
+                        state.order = Math.min(100, Math.max(0, state.order + (opt.dOrder || 0)));
+                        state.con = Math.min(100, Math.max(0, state.con + (opt.dConsensus || 0)));
+                        updateStats();
+
+                        // Add Player Msg
+                        const pDiv = document.createElement('div');
+                        pDiv.className = 'msg msg-player';
+                        pDiv.innerText = opt.txt;
+                        chatLog.appendChild(pDiv);
+
+                        setTimeout(() => renderNode(opt.next), 800);
+                    };
+                    optsArea.appendChild(btn);
+                });
+            }
+        }
+
+        function updateStats() {
+            document.getElementById('scoreOrder').innerText = state.order;
+            document.getElementById('barOrder').style.width = state.order + '%';
+
+            document.getElementById('scoreConsensus').innerText = state.con;
+            document.getElementById('barConsensus').style.width = state.con + '%';
+        }
+    </script>
+</body>
+
+</html>
