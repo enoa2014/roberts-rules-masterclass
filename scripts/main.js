@@ -259,11 +259,51 @@ function getProgressPercent() {
    Keyboard Navigation
    ======================================================== */
 function initKeyboardNav() {
+    // Define page order for navigation
+    const pageOrder = ['index.html', 'module-1.html', 'module-2.html', 'module-3.html', 'module-4.html', 'module-5.html'];
+
     document.addEventListener('keydown', (e) => {
-        // Arrow keys for navigation
-        if (e.key === 'ArrowRight' && e.altKey) {
-            const nextBtn = document.querySelector('a.btn[href*="module"]');
-            if (nextBtn) nextBtn.click();
+        // Ignore if user is typing in an input
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+        const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+        const currentIndex = pageOrder.indexOf(currentPage);
+        const isPagesDir = window.location.pathname.includes('/pages/');
+
+        if (e.key === 'ArrowRight') {
+            // Go to next page
+            e.preventDefault();
+            if (currentIndex < pageOrder.length - 1) {
+                const nextPage = pageOrder[currentIndex + 1];
+                if (currentPage === 'index.html') {
+                    window.location.href = 'pages/' + nextPage;
+                } else {
+                    window.location.href = nextPage;
+                }
+            }
+        }
+
+        if (e.key === 'ArrowLeft') {
+            // Go to previous page
+            e.preventDefault();
+            if (currentIndex > 0) {
+                const prevPage = pageOrder[currentIndex - 1];
+                if (prevPage === 'index.html' && isPagesDir) {
+                    window.location.href = '../index.html';
+                } else {
+                    window.location.href = prevPage;
+                }
+            }
+        }
+
+        if (e.key === 'ArrowDown') {
+            // Scroll down
+            window.scrollBy({ top: 200, behavior: 'smooth' });
+        }
+
+        if (e.key === 'ArrowUp') {
+            // Scroll up
+            window.scrollBy({ top: -200, behavior: 'smooth' });
         }
     });
 }
