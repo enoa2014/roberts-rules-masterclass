@@ -1,4 +1,7 @@
-import { sqlite } from "@/lib/db";
+import { eq } from "drizzle-orm";
+
+import { db } from "@/lib/db";
+import { users } from "@/lib/schema";
 import type { UserRole } from "@/lib/schema";
 
 export type UserRecord = {
@@ -10,21 +13,49 @@ export type UserRecord = {
   role: UserRole;
 };
 
-const selectUserFields = `
-  SELECT id, username, phone, password, nickname, role
-  FROM users
-`;
+const userSelect = {
+  id: users.id,
+  username: users.username,
+  phone: users.phone,
+  password: users.password,
+  nickname: users.nickname,
+  role: users.role,
+} as const;
 
 export function findUserByUsername(username: string) {
-  return sqlite
-    .prepare(`${selectUserFields} WHERE username = ? LIMIT 1`)
-    .get(username) as UserRecord | undefined;
+  const row = db
+    .select(userSelect)
+    .from(users)
+    .where(eq(users.username, username))
+    .limit(1)
+    .get();
+
+  if (!row) {
+    return undefined;
+  }
+
+  return {
+    ...row,
+    role: row.role as UserRole,
+  };
 }
 
 export function findUserById(userId: number) {
-  return sqlite
-    .prepare(`${selectUserFields} WHERE id = ? LIMIT 1`)
-    .get(userId) as UserRecord | undefined;
+  const row = db
+    .select(userSelect)
+    .from(users)
+    .where(eq(users.id, userId))
+    .limit(1)
+    .get();
+
+  if (!row) {
+    return undefined;
+  }
+
+  return {
+    ...row,
+    role: row.role as UserRole,
+  };
 }
 
 export function createUsernameUser(input: {
@@ -32,16 +63,15 @@ export function createUsernameUser(input: {
   passwordHash: string;
   nickname?: string;
 }) {
-  const insertStmt = sqlite.prepare(`
-    INSERT INTO users (username, password, nickname, role)
-    VALUES (?, ?, ?, 'registered')
-  `);
-
-  const result = insertStmt.run(
-    input.username,
-    input.passwordHash,
-    input.nickname ?? null,
-  );
+  const result = db
+    .insert(users)
+    .values({
+      username: input.username,
+      password: input.passwordHash,
+      nickname: input.nickname ?? null,
+      role: "registered",
+    })
+    .run();
 
   return findUserById(Number(result.lastInsertRowid));
 }
