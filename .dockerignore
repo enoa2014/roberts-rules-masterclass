@@ -1,0 +1,13 @@
+.git
+.gitignore
+.next
+node_modules
+archive
+docs
+res
+*.log
+.env.local
+.env.production
+findings.md
+progress.md
+task_plan.md

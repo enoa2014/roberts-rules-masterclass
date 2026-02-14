@@ -47,6 +47,7 @@ tttt/
 - 需求基线：`需求与现有资源清单.md`
 - 详细设计与任务拆解：`docs/10-详细设计与任务拆解.md`
 - Gemini 前端交接包：`docs/11-Gemini3Pro前端交接包.md`
+- 联调与冒烟手册：`docs/13-前后端联调与API冒烟手册.md`
 
 ## 推荐阅读顺序
 
@@ -68,6 +69,31 @@ tttt/
 1. 先按 `docs/10-详细设计与任务拆解.md` 执行 P0 任务
 2. 同步让 Gemini 从 FE-B1 批次开始交付前端
 3. 接口变更先更新 `docs/04-API合同.md` 再改代码
+
+## 本地运行与冒烟
+
+1. 推迁移：
+
+```bash
+npm run db:push
+```
+
+2. 启动服务：
+
+```bash
+NEXTAUTH_SECRET=dev-smoke-secret NEXTAUTH_URL=http://127.0.0.1:3000 npm run dev
+```
+
+3. 新开终端执行冒烟：
+
+```bash
+npm run smoke:all
+```
+
+说明：
+
+- `smoke:seed` 会创建/重置冒烟账号与邀请码。
+- `smoke:api` 会自动走完互动、作业、反馈、讨论、治理主流程。
 
 ## 归档说明
 

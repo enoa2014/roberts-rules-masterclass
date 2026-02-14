@@ -16,3 +16,9 @@ node_modules/
 .next/
 data/
 logs/
+uploads/
+
+# session planning files
+findings.md
+progress.md
+task_plan.md
