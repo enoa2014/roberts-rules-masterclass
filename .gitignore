@@ -1,2 +1,18 @@
 *.zip
 res/
+archive/
+
+# hidden directories
+.*/
+!.git/
+
+# local env
+.env.local
+.env.production
+
+# local tooling/runtime
+.claude/
+node_modules/
+.next/
+data/
+logs/
