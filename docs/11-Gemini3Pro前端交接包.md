@@ -43,9 +43,10 @@
 1. `/admin`
 2. `/admin/users`
 3. `/admin/invites`
-4. `/admin/sessions`
-5. `/admin/assignments`
+4. `/admin/assignments`
+5. `/admin/feedbacks`
 6. `/admin/moderation`
+7. `/admin/settings`
 
 ---
 
@@ -134,7 +135,7 @@ styles/
 ## 9.1 单批次页面实现模板
 
 ```text
-你是高级前端工程师。请在 Next.js 15 App Router 项目中实现以下页面：
+你是高级前端工程师。请在 Next.js 16 App Router 项目中实现以下页面：
 - 批次：FE-Bx
 - 页面：<列出路由>
 
@@ -168,7 +169,7 @@ styles/
 
 ```text
 请实现 /admin/* 页面：
-- users/invites/sessions/assignments/moderation
+- users/invites/assignments/feedbacks/moderation/settings
 - 权限不足时做前端提示并回退
 - 操作按钮都需要二次确认（删除/封禁）
 
