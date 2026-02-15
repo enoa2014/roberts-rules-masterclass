@@ -12,6 +12,7 @@ archive/
 # local env
 .env.local
 .env.production
+TEST_ACCOUNTS.local.md
 
 # local tooling/runtime
 .claude/
