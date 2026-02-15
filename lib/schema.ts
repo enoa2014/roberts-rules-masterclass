@@ -1,5 +1,5 @@
 import { sql } from "drizzle-orm";
-import { integer, sqliteTable, text, uniqueIndex } from "drizzle-orm/sqlite-core";
+import { index, integer, sqliteTable, text, uniqueIndex } from "drizzle-orm/sqlite-core";
 
 export const roles = [
   "registered",
@@ -46,6 +46,7 @@ export const users = sqliteTable("users", {
 export const inviteCodes = sqliteTable("invite_codes", {
   id: integer("id").primaryKey({ autoIncrement: true }),
   code: text("code").notNull().unique(),
+  targetRole: text("target_role").notNull().default("student"),
   maxUses: integer("max_uses").notNull().default(0),
   usedCount: integer("used_count").notNull().default(0),
   expiresAt: text("expires_at"),
@@ -68,6 +69,25 @@ export const inviteCodeUses = sqliteTable(
     ),
   }),
 );
+
+export const loginFailures = sqliteTable(
+  "login_failures",
+  {
+    id: integer("id").primaryKey({ autoIncrement: true }),
+    ip: text("ip").notNull(),
+    username: text("username"),
+    attemptedAt: text("attempted_at").notNull().default(sql`(datetime('now'))`),
+  },
+  (table) => ({
+    ipAttemptedIdx: index("idx_login_failures_ip_attempted").on(table.ip, table.attemptedAt),
+  }),
+);
+
+export const systemSettings = sqliteTable("system_settings", {
+  key: text("key").primaryKey(),
+  value: text("value").notNull(),
+  updatedAt: text("updated_at").notNull().default(sql`(datetime('now'))`),
+});
 
 export const classSessions = sqliteTable(
   "class_sessions",

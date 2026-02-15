@@ -12,6 +12,8 @@ function resolveDbPath() {
 
 const teacherUsername = process.env.SMOKE_TEACHER_USERNAME || "smoke_teacher";
 const teacherPassword = process.env.SMOKE_TEACHER_PASSWORD || "SmokePass123!";
+const adminUsername = process.env.SMOKE_ADMIN_USERNAME || "smoke_admin";
+const adminPassword = process.env.SMOKE_ADMIN_PASSWORD || "SmokePass123!";
 const studentUsername = process.env.SMOKE_STUDENT_USERNAME || "smoke_student";
 const studentPassword = process.env.SMOKE_STUDENT_PASSWORD || "SmokePass123!";
 const registeredUsername = process.env.SMOKE_REGISTERED_USERNAME || "smoke_registered";
@@ -57,7 +59,7 @@ function ensureInviteCode(code, createdBy) {
   if (existing) {
     db.prepare(
       `UPDATE invite_codes
-       SET max_uses = 0, used_count = 0, expires_at = NULL, created_by = ?
+       SET target_role = 'student', max_uses = 0, used_count = 0, expires_at = NULL, created_by = ?
        WHERE id = ?`,
     ).run(createdBy, existing.id);
 
@@ -66,8 +68,8 @@ function ensureInviteCode(code, createdBy) {
 
   const result = db
     .prepare(
-      `INSERT INTO invite_codes (code, max_uses, used_count, expires_at, created_by)
-       VALUES (?, 0, 0, NULL, ?)`,
+      `INSERT INTO invite_codes (code, target_role, max_uses, used_count, expires_at, created_by)
+       VALUES (?, 'student', 0, 0, NULL, ?)`,
     )
     .run(code, createdBy);
 
@@ -96,6 +98,13 @@ function main() {
     role: "student",
   });
 
+  const adminId = upsertUser({
+    username: adminUsername,
+    password: adminPassword,
+    nickname: "冒烟管理员",
+    role: "admin",
+  });
+
   const registeredId = upsertUser({
     username: registeredUsername,
     password: registeredPassword,
@@ -111,6 +120,7 @@ function main() {
     JSON.stringify(
       {
         teacher: { username: teacherUsername, password: teacherPassword, id: teacherId },
+        admin: { username: adminUsername, password: adminPassword, id: adminId },
         student: { username: studentUsername, password: studentPassword, id: studentId },
         registered: {
           username: registeredUsername,

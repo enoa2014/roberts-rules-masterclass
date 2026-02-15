@@ -1,0 +1,1 @@
+ALTER TABLE `invite_codes` ADD `target_role` text DEFAULT 'student' NOT NULL;

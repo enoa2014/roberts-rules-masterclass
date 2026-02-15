@@ -41,11 +41,12 @@ export function verifyInviteCodeForUser(
 
     const invite = sqlite
       .prepare(
-        `SELECT id, max_uses, used_count, expires_at FROM invite_codes WHERE code = ? LIMIT 1`,
+        `SELECT id, target_role, max_uses, used_count, expires_at FROM invite_codes WHERE code = ? LIMIT 1`,
       )
       .get(code) as
       | {
           id: number;
+          target_role: string;
           max_uses: number;
           used_count: number;
           expires_at: string | null;
@@ -121,11 +122,22 @@ export function verifyInviteCodeForUser(
 
     sqlite
       .prepare(
-        `UPDATE users SET role = 'student', updated_at = datetime('now') WHERE id = ?`,
+        `UPDATE users SET role = ?, updated_at = datetime('now') WHERE id = ?`,
       )
-      .run(uid);
+      .run(
+        invite.target_role === "teacher" || invite.target_role === "student"
+          ? invite.target_role
+          : "student",
+        uid,
+      );
 
-    return { ok: true, role: "student" };
+    return {
+      ok: true,
+      role:
+        invite.target_role === "teacher" || invite.target_role === "student"
+          ? (invite.target_role as UserRole)
+          : "student",
+    };
   });
 
   return tx(userId, inviteCode.trim());

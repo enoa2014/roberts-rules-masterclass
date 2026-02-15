@@ -13,10 +13,13 @@
     "db:generate": "drizzle-kit generate",
     "db:push": "drizzle-kit push",
     "db:studio": "drizzle-kit studio",
+    "backup:create": "bash scripts/backup.sh",
+    "backup:restore": "bash scripts/restore.sh",
     "admin:init": "node scripts/init-admin.mjs",
     "smoke:seed": "node scripts/seed-smoke-users.mjs",
     "smoke:api": "node scripts/smoke-api.mjs",
-    "smoke:all": "npm run smoke:seed && npm run smoke:api"
+    "smoke:rate-limit": "node scripts/smoke-auth-rate-limit.mjs",
+    "smoke:all": "npm run smoke:seed && npm run smoke:api && npm run smoke:rate-limit"
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",

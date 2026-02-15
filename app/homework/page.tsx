@@ -3,16 +3,13 @@
 import { useEffect, useState } from "react";
 import { PageShell } from "@/components/page-shell";
 import { Loader2, Plus, FileText, CheckCircle, Clock } from "lucide-react";
-import { useRouter } from "next/navigation";
 
 type Assignment = {
   id: number;
   lessonId: string;
-  content: string;
-  fileUrl?: string;
+  content: string | null;
+  filePath: string | null;
   status: "submitted" | "reviewed";
-  score?: number;
-  feedback?: string;
   createdAt: string;
 };
 
@@ -25,6 +22,7 @@ export default function HomeworkPage() {
   // Form State
   const [lessonId, setLessonId] = useState("rules-1");
   const [content, setContent] = useState("");
+  const [file, setFile] = useState<File | null>(null);
 
   useEffect(() => {
     fetchAssignments();
@@ -48,21 +46,38 @@ export default function HomeworkPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const trimmedContent = content.trim();
+
+    if (!trimmedContent && !file) {
+      alert("请至少填写作业内容或上传一个附件");
+      return;
+    }
+
     setSubmitting(true);
 
     try {
+      const formData = new FormData();
+      formData.append("lessonId", lessonId);
+      if (trimmedContent) {
+        formData.append("content", trimmedContent);
+      }
+      if (file) {
+        formData.append("file", file);
+      }
+
       const res = await fetch("/api/assignments", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ lessonId, content }),
+        body: formData,
       });
 
       if (res.ok) {
         setShowForm(false);
         setContent("");
+        setFile(null);
         fetchAssignments(); // Refresh list
       } else {
-        alert("提交失败，请重试");
+        const data = await res.json().catch(() => null);
+        alert(data?.error?.message ?? "提交失败，请重试");
       }
     } catch (error) {
       console.error("Submit error", error);
@@ -106,13 +121,25 @@ export default function HomeworkPage() {
                 onChange={(e) => setContent(e.target.value)}
                 className="w-full p-3 border rounded-lg h-32"
                 placeholder="在此输入作业内容或复盘心得..."
-                required
               />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">附件（可选）</label>
+              <input
+                type="file"
+                accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+                onChange={(e) => setFile(e.target.files?.[0] ?? null)}
+                className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm"
+              />
+              <p className="text-xs text-gray-500 mt-1">支持 pdf/doc/docx/jpg/png，最大 10MB</p>
             </div>
             <div className="flex justify-end gap-3">
               <button
                 type="button"
-                onClick={() => setShowForm(false)}
+                onClick={() => {
+                  setShowForm(false);
+                  setFile(null);
+                }}
                 className="button bg-white text-gray-700 border hover:bg-gray-50"
               >
                 取消
@@ -170,21 +197,29 @@ export default function HomeworkPage() {
                 </div>
 
                 <div className="bg-gray-50 p-4 rounded-lg text-gray-700 text-sm mb-4">
-                  {assignment.content}
+                  {assignment.content || "（仅提交了附件）"}
                 </div>
+
+                {assignment.filePath && (
+                  <div className="mb-4">
+                    <a
+                      href={`/api/assignments/${assignment.id}/file`}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-sm text-primary hover:underline"
+                    >
+                      下载附件
+                    </a>
+                  </div>
+                )}
 
                 {assignment.status === 'reviewed' && (
                   <div className="border-t pt-4">
                     <div className="flex items-center gap-2 mb-2">
                       <span className="font-bold text-sm text-gray-900">教师反馈</span>
-                      {assignment.score && (
-                        <span className="bg-primary text-white text-xs px-2 py-0.5 rounded font-mono">
-                          {assignment.score}分
-                        </span>
-                      )}
                     </div>
                     <p className="text-sm text-gray-600">
-                      {assignment.feedback || "暂无文字反馈"}
+                      暂无文字反馈
                     </p>
                   </div>
                 )}

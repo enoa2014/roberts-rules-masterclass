@@ -34,6 +34,7 @@ npm run smoke:all
 
 1. `npm run smoke:seed`
 2. `node scripts/smoke-api.mjs`
+3. `node scripts/smoke-auth-rate-limit.mjs`
 
 ## 2.2 脚本覆盖的业务链路
 
@@ -43,10 +44,13 @@ npm run smoke:all
 4. student 连接 SSE、举手
 5. teacher 发言计时 start/stop
 6. teacher 发起投票，student 投票，teacher 关闭投票
-7. student 提交作业，teacher 批阅
+7. student 提交作业（multipart + 附件），teacher 批阅
 8. student 提交课堂反馈
 9. student 发帖与评论，teacher 执行治理（hide comment）
 10. teacher 结束课堂
+11. 同一测试 IP 连续 21 次错误登录，第 21 次返回 `429`
+12. admin 查询用户、更新角色、创建并作废邀请码
+13. admin 查询并保存系统设置（注册开关、站点公告）
 
 ## 2.3 可配置环境变量
 
@@ -55,6 +59,8 @@ npm run smoke:all
 | `SMOKE_BASE_URL` | `http://127.0.0.1:3000` | 目标服务地址 |
 | `SMOKE_TEACHER_USERNAME` | `smoke_teacher` | 冒烟教师账号 |
 | `SMOKE_TEACHER_PASSWORD` | `SmokePass123!` | 冒烟教师密码 |
+| `SMOKE_ADMIN_USERNAME` | `smoke_admin` | 冒烟管理员账号 |
+| `SMOKE_ADMIN_PASSWORD` | `SmokePass123!` | 冒烟管理员密码 |
 | `SMOKE_STUDENT_USERNAME` | `smoke_student` | 冒烟学员账号 |
 | `SMOKE_STUDENT_PASSWORD` | `SmokePass123!` | 冒烟学员密码 |
 | `SMOKE_REGISTERED_USERNAME` | `smoke_registered` | 冒烟待升级账号 |
@@ -124,6 +130,7 @@ npm run test:e2e
 2. `403`：显示无权限提示
 3. `422`：显示状态冲突提示（例如课堂已结束）
 4. `500`：显示通用错误并提供重试
+5. `429`：显示“尝试次数过多，请稍后再试”，并短时禁用登录按钮
 
 ---
 
@@ -304,6 +311,11 @@ Multipart 提交：
 }
 ```
 
+## 6.2.1 作业附件下载
+
+1. `GET /api/assignments/{id}/file`
+2. 学员仅可下载自己的附件，教师/管理员可下载任意学员附件
+
 ## 6.3 反馈
 
 - `POST /api/feedbacks`
@@ -337,6 +349,11 @@ Multipart 提交：
   "reason": "与课堂无关"
 }
 ```
+
+管理设置：
+
+1. `GET /api/admin/settings`
+2. `PATCH /api/admin/settings`
 
 规则：
 

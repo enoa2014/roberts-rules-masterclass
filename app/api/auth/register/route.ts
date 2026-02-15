@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 
 import { hashPassword } from "@/lib/password";
+import { getSystemSettings } from "@/lib/system-settings";
 import { createUsernameUser, findUserByUsername } from "@/lib/user-store";
 
 const registerSchema = z.object({
@@ -12,6 +13,19 @@ const registerSchema = z.object({
 
 export async function POST(request: Request) {
   try {
+    const settings = getSystemSettings();
+    if (!settings.registrationEnabled) {
+      return NextResponse.json(
+        {
+          error: {
+            code: "FORBIDDEN",
+            message: "当前暂未开放注册，请联系管理员",
+          },
+        },
+        { status: 403 },
+      );
+    }
+
     const payload = await request.json();
     const parsed = registerSchema.safeParse(payload);
 

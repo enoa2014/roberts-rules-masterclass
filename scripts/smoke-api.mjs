@@ -6,6 +6,10 @@ const users = {
     username: process.env.SMOKE_TEACHER_USERNAME || "smoke_teacher",
     password: process.env.SMOKE_TEACHER_PASSWORD || "SmokePass123!",
   },
+  admin: {
+    username: process.env.SMOKE_ADMIN_USERNAME || "smoke_admin",
+    password: process.env.SMOKE_ADMIN_PASSWORD || "SmokePass123!",
+  },
   student: {
     username: process.env.SMOKE_STUDENT_USERNAME || "smoke_student",
     password: process.env.SMOKE_STUDENT_PASSWORD || "SmokePass123!",
@@ -172,11 +176,14 @@ async function main() {
   console.log("[smoke:api] start", { baseUrl });
 
   const teacherClient = new ApiClient("teacher");
+  const adminClient = new ApiClient("admin");
   const studentClient = new ApiClient("student");
   const registeredClient = new ApiClient("registered");
 
   const teacher = await teacherClient.login(users.teacher.username, users.teacher.password);
   console.log("[smoke:api] teacher login ok", teacher);
+  const admin = await adminClient.login(users.admin.username, users.admin.password);
+  console.log("[smoke:api] admin login ok", admin);
 
   await registeredClient.login(users.registered.username, users.registered.password);
   const inviteResp = await registeredClient.request("/api/invite/verify", {
@@ -308,16 +315,26 @@ async function main() {
 
   const assignment = await studentClient.request("/api/assignments", {
     method: "POST",
-    headers: {
-      "content-type": "application/json",
-    },
-    body: JSON.stringify({
-      lessonId: "rules-1",
-      content: `smoke assignment at ${new Date().toISOString()}`,
-    }),
+    body: (() => {
+      const form = new FormData();
+      form.append("lessonId", "rules-1");
+      form.append("content", `smoke assignment at ${new Date().toISOString()}`);
+      form.append("file", new Blob(["smoke file"], { type: "application/pdf" }), "smoke.pdf");
+      return form;
+    })(),
   });
   const assignmentData = ensureOk(assignment, [201], "提交作业");
   const assignmentId = assignmentData.assignment.id;
+  if (!assignmentData.assignment.filePath) {
+    throw new Error("提交作业失败: 附件路径为空");
+  }
+
+  const assignmentFile = await studentClient.request(`/api/assignments/${assignmentId}/file`, {
+    method: "GET",
+  });
+  if (assignmentFile.status !== 200) {
+    throw new Error(`下载作业附件失败: status=${assignmentFile.status}`);
+  }
 
   const review = await teacherClient.request(`/api/assignments/${assignmentId}/review`, {
     method: "PATCH",
@@ -406,6 +423,58 @@ async function main() {
     body: JSON.stringify({ status: "ended" }),
   });
   ensureOk(end, [200], "结束课堂");
+
+  const adminUsers = await adminClient.request("/api/admin/users", {
+    method: "GET",
+  });
+  const adminUsersData = ensureOk(adminUsers, [200], "管理员查询用户");
+  if (!Array.isArray(adminUsersData.users) || adminUsersData.users.length === 0) {
+    throw new Error("管理员查询用户失败: users 为空");
+  }
+
+  const updateUserRole = await adminClient.request(`/api/admin/users/${student.id}/role`, {
+    method: "PATCH",
+    headers: {
+      "content-type": "application/json",
+    },
+    body: JSON.stringify({ role: "student" }),
+  });
+  ensureOk(updateUserRole, [200], "管理员更新用户角色");
+
+  const createInvite = await adminClient.request("/api/admin/invites", {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+    },
+    body: JSON.stringify({ targetRole: "teacher", maxUses: 2 }),
+  });
+  const createInviteData = ensureOk(createInvite, [201], "管理员创建邀请码");
+  if (createInviteData.invite.targetRole !== "teacher") {
+    throw new Error("管理员创建邀请码失败: targetRole 不匹配");
+  }
+  const createdInviteId = createInviteData.invite.id;
+
+  const revokeInvite = await adminClient.request(`/api/admin/invites/${createdInviteId}`, {
+    method: "DELETE",
+  });
+  ensureOk(revokeInvite, [200], "管理员作废邀请码");
+
+  const settingsGet = await adminClient.request("/api/admin/settings", {
+    method: "GET",
+  });
+  const settingsData = ensureOk(settingsGet, [200], "管理员查询系统设置");
+
+  const settingsPatch = await adminClient.request("/api/admin/settings", {
+    method: "PATCH",
+    headers: {
+      "content-type": "application/json",
+    },
+    body: JSON.stringify({
+      registrationEnabled: settingsData.settings.registrationEnabled,
+      siteAnnouncement: settingsData.settings.siteAnnouncement,
+    }),
+  });
+  ensureOk(settingsPatch, [200], "管理员更新系统设置");
 
   console.log("[smoke:api] all steps passed");
 }

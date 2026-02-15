@@ -68,6 +68,7 @@
 
 - 鉴权：无
 - 用途：用户名密码登录（由 NextAuth credentials provider 处理）
+- 防刷：同一 IP 在 1 小时窗口内错误登录超过 20 次后，返回 `429 RATE_LIMITED`
 
 ---
 
@@ -91,7 +92,7 @@
 {
   "success": true,
   "newRole": "student",
-  "message": "恭喜！您已获得学员资格"
+  "message": "恭喜！您的资格已升级"
 }
 ```
 
@@ -223,6 +224,12 @@
 - 鉴权：`teacher/admin`
 - 请求：`{"status":"reviewed"}`
 
+### GET `/api/assignments/{id}/file`
+
+- 鉴权：`student+`
+- 作用：下载作业附件
+- 权限：学员仅可下载自己的附件；`teacher/admin` 可下载任意学员附件
+
 ### POST `/api/feedbacks`
 
 - 鉴权：`student+`
@@ -286,6 +293,83 @@
 
 ## 7. 健康检查
 
+### GET `/api/admin/users`
+
+- 鉴权：`admin`
+- 用途：查询用户列表（可选按角色筛选）
+
+查询参数：
+
+- `role`（可选）：`registered|student|teacher|admin|blocked`
+
+### PATCH `/api/admin/users/{id}/role`
+
+- 鉴权：`admin`
+- 用途：更新用户角色
+
+请求：
+
+```json
+{ "role": "teacher" }
+```
+
+### GET `/api/admin/invites`
+
+- 鉴权：`admin`
+- 用途：查询邀请码列表
+
+查询参数：
+
+- `status`（可选）：`active|expired|exhausted`
+
+### POST `/api/admin/invites`
+
+- 鉴权：`admin`
+- 用途：创建邀请码
+
+请求：
+
+```json
+{
+  "targetRole": "student",
+  "maxUses": 30,
+  "expiresAt": "2026-12-31T23:59:59.000Z"
+}
+```
+
+### DELETE `/api/admin/invites/{id}`
+
+- 鉴权：`admin`
+- 用途：作废邀请码（立即过期）
+
+### GET `/api/admin/settings`
+
+- 鉴权：`admin`
+- 用途：查询系统设置（注册开关、公告）
+
+### PATCH `/api/admin/settings`
+
+- 鉴权：`admin`
+- 用途：更新系统设置
+
+请求：
+
+```json
+{
+  "registrationEnabled": true,
+  "siteAnnouncement": "本周课堂安排已更新"
+}
+```
+
+### GET `/api/settings`
+
+- 鉴权：无
+- 用途：前台读取公开系统设置（例如注册页公告与注册开关）
+
+---
+
+## 8. 健康检查
+
 ### GET `/api/health`
 
 响应 `200`：
@@ -300,7 +384,7 @@
 
 ---
 
-## 8. MVP+1（短信相关 API）
+## 9. MVP+1（短信相关 API）
 
 - `POST /api/sms/send`
 - `POST /api/sms/verify`

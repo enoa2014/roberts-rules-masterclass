@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -21,11 +21,36 @@ export default function RegisterPage() {
   const [nickname, setNickname] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [registrationEnabled, setRegistrationEnabled] = useState(true);
+  const [announcement, setAnnouncement] = useState("");
+
+  useEffect(() => {
+    void fetchSettings();
+  }, []);
+
+  async function fetchSettings() {
+    try {
+      const res = await fetch("/api/settings");
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setRegistrationEnabled(Boolean(data.settings?.registrationEnabled ?? true));
+        setAnnouncement(String(data.settings?.siteAnnouncement ?? ""));
+      }
+    } catch (fetchError) {
+      console.error("fetch settings error", fetchError);
+    }
+  }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    setLoading(true);
     setError("");
+
+    if (!registrationEnabled) {
+      setError("当前暂未开放注册，请联系管理员");
+      return;
+    }
+
+    setLoading(true);
 
     try {
       // 1. Register
@@ -53,8 +78,8 @@ export default function RegisterPage() {
       } else {
         router.push("/invite");
       }
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "Registration failed");
     } finally {
       setLoading(false);
     }
@@ -77,6 +102,12 @@ export default function RegisterPage() {
             <div className="flex">
               <div className="text-sm text-red-700">{error}</div>
             </div>
+          </div>
+        )}
+
+        {announcement && (
+          <div className="rounded-md bg-blue-50 p-4 text-sm text-blue-700">
+            {announcement}
           </div>
         )}
 
@@ -139,12 +170,12 @@ export default function RegisterPage() {
 
           <button
             type="submit"
-            disabled={loading}
+            disabled={loading || !registrationEnabled}
             className="button w-full"
           >
             {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
             <UserPlus className="mr-2 h-4 w-4" />
-            Register & Login
+            {registrationEnabled ? "Register & Login" : "Registration Closed"}
           </button>
         </form>
 

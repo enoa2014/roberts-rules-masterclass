@@ -68,7 +68,7 @@ export async function POST(request: Request) {
   return NextResponse.json({
     success: true,
     newRole: result.role,
-    message: "恭喜！您已获得学员资格",
+    message: "恭喜！您的资格已升级",
   });
 }
 
