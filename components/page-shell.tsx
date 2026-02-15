@@ -8,12 +8,23 @@ type Props = {
 
 export function PageShell({ title, description, children }: Props) {
   return (
-    <div className="container">
-      <section className="card">
-        <h1 className="title">{title}</h1>
-        <p className="subtitle">{description}</p>
+    <>
+      {/* Page Hero */}
+      <section className="page-hero">
+        <div className="container max-w-6xl">
+          <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900 animate-fadeInUp">
+            {title}
+          </h1>
+          <p className="mt-3 text-lg text-gray-500 max-w-2xl animate-fadeInUp delay-100">
+            {description}
+          </p>
+        </div>
+      </section>
+
+      {/* Page Content */}
+      <section className="container max-w-6xl py-8 md:py-12 animate-fadeIn delay-200">
         {children}
       </section>
-    </div>
+    </>
   );
 }

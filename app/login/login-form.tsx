@@ -4,7 +4,7 @@ import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { Loader2, Smartphone, User, Lock, ArrowRight } from "lucide-react";
+import { Loader2, User, Lock, ArrowRight, GraduationCap } from "lucide-react";
 
 type Props = {
   callbackUrl: string;
@@ -12,17 +12,10 @@ type Props = {
 
 export function LoginForm({ callbackUrl }: Props) {
   const router = useRouter();
-  const [tab, setTab] = useState<"username" | "phone">("username");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-
-  // Username Form State
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
-  // Phone Form State (MVP: Placeholder for now, can implement mock later)
-  const [phone, setPhone] = useState("");
-  const [code, setCode] = useState("");
 
   async function handleUsernameLogin(e: React.FormEvent) {
     e.preventDefault();
@@ -38,129 +31,113 @@ export function LoginForm({ callbackUrl }: Props) {
       });
 
       if (res?.error) {
-        setError("Invalid credentials");
+        setError("用户名或密码错误");
       } else {
         router.push(callbackUrl);
       }
-    } catch (err) {
-      setError("Login failed");
+    } catch {
+      setError("登录失败，请稍后重试");
     } finally {
       setLoading(false);
     }
   }
 
-  // MVP: Phone login not fully implemented in backend yet, just UI demo
-  async function handlePhoneLogin(e: React.FormEvent) {
-    e.preventDefault();
-    setError("Mobile login is coming in MVP+1");
-  }
-
   return (
-    <div className="flex min-h-[80vh] items-center justify-center">
-      <div className="w-full max-w-md space-y-8 bg-white p-8 shadow-lg rounded-xl">
-        <div className="text-center">
-          <h2 className="mt-6 text-3xl font-bold tracking-tight text-gray-900">
-            Welcome back
-          </h2>
-          <p className="mt-2 text-sm text-gray-600">
-            Sign in to your account
-          </p>
-        </div>
-
-        {/* Tabs */}
-        <div className="flex border-b border-gray-200">
-          <button
-            onClick={() => setTab("username")}
-            className={`flex-1 pb-4 text-sm font-medium ${tab === "username"
-                ? "border-b-2 border-primary text-primary"
-                : "text-gray-500 hover:text-gray-700"
-              }`}
-          >
-            <span className="flex items-center justify-center gap-2">
-              <User className="h-4 w-4" /> Account
-            </span>
-          </button>
-          {/* Phone Login Hidden for MVP
-          <button
-            onClick={() => setTab("phone")}
-            className={`flex-1 pb-4 text-sm font-medium ${
-              tab === "phone"
-                ? "border-b-2 border-primary text-primary"
-                : "text-gray-500 hover:text-gray-700"
-            }`}
-          >
-            <span className="flex items-center justify-center gap-2">
-              <Smartphone className="h-4 w-4" /> Mobile
-            </span>
-          </button>
-          */}
-        </div>
-
-        {error && (
-          <div className="rounded-md bg-red-50 p-4">
-            <div className="flex">
-              <div className="text-sm text-red-700">{error}</div>
+    <div className="flex min-h-[calc(100vh-5rem)] items-center justify-center p-4">
+      <div className="w-full max-w-5xl grid md:grid-cols-2 gap-0 overflow-hidden rounded-3xl shadow-soft border border-gray-100">
+        {/* Left - Brand Panel */}
+        <div className="hidden md:flex flex-col justify-center gradient-primary p-12 text-white relative overflow-hidden">
+          <div className="absolute -top-20 -right-20 w-64 h-64 bg-white/10 rounded-full blur-3xl" />
+          <div className="absolute -bottom-32 -left-20 w-80 h-80 bg-white/5 rounded-full blur-3xl" />
+          <div className="relative z-10">
+            <div className="h-14 w-14 bg-white/20 rounded-2xl flex items-center justify-center mb-8 backdrop-blur-sm">
+              <GraduationCap className="h-8 w-8 text-white" />
             </div>
+            <h2 className="text-3xl font-extrabold mb-4 leading-tight">
+              掌握公共议事规则<br />提升公民核心素养
+            </h2>
+            <p className="text-blue-100 leading-relaxed">
+              从理论学习到模拟议事，全方位掌握罗伯特议事规则。加入我们，在实践中学会表达、倾听与决策。
+            </p>
           </div>
-        )}
+        </div>
 
-        {tab === "username" ? (
-          <form className="mt-8 space-y-6" onSubmit={handleUsernameLogin}>
-            <div className="space-y-4">
-              <div>
-                <label className="sr-only">Username</label>
-                <div className="relative">
-                  <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                    <User className="h-5 w-5 text-gray-400" />
-                  </div>
-                  <input
-                    type="text"
-                    required
-                    className="input pl-10"
-                    placeholder="Username"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                  />
-                </div>
+        {/* Right - Form */}
+        <div className="bg-white p-8 md:p-12 flex flex-col justify-center">
+          <div className="mb-8">
+            <div className="md:hidden flex items-center gap-2 mb-6">
+              <div className="h-10 w-10 gradient-primary rounded-xl flex items-center justify-center">
+                <GraduationCap className="h-5 w-5 text-white" />
               </div>
-              <div>
-                <label className="sr-only">Password</label>
-                <div className="relative">
-                  <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                    <Lock className="h-5 w-5 text-gray-400" />
-                  </div>
-                  <input
-                    type="password"
-                    required
-                    className="input pl-10"
-                    placeholder="Password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
+              <span className="font-extrabold text-xl text-primary">议起读</span>
+            </div>
+            <h2 className="text-2xl md:text-3xl font-extrabold tracking-tight text-gray-900">
+              欢迎回来
+            </h2>
+            <p className="mt-2 text-gray-500">
+              登录你的账号，继续学习之旅
+            </p>
+          </div>
+
+          {error && (
+            <div className="mb-6 rounded-xl bg-red-50 border border-red-100 p-4 animate-fadeIn">
+              <p className="text-sm font-medium text-red-700">{error}</p>
+            </div>
+          )}
+
+          <form className="space-y-5" onSubmit={handleUsernameLogin}>
+            <div>
+              <label className="label mb-1.5 block">用户名</label>
+              <div className="relative">
+                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4">
+                  <User className="h-4.5 w-4.5 text-gray-400" />
                 </div>
+                <input
+                  type="text"
+                  required
+                  data-testid="login-username"
+                  className="input pl-11"
+                  placeholder="请输入用户名"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                />
+              </div>
+            </div>
+            <div>
+              <label className="label mb-1.5 block">密码</label>
+              <div className="relative">
+                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4">
+                  <Lock className="h-4.5 w-4.5 text-gray-400" />
+                </div>
+                <input
+                  type="password"
+                  required
+                  data-testid="login-password"
+                  className="input pl-11"
+                  placeholder="请输入密码"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
               </div>
             </div>
 
             <button
               type="submit"
+              data-testid="login-submit"
               disabled={loading}
-              className="button w-full"
+              className="button w-full h-12 text-base"
             >
               {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              Sign in
+              登录
             </button>
           </form>
-        ) : (
-          <div className="mt-8 text-center text-gray-500">
-            Phone login is currently disabled.
-          </div>
-        )}
 
-        <div className="text-center text-sm">
-          <span className="text-gray-500">Don't have an account? </span>
-          <Link href="/register" className="font-medium text-primary hover:text-primary/90">
-            Register now <ArrowRight className="inline h-3 w-3" />
-          </Link>
+          <div className="mt-8 text-center text-sm">
+            <span className="text-gray-500">还没有账号？</span>{" "}
+            <Link href="/register" className="font-semibold text-primary hover:text-primary/80 transition-colors cursor-pointer">
+              立即注册 <ArrowRight className="inline h-3.5 w-3.5" />
+            </Link>
+          </div>
         </div>
       </div>
     </div>

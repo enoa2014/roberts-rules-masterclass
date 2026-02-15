@@ -13,9 +13,9 @@ test.describe('Auth and Session Creation Flow', () => {
     test('Teacher can login and create a session', async ({ page }) => {
         // Teacher Login
         await page.goto('/login');
-        await page.getByPlaceholder('Username').fill('smoke_teacher');
-        await page.getByPlaceholder('Password').fill('SmokePass123!');
-        await page.getByRole('button', { name: 'Sign in', exact: true }).click();
+        await page.getByTestId('login-username').fill('smoke_teacher');
+        await page.getByTestId('login-password').fill('SmokePass123!');
+        await page.getByTestId('login-submit').click();
         await expect(page).toHaveURL('/');
 
         // Create Session
@@ -34,9 +34,9 @@ test.describe('Auth and Session Creation Flow', () => {
 
     test('Student can login', async ({ page }) => {
         await page.goto('/login');
-        await page.getByPlaceholder('Username').fill('smoke_student');
-        await page.getByPlaceholder('Password').fill('SmokePass123!');
-        await page.getByRole('button', { name: 'Sign in', exact: true }).click();
+        await page.getByTestId('login-username').fill('smoke_student');
+        await page.getByTestId('login-password').fill('SmokePass123!');
+        await page.getByTestId('login-submit').click();
         await expect(page).toHaveURL('/');
     });
 });

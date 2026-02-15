@@ -22,6 +22,7 @@
     "smoke:all": "npm run smoke:seed && npm run smoke:api && npm run smoke:rate-limit"
   },
   "dependencies": {
+    "@tailwindcss/postcss": "^4.1.18",
     "bcryptjs": "^3.0.3",
     "better-sqlite3": "^12.6.2",
     "drizzle-orm": "^0.45.1",

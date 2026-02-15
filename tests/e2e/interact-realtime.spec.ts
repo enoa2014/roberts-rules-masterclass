@@ -20,9 +20,9 @@ test.describe('Realtime Interaction Flow', () => {
 
         // Teacher Login & Create Session
         await teacherPage.goto('/login');
-        await teacherPage.getByPlaceholder('Username').fill('smoke_teacher');
-        await teacherPage.getByPlaceholder('Password').fill('SmokePass123!');
-        await teacherPage.getByRole('button', { name: 'Sign in', exact: true }).click();
+        await teacherPage.getByTestId('login-username').fill('smoke_teacher');
+        await teacherPage.getByTestId('login-password').fill('SmokePass123!');
+        await teacherPage.getByTestId('login-submit').click();
         await expect(teacherPage).toHaveURL('/');
 
         await teacherPage.goto('/interact');
@@ -46,9 +46,9 @@ test.describe('Realtime Interaction Flow', () => {
 
         // Student Login
         await studentPage.goto('/login');
-        await studentPage.getByPlaceholder('Username').fill('smoke_student');
-        await studentPage.getByPlaceholder('Password').fill('SmokePass123!');
-        await studentPage.getByRole('button', { name: 'Sign in', exact: true }).click();
+        await studentPage.getByTestId('login-username').fill('smoke_student');
+        await studentPage.getByTestId('login-password').fill('SmokePass123!');
+        await studentPage.getByTestId('login-submit').click();
         await expect(studentPage).toHaveURL('/');
 
         // Student Joins Session

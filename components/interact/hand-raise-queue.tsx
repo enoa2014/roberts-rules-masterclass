@@ -13,7 +13,10 @@ type HandRaise = {
 type Props = {
     queue: HandRaise[];
     isTeacher: boolean;
-    onAction: (action: string, targetId?: number) => void;
+    onAction: (
+        action: "pick" | "stop_speech" | "raise" | "cancel",
+        targetId?: number,
+    ) => void | Promise<void>;
     classSessionId: number;
 };
 

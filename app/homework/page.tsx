@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { PageShell } from "@/components/page-shell";
-import { Loader2, Plus, FileText, CheckCircle, Clock } from "lucide-react";
+import { Loader2, Plus, FileText, CheckCircle, Clock, Upload, X } from "lucide-react";
 
 type Assignment = {
   id: number;
@@ -13,13 +13,18 @@ type Assignment = {
   createdAt: string;
 };
 
+const lessonMap: Record<string, string> = {
+  "rules-1": "第一讲：议事规则基础",
+  "rules-2": "第二讲：动议体系详解",
+  "rules-3": "第三讲：主持与辩论",
+};
+
 export default function HomeworkPage() {
   const [assignments, setAssignments] = useState<Assignment[]>([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [submitting, setSubmitting] = useState(false);
 
-  // Form State
   const [lessonId, setLessonId] = useState("rules-1");
   const [content, setContent] = useState("");
   const [file, setFile] = useState<File | null>(null);
@@ -74,7 +79,7 @@ export default function HomeworkPage() {
         setShowForm(false);
         setContent("");
         setFile(null);
-        fetchAssignments(); // Refresh list
+        fetchAssignments();
       } else {
         const data = await res.json().catch(() => null);
         alert(data?.error?.message ?? "提交失败，请重试");
@@ -88,8 +93,8 @@ export default function HomeworkPage() {
 
   return (
     <PageShell title="作业与复盘" description="提交课程作业，查看教师反馈">
-      <div className="mt-6 flex justify-between items-center">
-        <h3 className="font-bold text-lg">我的作业</h3>
+      <div className="flex justify-between items-center mb-6">
+        <h3 className="font-bold text-lg text-gray-900">我的作业</h3>
         <button
           onClick={() => setShowForm(true)}
           className="button"
@@ -98,97 +103,111 @@ export default function HomeworkPage() {
         </button>
       </div>
 
+      {/* New Assignment Form */}
       {showForm && (
-        <div className="mt-6 p-6 bg-white rounded-xl border shadow-sm">
-          <h4 className="font-bold mb-4">新作业提交</h4>
-          <form onSubmit={handleSubmit} className="space-y-4">
+        <div className="mb-8 p-7 bg-white rounded-2xl border border-gray-100 shadow-soft animate-fadeInUp">
+          <div className="flex justify-between items-center mb-6">
+            <h4 className="font-bold text-lg text-gray-900">新作业提交</h4>
+            <button
+              onClick={() => { setShowForm(false); setFile(null); }}
+              className="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors cursor-pointer"
+            >
+              <X className="h-5 w-5" />
+            </button>
+          </div>
+          <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">课程章节</label>
+              <label className="label mb-1.5 block">课程章节</label>
               <select
                 value={lessonId}
                 onChange={(e) => setLessonId(e.target.value)}
-                className="w-full p-2 border rounded-lg bg-gray-50"
+                className="input cursor-pointer"
               >
-                <option value="rules-1">第一讲：议事规则基础</option>
-                <option value="rules-2">第二讲：动议体系详解</option>
-                <option value="rules-3">第三讲：主持与辩论</option>
+                {Object.entries(lessonMap).map(([id, label]) => (
+                  <option key={id} value={id}>{label}</option>
+                ))}
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">作业内容</label>
+              <label className="label mb-1.5 block">作业内容</label>
               <textarea
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
-                className="w-full p-3 border rounded-lg h-32"
+                className="input h-32 py-3 resize-none"
                 placeholder="在此输入作业内容或复盘心得..."
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">附件（可选）</label>
-              <input
-                type="file"
-                accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
-                onChange={(e) => setFile(e.target.files?.[0] ?? null)}
-                className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm"
-              />
-              <p className="text-xs text-gray-500 mt-1">支持 pdf/doc/docx/jpg/png，最大 10MB</p>
+              <label className="label mb-1.5 block">附件 <span className="text-gray-400 font-normal">(可选)</span></label>
+              <div className="flex items-center gap-3">
+                <label className="button-secondary h-10 px-4 text-sm gap-2 cursor-pointer">
+                  <Upload className="h-4 w-4" />
+                  选择文件
+                  <input
+                    type="file"
+                    accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+                    onChange={(e) => setFile(e.target.files?.[0] ?? null)}
+                    className="hidden"
+                  />
+                </label>
+                {file && <span className="text-sm text-gray-600">{file.name}</span>}
+              </div>
+              <p className="text-xs text-gray-400 mt-1.5">支持 pdf / doc / docx / jpg / png，最大 10MB</p>
             </div>
-            <div className="flex justify-end gap-3">
+            <div className="flex justify-end gap-3 pt-2">
               <button
                 type="button"
-                onClick={() => {
-                  setShowForm(false);
-                  setFile(null);
-                }}
-                className="button bg-white text-gray-700 border hover:bg-gray-50"
+                onClick={() => { setShowForm(false); setFile(null); }}
+                className="button-secondary"
               >
                 取消
               </button>
-              <button
-                type="submit"
-                disabled={submitting}
-                className="button"
-              >
+              <button type="submit" disabled={submitting} className="button">
                 {submitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                提交
+                提交作业
               </button>
             </div>
           </form>
         </div>
       )}
 
+      {/* Assignment List */}
       {loading ? (
-        <div className="flex justify-center p-12">
+        <div className="flex justify-center p-16">
           <Loader2 className="h-8 w-8 animate-spin text-primary" />
         </div>
       ) : (
-        <div className="grid gap-4 mt-6">
+        <div className="grid gap-4">
           {assignments.length === 0 ? (
-            <div className="text-center py-12 text-gray-500 bg-white rounded-xl border border-dashed">
-              暂无作业记录
+            <div className="text-center py-16 bg-white rounded-2xl border border-dashed border-gray-200">
+              <FileText className="h-12 w-12 text-gray-200 mx-auto mb-4" />
+              <p className="text-gray-400 font-medium">暂无作业记录</p>
+              <p className="text-gray-300 text-sm mt-1">点击上方“提交作业”开始</p>
             </div>
           ) : (
             assignments.map((assignment) => (
-              <div key={assignment.id} className="bg-white p-6 rounded-xl border shadow-sm">
+              <div key={assignment.id} className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow duration-200">
                 <div className="flex justify-between items-start mb-4">
                   <div className="flex items-center gap-3">
-                    <div className="h-10 w-10 bg-blue-50 text-primary rounded-lg flex items-center justify-center">
+                    <div className="h-11 w-11 bg-blue-50 text-primary rounded-xl flex items-center justify-center flex-shrink-0">
                       <FileText className="h-5 w-5" />
                     </div>
                     <div>
                       <h4 className="font-bold text-gray-900">
-                        {assignment.lessonId === 'rules-1' ? '第一讲：议事规则基础' :
-                          assignment.lessonId === 'rules-2' ? '第二讲：动议体系详解' :
-                            assignment.lessonId}
+                        {lessonMap[assignment.lessonId] || assignment.lessonId}
                       </h4>
-                      <p className="text-xs text-gray-500">
-                        提交时间: {new Date(assignment.createdAt).toLocaleString()}
+                      <p className="text-xs text-gray-400 mt-0.5">
+                        {new Date(assignment.createdAt).toLocaleString()}
                       </p>
                     </div>
                   </div>
-                  <span className={`px-3 py-1 rounded-full text-xs font-medium flex items-center gap-1 ${assignment.status === 'reviewed' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'
-                    }`}>
-                    {assignment.status === 'reviewed' ? (
+                  <span
+                    className={`badge ${assignment.status === "reviewed"
+                        ? "badge-success"
+                        : "badge-warning"
+                      }`}
+                  >
+                    {assignment.status === "reviewed" ? (
                       <><CheckCircle className="h-3 w-3" /> 已批阅</>
                     ) : (
                       <><Clock className="h-3 w-3" /> 待批阅</>
@@ -196,7 +215,7 @@ export default function HomeworkPage() {
                   </span>
                 </div>
 
-                <div className="bg-gray-50 p-4 rounded-lg text-gray-700 text-sm mb-4">
+                <div className="bg-gray-50 p-4 rounded-xl text-gray-600 text-sm leading-relaxed mb-4">
                   {assignment.content || "（仅提交了附件）"}
                 </div>
 
@@ -206,21 +225,17 @@ export default function HomeworkPage() {
                       href={`/api/assignments/${assignment.id}/file`}
                       target="_blank"
                       rel="noreferrer"
-                      className="text-sm text-primary hover:underline"
+                      className="text-sm text-primary font-medium hover:text-primary/80 transition-colors cursor-pointer"
                     >
-                      下载附件
+                      下载附件 →
                     </a>
                   </div>
                 )}
 
-                {assignment.status === 'reviewed' && (
-                  <div className="border-t pt-4">
-                    <div className="flex items-center gap-2 mb-2">
-                      <span className="font-bold text-sm text-gray-900">教师反馈</span>
-                    </div>
-                    <p className="text-sm text-gray-600">
-                      暂无文字反馈
-                    </p>
+                {assignment.status === "reviewed" && (
+                  <div className="border-t border-gray-50 pt-4">
+                    <span className="font-bold text-sm text-gray-900">教师反馈</span>
+                    <p className="text-sm text-gray-500 mt-1">暂无文字反馈</p>
                   </div>
                 )}
               </div>

@@ -2,26 +2,43 @@
 
 import { useEffect, useState, useRef } from "react";
 import { useSession } from "next-auth/react";
-import { PageShell } from "@/components/page-shell";
 import { HandRaiseQueue } from "@/components/interact/hand-raise-queue";
 import { PollSystem } from "@/components/interact/poll-system";
-import { Mic, Hand, StopCircle, PlayCircle, Loader2, Ban } from "lucide-react";
+import { Mic, Hand, StopCircle, PlayCircle, Loader2 } from "lucide-react";
+
+type Role = "registered" | "student" | "teacher" | "admin" | "blocked";
+
+type QueueItem = {
+    id: number;
+    userId: number;
+    nickname: string;
+    status: "queued" | "speaking" | "dismissed";
+    raisedAt: string;
+};
+
+type PollState = {
+    pollId: number;
+    question: string;
+    options: Array<{ id: number; label: string; count: number }>;
+    status: "open" | "closed";
+    totalVoters: number;
+};
 
 type SessionState = {
     session: {
         id: number;
         title: string;
         status: string;
-        settings?: string;
+        settings?: string | null;
     };
-    queue: any[];
+    queue: QueueItem[];
     activeTimer: {
         userId: number;
         nickname: string;
         durationSec: number;
         startedAt: string;
     } | null;
-    openPoll: any | null;
+    openPoll: PollState | null;
 };
 
 interface SessionViewProps {
@@ -30,13 +47,16 @@ interface SessionViewProps {
 
 export function SessionView({ sessionId }: SessionViewProps) {
     const { data: sessionData } = useSession();
-    const role = (sessionData?.user as any)?.role || "student";
-    const currentUserId = (sessionData?.user as any)?.id;
+    const role = (sessionData?.user?.role as Role | undefined) ?? "student";
+    const currentUserId = Number(sessionData?.user?.id ?? 0);
     const isTeacher = role === "teacher" || role === "admin";
 
     const [state, setState] = useState<SessionState | null>(null);
     const [connected, setConnected] = useState(false);
     const sourceRef = useRef<EventSource | null>(null);
+
+    const pollRole: "student" | "teacher" | "admin" =
+        role === "teacher" || role === "admin" ? role : "student";
 
     // SSE Connection
     useEffect(() => {
@@ -67,7 +87,7 @@ export function SessionView({ sessionId }: SessionViewProps) {
 
             source.addEventListener("user_kicked", (e) => {
                 const data = JSON.parse(e.data);
-                if (data.userId === Number(currentUserId)) {
+                if (data.userId === currentUserId) {
                     alert("您已被踢出课堂");
                     window.location.href = "/";
                 }
@@ -95,7 +115,10 @@ export function SessionView({ sessionId }: SessionViewProps) {
         };
     }, [sessionId, currentUserId]);
 
-    const handleAction = async (action: string, targetId?: number) => {
+    const handleAction = async (
+        action: "pick" | "stop_speech" | "raise" | "cancel",
+        targetId?: number,
+    ) => {
         // Teacher Picks Student -> Start Timer
         if (action === "pick" && targetId) {
             await fetch(`/api/interact/sessions/${sessionId}/timer`, {
@@ -152,9 +175,9 @@ export function SessionView({ sessionId }: SessionViewProps) {
     }
 
     // Determine student status
-    const myHand = state.queue?.find((h: any) => h.userId === Number(currentUserId));
-    const isSpeaking = state.activeTimer?.userId === Number(currentUserId);
-    const isCurrentUserRaised = state.queue?.some((h: any) => h.userId === Number(currentUserId));
+    const myHand = state.queue.find((h) => h.userId === currentUserId);
+    const isSpeaking = state.activeTimer?.userId === currentUserId;
+    const isCurrentUserRaised = state.queue.some((h) => h.userId === currentUserId);
 
     return (
         <div className="flex flex-col h-screen bg-gray-50">
@@ -321,7 +344,7 @@ export function SessionView({ sessionId }: SessionViewProps) {
                         {/* Poll */}
                         <PollSystem
                             poll={state.openPoll}
-                            role={role as any}
+                            role={pollRole}
                             onVote={async (optionId) => {
                                 await fetch(`/api/interact/sessions/${state.session.id}/vote`, {
                                     method: "POST",

@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { PageShell } from "@/components/page-shell";
-import { Loader2, Plus, Play, Square, Users, X } from "lucide-react";
+import { Loader2, Plus, Users, X } from "lucide-react";
 
 type Session = {
   id: number;
@@ -11,6 +11,13 @@ type Session = {
   name: string;
   status: "pending" | "active" | "ended";
   created_at: string;
+};
+
+type SessionApiItem = {
+  id: number;
+  title: string;
+  status: "pending" | "active" | "ended";
+  createdAt: string;
 };
 
 export default function InteractPage() {
@@ -33,12 +40,13 @@ export default function InteractPage() {
       if (res.ok) {
         const data = await res.json();
         if (data.success) {
-          setSessions(data.sessions.map((s: any) => ({
+          const mapped = (data.sessions as SessionApiItem[]).map((s) => ({
             ...s,
             name: s.title,
             code: `CLASS-${String(s.id).padStart(3, '0')}`,
             created_at: new Date(s.createdAt).toLocaleDateString()
-          })));
+          }));
+          setSessions(mapped);
         }
       }
     } catch (error) {

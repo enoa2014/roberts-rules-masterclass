@@ -1,10 +1,11 @@
 import { PageShell } from "@/components/page-shell";
-import { FileDown, FileText, Video } from "lucide-react";
+import { FileDown, FileText, Video, Download } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 
 export default function ResourcesPage() {
   return (
     <PageShell title="资源中心" description="下载课程 PPT、讲义与参考资料。">
-      <div className="space-y-4 mt-8">
+      <div className="space-y-3">
         <ResourceItem
           title="议事规则基础班-第一次课.pdf"
           type="PPT"
@@ -28,24 +29,42 @@ export default function ResourcesPage() {
   );
 }
 
-function ResourceItem({ title, type, size, date }: any) {
-  const Icon = type === 'PPT' ? Video : type === 'Image' ? FileText : FileDown;
+const typeConfig: Record<string, { icon: LucideIcon; bg: string; text: string }> = {
+  PPT: { icon: Video, bg: "bg-orange-50", text: "text-orange-600" },
+  Image: { icon: FileText, bg: "bg-blue-50", text: "text-blue-600" },
+  Doc: { icon: FileDown, bg: "bg-emerald-50", text: "text-emerald-600" },
+};
+
+type ResourceItemProps = {
+  title: string;
+  type: "PPT" | "Image" | "Doc";
+  size: string;
+  date: string;
+};
+
+function ResourceItem({ title, type, size, date }: ResourceItemProps) {
+  const config = typeConfig[type] || typeConfig.Doc;
+  const Icon = config.icon;
 
   return (
-    <div className="flex items-center justify-between p-4 bg-white rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors">
+    <div className="group flex items-center justify-between p-5 bg-white rounded-xl border border-gray-100 shadow-sm hover:shadow-md hover:border-blue-100 transition-all duration-200 cursor-pointer">
       <div className="flex items-center gap-4">
-        <div className="h-10 w-10 bg-blue-50 text-primary rounded-lg flex items-center justify-center">
+        <div className={`h-11 w-11 ${config.bg} ${config.text} rounded-xl flex items-center justify-center flex-shrink-0`}>
           <Icon className="h-5 w-5" />
         </div>
         <div>
-          <h4 className="font-medium text-gray-900">{title}</h4>
-          <div className="flex gap-4 text-xs text-gray-500 mt-1">
+          <h4 className="font-semibold text-gray-900 text-sm group-hover:text-primary transition-colors duration-200">
+            {title}
+          </h4>
+          <div className="flex gap-3 text-xs text-gray-400 mt-1">
+            <span className="badge bg-gray-50 text-gray-500 px-2 py-0.5">{type}</span>
             <span>{size}</span>
             <span>{date}</span>
           </div>
         </div>
       </div>
-      <button className="button bg-white text-gray-700 border border-gray-200 hover:bg-gray-100 h-9 px-4 text-sm shadow-none">
+      <button className="button-secondary h-9 px-4 text-xs gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+        <Download className="h-3.5 w-3.5" />
         下载
       </button>
     </div>

@@ -3,13 +3,12 @@ import "./globals.css";
 
 import { SiteNav } from "@/components/site-nav";
 import { SiteFooter } from "@/components/site-footer";
+import { Providers } from "@/components/providers";
 
 export const metadata: Metadata = {
-  title: "议起读课程学习与互动平台",
-  description: "课程学习、课堂互动、课后复盘一体化平台",
+  title: "议起读 — 课程学习与互动平台",
+  description: "掌握公共议事规则，提升公民核心素养。课程学习、课堂互动、课后复盘一体化平台。",
 };
-
-import { Providers } from "@/components/providers";
 
 export default function RootLayout({
   children,
@@ -18,7 +17,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="zh-CN">
-      <body>
+      <body className="font-sans">
         <Providers>
           <div className="flex min-h-screen flex-col">
             <SiteNav />
