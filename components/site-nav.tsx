@@ -3,7 +3,19 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, BookOpen, GraduationCap, HelpCircle, LogIn, UserPlus, Info } from "lucide-react";
+import { signOut, useSession } from "next-auth/react";
+import {
+  Menu,
+  X,
+  BookOpen,
+  GraduationCap,
+  HelpCircle,
+  LogIn,
+  UserPlus,
+  Info,
+  LogOut,
+  ShieldCheck,
+} from "lucide-react";
 
 const links = [
   { label: "课程总览", href: "/course", icon: BookOpen },
@@ -14,6 +26,20 @@ const links = [
 export function SiteNav() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
+  const { data: session } = useSession();
+  const role = session?.user?.role;
+  const isSignedIn = Boolean(session?.user?.id);
+  const isTeacherOrAdmin = role === "teacher" || role === "admin";
+  const roleLabel =
+    role === "admin"
+      ? "管理员"
+      : role === "teacher"
+        ? "教师"
+        : role === "student"
+          ? "学员"
+          : role === "registered"
+            ? "已注册"
+            : "";
 
   const isActive = (path: string) => pathname === path;
 
@@ -40,12 +66,37 @@ export function SiteNav() {
         </div>
 
         <div className="hidden md:flex items-center gap-4">
-          <Link href="/login" className="text-sm font-medium text-muted-foreground hover:text-primary">
-            登录
-          </Link>
-          <Link href="/register" className="button h-9 px-4">
-            注册
-          </Link>
+          {isSignedIn ? (
+            <>
+              {roleLabel ? (
+                <span className="inline-flex items-center gap-1 rounded-full bg-blue-50 px-2.5 py-1 text-xs font-medium text-blue-700">
+                  <ShieldCheck className="h-3.5 w-3.5" />
+                  {roleLabel}
+                </span>
+              ) : null}
+              {isTeacherOrAdmin ? (
+                <Link href="/admin" className="text-sm font-medium text-muted-foreground hover:text-primary">
+                  管理后台
+                </Link>
+              ) : null}
+              <button
+                type="button"
+                className="text-sm font-medium text-muted-foreground hover:text-primary"
+                onClick={() => signOut({ callbackUrl: "/login" })}
+              >
+                退出
+              </button>
+            </>
+          ) : (
+            <>
+              <Link href="/login" className="text-sm font-medium text-muted-foreground hover:text-primary">
+                登录
+              </Link>
+              <Link href="/register" className="button h-9 px-4">
+                注册
+              </Link>
+            </>
+          )}
         </div>
 
         {/* Mobile Menu Button */}
@@ -74,20 +125,51 @@ export function SiteNav() {
               </Link>
             ))}
             <div className="border-t pt-4 grid gap-2">
-              <Link
-                href="/login"
-                className="flex items-center gap-2 text-sm font-medium p-2 rounded-md text-muted-foreground hover:bg-gray-50"
-                onClick={() => setIsOpen(false)}
-              >
-                <LogIn className="h-4 w-4" /> 登录
-              </Link>
-              <Link
-                href="/register"
-                className="flex items-center gap-2 text-sm font-medium p-2 rounded-md bg-primary/10 text-primary hover:bg-primary/20"
-                onClick={() => setIsOpen(false)}
-              >
-                <UserPlus className="h-4 w-4" /> 注册
-              </Link>
+              {isSignedIn ? (
+                <>
+                  {roleLabel ? (
+                    <div className="flex items-center gap-2 text-sm font-medium p-2 rounded-md bg-blue-50 text-blue-700">
+                      <ShieldCheck className="h-4 w-4" /> 当前身份：{roleLabel}
+                    </div>
+                  ) : null}
+                  {isTeacherOrAdmin ? (
+                    <Link
+                      href="/admin"
+                      className="flex items-center gap-2 text-sm font-medium p-2 rounded-md text-muted-foreground hover:bg-gray-50"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      <ShieldCheck className="h-4 w-4" /> 管理后台
+                    </Link>
+                  ) : null}
+                  <button
+                    type="button"
+                    className="flex items-center gap-2 text-sm font-medium p-2 rounded-md text-muted-foreground hover:bg-gray-50"
+                    onClick={() => {
+                      setIsOpen(false);
+                      void signOut({ callbackUrl: "/login" });
+                    }}
+                  >
+                    <LogOut className="h-4 w-4" /> 退出
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link
+                    href="/login"
+                    className="flex items-center gap-2 text-sm font-medium p-2 rounded-md text-muted-foreground hover:bg-gray-50"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    <LogIn className="h-4 w-4" /> 登录
+                  </Link>
+                  <Link
+                    href="/register"
+                    className="flex items-center gap-2 text-sm font-medium p-2 rounded-md bg-primary/10 text-primary hover:bg-primary/20"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    <UserPlus className="h-4 w-4" /> 注册
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         </div>

@@ -47,6 +47,7 @@ tttt/
 - 需求基线：`需求与现有资源清单.md`
 - 详细设计与任务拆解：`docs/10-详细设计与任务拆解.md`
 - Gemini 前端交接包：`docs/11-Gemini3Pro前端交接包.md`
+- Opus 4.6 前端交接 SOP：`docs/15-Opus46前端交接SOP.md`
 - 联调与冒烟手册：`docs/13-前后端联调与API冒烟手册.md`
 - 中文使用手册：`docs/14-平台使用手册.md`
 
@@ -58,6 +59,7 @@ tttt/
 4. `docs/10-详细设计与任务拆解.md`
 5. `docs/11-Gemini3Pro前端交接包.md`
 6. `docs/14-平台使用手册.md`
+7. `docs/15-Opus46前端交接SOP.md`
 
 ## 角色分工
 
