@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>阅读花园 - 模块化壳</title>
+  <meta name="description" content="阅读花园模块化页面壳">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@400;600&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+  <header class="header">
+    <div class="header-left">
+      <a href="../index.html" class="back-btn" title="返回书柜">📚</a>
+      <span class="logo" id="runtimeLogo">📘</span>
+      <h1 class="site-title" id="runtimeTitle">模块化书页</h1>
+    </div>
+    <div class="header-right">
+      <button class="btn-icon" id="themeToggle" aria-label="切换主题">
+        <span class="icon-sun">☀️</span>
+        <span class="icon-moon">🌙</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="main-content" id="runtimeMain">
+    <section class="view-panel active">
+      <div class="loading">初始化中...</div>
+    </section>
+  </main>
+
+  <nav class="tab-bar" id="runtimeTabBar"></nav>
+</body>
+
+</html>
+

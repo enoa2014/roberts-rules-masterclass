@@ -13,49 +13,12 @@ export type UserRecord = {
   role: UserRole;
 };
 
-const userSelect = {
-  id: users.id,
-  username: users.username,
-  phone: users.phone,
-  password: users.password,
-  nickname: users.nickname,
-  role: users.role,
-} as const;
-
 export function findUserByUsername(username: string) {
-  const row = db
-    .select(userSelect)
-    .from(users)
-    .where(eq(users.username, username))
-    .limit(1)
-    .get();
-
-  if (!row) {
-    return undefined;
-  }
-
-  return {
-    ...row,
-    role: row.role as UserRole,
-  };
+  return db.select().from(users).where(eq(users.username, username)).get();
 }
 
 export function findUserById(userId: number) {
-  const row = db
-    .select(userSelect)
-    .from(users)
-    .where(eq(users.id, userId))
-    .limit(1)
-    .get();
-
-  if (!row) {
-    return undefined;
-  }
-
-  return {
-    ...row,
-    role: row.role as UserRole,
-  };
+  return db.select().from(users).where(eq(users.id, userId)).get();
 }
 
 export function createUsernameUser(input: {

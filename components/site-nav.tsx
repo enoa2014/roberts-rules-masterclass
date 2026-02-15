@@ -1,26 +1,97 @@
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { Menu, X, BookOpen, GraduationCap, HelpCircle, LogIn, UserPlus, Info } from "lucide-react";
 
 const links = [
-  ["课程总览", "/course"],
-  ["关于与报名", "/about"],
-  ["FAQ", "/faq"],
-  ["登录", "/login"],
-  ["注册", "/register"],
+  { label: "课程总览", href: "/course", icon: BookOpen },
+  { label: "关于与报名", href: "/about", icon: Info },
+  { label: "FAQ", href: "/faq", icon: HelpCircle },
 ];
 
 export function SiteNav() {
+  const pathname = usePathname();
+  const [isOpen, setIsOpen] = useState(false);
+
+  const isActive = (path: string) => pathname === path;
+
   return (
-    <header className="nav">
-      <div className="nav-inner">
-        <Link className="brand" href="/">
-          议起读平台
+    <nav className="sticky top-0 z-50 w-full border-b bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+      <div className="container flex h-16 items-center justify-between">
+        <Link className="flex items-center gap-2 font-bold text-xl text-primary" href="/">
+          <GraduationCap className="h-6 w-6" />
+          <span>议起读</span>
         </Link>
-        {links.map(([label, href]) => (
-          <Link className="link" key={href} href={href}>
-            {label}
+
+        {/* Desktop Menu */}
+        <div className="hidden md:flex md:gap-6">
+          {links.map(({ label, href }) => (
+            <Link
+              key={href}
+              href={href}
+              className={`text-sm font-medium transition-colors hover:text-primary ${isActive(href) ? "text-primary" : "text-muted-foreground"
+                }`}
+            >
+              {label}
+            </Link>
+          ))}
+        </div>
+
+        <div className="hidden md:flex items-center gap-4">
+          <Link href="/login" className="text-sm font-medium text-muted-foreground hover:text-primary">
+            登录
           </Link>
-        ))}
+          <Link href="/register" className="button h-9 px-4">
+            注册
+          </Link>
+        </div>
+
+        {/* Mobile Menu Button */}
+        <button
+          className="md:hidden p-2 text-muted-foreground hover:text-primary"
+          onClick={() => setIsOpen(!isOpen)}
+        >
+          {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+        </button>
       </div>
-    </header>
+
+      {/* Mobile Menu */}
+      {isOpen && (
+        <div className="md:hidden border-t bg-white">
+          <div className="container py-4 grid gap-4">
+            {links.map(({ label, href, icon: Icon }) => (
+              <Link
+                key={href}
+                href={href}
+                className={`flex items-center gap-2 text-sm font-medium p-2 rounded-md ${isActive(href) ? "bg-blue-50 text-primary" : "text-muted-foreground hover:bg-gray-50"
+                  }`}
+                onClick={() => setIsOpen(false)}
+              >
+                <Icon className="h-4 w-4" />
+                {label}
+              </Link>
+            ))}
+            <div className="border-t pt-4 grid gap-2">
+              <Link
+                href="/login"
+                className="flex items-center gap-2 text-sm font-medium p-2 rounded-md text-muted-foreground hover:bg-gray-50"
+                onClick={() => setIsOpen(false)}
+              >
+                <LogIn className="h-4 w-4" /> 登录
+              </Link>
+              <Link
+                href="/register"
+                className="flex items-center gap-2 text-sm font-medium p-2 rounded-md bg-primary/10 text-primary hover:bg-primary/20"
+                onClick={() => setIsOpen(false)}
+              >
+                <UserPlus className="h-4 w-4" /> 注册
+              </Link>
+            </div>
+          </div>
+        </div>
+      )}
+    </nav>
   );
 }

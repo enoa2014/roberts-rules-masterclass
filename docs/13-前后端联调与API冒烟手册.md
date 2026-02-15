@@ -61,6 +61,40 @@ npm run smoke:all
 | `SMOKE_REGISTERED_PASSWORD` | `SmokePass123!` | 冒烟待升级密码 |
 | `SMOKE_INVITE_CODE` | `SMOKE2026` | 冒烟邀请码 |
 
+## 2.4 Playwright E2E（页面级联调）
+
+> API 冒烟通过只说明接口主流程可用，不代表页面交互一定正确。E2E 负责补齐页面级验证。
+
+1. 先构建：
+
+```bash
+npm run build
+```
+
+2. 执行稳定用例（认证 + 建课）：
+
+```bash
+npm run test:e2e:auth
+```
+
+3. 执行实时互动用例（建课 -> 开始课堂 -> 举手 -> 点名 -> 停止）：
+
+```bash
+npm run test:e2e:realtime
+```
+
+4. 全量执行：
+
+```bash
+npm run test:e2e
+```
+
+说明：
+
+1. `auth-create.spec.ts` 是稳定回归用例，适合每次提交必跑。
+2. `interact-realtime.spec.ts` 涉及 SSE 实时链路，已加入回退逻辑（短超时失败后 reload 再校验），建议在 CI 保留重试。
+3. 测试前会自动执行 `smoke:seed` 保证账户与邀请码存在。
+
 ---
 
 ## 3. 前端联调关键信息
@@ -319,3 +353,5 @@ Multipart 提交：
 3. SSE 断线重连后能够恢复状态。
 4. 作业、反馈、讨论、治理均可闭环。
 5. 错误态（401/403/422/500）均有 UI 提示。
+6. `npm run test:e2e:auth` 持续通过。
+7. `npm run test:e2e:realtime` 本地可通过，CI 允许重试。

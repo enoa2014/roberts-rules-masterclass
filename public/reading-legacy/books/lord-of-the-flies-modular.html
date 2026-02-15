@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>蝇王 Lord of the Flies - 阅读花园</title>
+    <meta name="description" content="《蝇王》深度阅读与教学 - 文明与野蛮的永恒对话">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bitter:wght@400;700&family=Source+Sans+3:wght@400;600&family=Literata:ital,wght@0,400;1,400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/lotf-theme.css">
+</head>
+
+<body class="lotf-theme lotf-modular-page">
+    <header class="header">
+        <div class="header-left">
+            <a href="../index.html" class="back-btn" title="返回书柜">📚</a>
+            <span class="logo" id="runtimeLogo">🐚</span>
+            <h1 class="site-title" id="runtimeTitle">蝇王</h1>
+        </div>
+        <div class="header-right">
+            <button class="btn-icon" id="themeToggle" aria-label="切换主题">
+                <span class="icon-sun">☀️</span>
+                <span class="icon-moon">🌙</span>
+            </button>
+        </div>
+    </header>
+
+    <main class="main-content" id="runtimeMain">
+        <section class="view-panel active">
+            <div class="loading">正在加载《蝇王》...</div>
+        </section>
+    </main>
+
+    <nav class="tab-bar" id="runtimeTabBar"></nav>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.28.1/cytoscape.min.js"></script>
+    <script type="module">
+        import { BookRuntime } from '../js/core/book-runtime.js';
+
+        const runtime = new BookRuntime({
+            registryUrl: '../data/lord-of-the-flies/registry.json'
+        });
+
+        runtime.start().catch((err) => {
+            console.error(err);
+            const main = document.getElementById('runtimeMain');
+            if (main) {
+                main.innerHTML = '<section class="view-panel active"><div class="loading">页面初始化失败，请查看控制台</div></section>';
+            }
+        });
+    </script>
+</body>
+
+</html>

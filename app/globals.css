@@ -1,12 +1,71 @@
-:root {
-  --bg: #f6f7fb;
-  --surface: #ffffff;
-  --text: #1d2433;
-  --muted: #5b6476;
-  --border: #dce1ec;
-  --primary: #1f5eff;
-  --primary-hover: #194fd9;
-  --danger: #c62828;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Colors from Design System */
+    --primary: #1e40af;
+    --primary-foreground: #ffffff;
+    --secondary: #3b82f6;
+    --secondary-foreground: #ffffff;
+    --accent: #0891b2;
+    --accent-foreground: #ffffff;
+    --background: #f8fafc;
+    --foreground: #0f172a;
+    --muted: #64748b;
+    --muted-foreground: #94a3b8;
+    --card: #ffffff;
+    --card-foreground: #0f172a;
+    --border: #e2e8f0;
+    --input: #e2e8f0;
+    --ring: #1e40af;
+    --radius: 0.5rem;
+
+    /* Legacy/Manual Variables Compatibility */
+    --surface: #ffffff;
+    --primary-hover: #1e3a8a;
+    /* Blue-900 */
+    --danger: #ef4444;
+    /* Red-500 */
+  }
+}
+
+@layer base {
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-bold tracking-tight;
+  }
+}
+
+@layer components {
+  .container {
+    @apply mx-auto max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+
+  .card {
+    @apply bg-card text-card-foreground rounded-lg border shadow-sm;
+  }
+
+  .button {
+    @apply inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 bg-primary text-primary-foreground hover:bg-primary/90;
+  }
+
+  .input {
+    @apply flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  .label {
+    @apply text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70;
+  }
 }
 
 * {
@@ -17,8 +76,6 @@ html,
 body {
   margin: 0;
   padding: 0;
-  background: var(--bg);
-  color: var(--text);
   font-family: "PingFang SC", "Noto Sans CJK SC", "Microsoft Yahei", sans-serif;
 }
 
