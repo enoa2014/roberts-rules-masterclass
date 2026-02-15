@@ -1,6 +1,6 @@
 "use client";
 
-import { Hand, Mic } from "lucide-react";
+import { Hand, Mic, Ban } from "lucide-react";
 
 type HandRaise = {
     id: number;
@@ -14,9 +14,10 @@ type Props = {
     queue: HandRaise[];
     isTeacher: boolean;
     onAction: (action: string, targetId?: number) => void;
+    classSessionId: number;
 };
 
-export function HandRaiseQueue({ queue = [], isTeacher, onAction }: Props) {
+export function HandRaiseQueue({ queue = [], isTeacher, onAction, classSessionId }: Props) {
     return (
         <div className="bg-white rounded-xl border shadow-sm h-full flex flex-col">
             <div className="p-4 border-b flex justify-between items-center bg-gray-50/50">
@@ -44,14 +45,30 @@ export function HandRaiseQueue({ queue = [], isTeacher, onAction }: Props) {
                             </div>
                         </div>
 
-                        {isTeacher && item.status === 'queued' && (
-                            <button
-                                onClick={() => onAction("pick", item.userId)}
-                                className="p-1.5 text-green-600 hover:bg-green-100 rounded"
-                                title="点名发言"
-                            >
-                                <Mic className="h-4 w-4" />
-                            </button>
+                        {isTeacher && (
+                            <div className="flex gap-2">
+                                <button
+                                    onClick={() => onAction("pick", item.userId)}
+                                    className="p-1 text-green-600 hover:bg-green-50 rounded"
+                                    title="点名发言"
+                                >
+                                    <Mic className="h-4 w-4" />
+                                </button>
+                                <button
+                                    onClick={async () => {
+                                        if (!confirm("确定要踢出该用户吗？")) return;
+                                        await fetch(`/api/interact/sessions/${classSessionId}/kick`, {
+                                            method: "POST",
+                                            headers: { "Content-Type": "application/json" },
+                                            body: JSON.stringify({ userId: item.userId })
+                                        });
+                                    }}
+                                    className="p-1 text-red-600 hover:bg-red-50 rounded"
+                                    title="踢出课堂"
+                                >
+                                    <Ban className="h-4 w-4" />
+                                </button>
+                            </div>
                         )}
                     </div>
                 ))}

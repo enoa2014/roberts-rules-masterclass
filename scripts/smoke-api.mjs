@@ -134,6 +134,14 @@ function ensureOk(resp, expectedStatuses, stepName) {
   return resp.data;
 }
 
+function ensureStatus(resp, expectedStatus, stepName) {
+  if (resp.status !== expectedStatus) {
+    throw new Error(
+      `${stepName} 失败: status=${resp.status}, expected=${expectedStatus}, body=${JSON.stringify(resp.data)}`,
+    );
+  }
+}
+
 async function openStreamAndReadOnce(client, sessionId) {
   const controller = new AbortController();
 
@@ -206,6 +214,33 @@ async function main() {
     body: JSON.stringify({ status: "active" }),
   });
   ensureOk(activate, [200], "开始课堂");
+
+  const muteOn = await teacherClient.request(`/api/interact/sessions/${sessionId}/mute`, {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+    },
+    body: JSON.stringify({ globalMute: true }),
+  });
+  ensureOk(muteOn, [200], "开启全员禁言");
+
+  const handWhenMuted = await studentClient.request(`/api/interact/sessions/${sessionId}/hand`, {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+    },
+    body: JSON.stringify({ action: "raise" }),
+  });
+  ensureStatus(handWhenMuted, 422, "禁言状态举手应被拒绝");
+
+  const muteOff = await teacherClient.request(`/api/interact/sessions/${sessionId}/mute`, {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+    },
+    body: JSON.stringify({ globalMute: false }),
+  });
+  ensureOk(muteOff, [200], "关闭全员禁言");
 
   const hand = await studentClient.request(`/api/interact/sessions/${sessionId}/hand`, {
     method: "POST",
@@ -341,6 +376,27 @@ async function main() {
     }),
   });
   ensureOk(moderation, [200], "治理评论");
+
+  const kick = await teacherClient.request(`/api/interact/sessions/${sessionId}/kick`, {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+    },
+    body: JSON.stringify({
+      userId: Number(student.id),
+      reason: "smoke kick",
+    }),
+  });
+  ensureOk(kick, [200], "踢出学员");
+
+  const handAfterKick = await studentClient.request(`/api/interact/sessions/${sessionId}/hand`, {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+    },
+    body: JSON.stringify({ action: "raise" }),
+  });
+  ensureStatus(handAfterKick, 403, "被踢出后应禁止举手");
 
   const end = await teacherClient.request(`/api/interact/sessions/${sessionId}/status`, {
     method: "PATCH",

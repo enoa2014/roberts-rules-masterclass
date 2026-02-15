@@ -12,6 +12,7 @@ test.beforeAll(async () => {
 test.describe('Realtime Interaction Flow', () => {
     test('Full classroom interaction', async ({ browser }) => {
         test.setTimeout(90_000);
+        test.info().annotations.push({ type: 'retries', description: '2' });
 
         // 1. Teacher Context
         const teacherContext = await browser.newContext();

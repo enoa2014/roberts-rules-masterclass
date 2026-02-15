@@ -5,13 +5,14 @@ import { useSession } from "next-auth/react";
 import { PageShell } from "@/components/page-shell";
 import { HandRaiseQueue } from "@/components/interact/hand-raise-queue";
 import { PollSystem } from "@/components/interact/poll-system";
-import { Mic, Hand, StopCircle, PlayCircle, Loader2 } from "lucide-react";
+import { Mic, Hand, StopCircle, PlayCircle, Loader2, Ban } from "lucide-react";
 
 type SessionState = {
     session: {
         id: number;
         title: string;
         status: string;
+        settings?: string;
     };
     queue: any[];
     activeTimer: {
@@ -64,6 +65,21 @@ export function SessionView({ sessionId }: SessionViewProps) {
                 }
             });
 
+            source.addEventListener("user_kicked", (e) => {
+                const data = JSON.parse(e.data);
+                if (data.userId === Number(currentUserId)) {
+                    alert("您已被踢出课堂");
+                    window.location.href = "/";
+                }
+            });
+
+            source.addEventListener("settings_updated", (e) => {
+                const data = JSON.parse(e.data);
+                if (data && data.settings) {
+                    setState(prev => prev ? { ...prev, session: { ...prev.session, settings: JSON.stringify(data.settings) } } : null);
+                }
+            });
+
             source.onerror = (e) => {
                 console.error("SSE Error", e);
                 setConnected(false);
@@ -77,7 +93,7 @@ export function SessionView({ sessionId }: SessionViewProps) {
         return () => {
             sourceRef.current?.close();
         };
-    }, [sessionId]);
+    }, [sessionId, currentUserId]);
 
     const handleAction = async (action: string, targetId?: number) => {
         // Teacher Picks Student -> Start Timer
@@ -110,6 +126,20 @@ export function SessionView({ sessionId }: SessionViewProps) {
         }
     };
 
+    const handleCreateTestVote = async () => {
+        await fetch(`/api/interact/sessions/${sessionId}/vote`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                action: "create",
+                question: "测试投票：是否继续当前练习？",
+                options: ["继续", "暂停"],
+                multiple: false,
+                anonymous: true,
+            }),
+        });
+    };
+
     if (!state) {
         return (
             <div className="flex items-center justify-center h-screen bg-gray-50">
@@ -124,6 +154,7 @@ export function SessionView({ sessionId }: SessionViewProps) {
     // Determine student status
     const myHand = state.queue?.find((h: any) => h.userId === Number(currentUserId));
     const isSpeaking = state.activeTimer?.userId === Number(currentUserId);
+    const isCurrentUserRaised = state.queue?.some((h: any) => h.userId === Number(currentUserId));
 
     return (
         <div className="flex flex-col h-screen bg-gray-50">
@@ -136,8 +167,8 @@ export function SessionView({ sessionId }: SessionViewProps) {
                             {connected ? '在线' : '离线'}
                         </span>
                         <span className={`text-xs px-2 py-0.5 rounded-full ${state.session.status === 'active' ? 'bg-blue-100 text-blue-700' :
-                                state.session.status === 'pending' ? 'bg-gray-100 text-gray-700' :
-                                    'bg-red-100 text-red-700'
+                            state.session.status === 'pending' ? 'bg-gray-100 text-gray-700' :
+                                'bg-red-100 text-red-700'
                             }`}>
                             {state.session.status === 'active' ? '进行中' :
                                 state.session.status === 'pending' ? '未开始' : '已结束'}
@@ -163,19 +194,35 @@ export function SessionView({ sessionId }: SessionViewProps) {
                             </button>
                         )}
                         {state.session.status === 'active' && (
-                            <button
-                                onClick={async () => {
-                                    if (!confirm("确定要结束课堂吗？")) return;
-                                    await fetch(`/api/interact/sessions/${sessionId}/status`, {
-                                        method: "PATCH",
-                                        headers: { "Content-Type": "application/json" },
-                                        body: JSON.stringify({ status: "ended" }),
-                                    });
-                                }}
-                                className="button bg-white text-red-600 border-red-200 hover:bg-red-50"
-                            >
-                                <StopCircle className="mr-2 h-4 w-4" /> 结束课堂
-                            </button>
+                            <>
+                                <button
+                                    onClick={async () => {
+                                        await handleAction(isCurrentUserRaised ? "cancel" : "raise");
+                                    }}
+                                    className="button bg-orange-50 text-orange-700 border-orange-200 hover:bg-orange-100 text-xs px-2"
+                                >
+                                    {isCurrentUserRaised ? "取消测试举手" : "测试举手"}
+                                </button>
+                                <button
+                                    onClick={handleCreateTestVote}
+                                    className="button bg-blue-50 text-blue-600 border-blue-200 hover:bg-blue-100 text-xs px-2"
+                                >
+                                    测试投票
+                                </button>
+                                <button
+                                    onClick={async () => {
+                                        if (!confirm("确定要结束课堂吗？")) return;
+                                        await fetch(`/api/interact/sessions/${sessionId}/status`, {
+                                            method: "PATCH",
+                                            headers: { "Content-Type": "application/json" },
+                                            body: JSON.stringify({ status: "ended" }),
+                                        });
+                                    }}
+                                    className="button bg-white text-red-600 border-red-200 hover:bg-red-50"
+                                >
+                                    <StopCircle className="mr-2 h-4 w-4" /> 结束课堂
+                                </button>
+                            </>
                         )}
                         {state.session.status === 'ended' && (
                             <span className="text-gray-400 font-medium px-3 py-2 bg-gray-100 rounded-md">
@@ -210,7 +257,7 @@ export function SessionView({ sessionId }: SessionViewProps) {
                             </div>
 
                             {isTeacher && (
-                                <div className="flex gap-2 mt-4 justify-center">
+                                <div className="flex flex-col gap-2 mt-4 justify-center items-center">
                                     {state.activeTimer ? (
                                         <button
                                             onClick={() => handleAction("stop_speech")}
@@ -221,6 +268,24 @@ export function SessionView({ sessionId }: SessionViewProps) {
                                     ) : (
                                         <div className="text-xs text-gray-400">请从右侧队列点名发言</div>
                                     )}
+
+                                    <div className="flex items-center gap-2 mt-2">
+                                        <label className="text-sm text-gray-600 flex items-center gap-1 cursor-pointer">
+                                            <input
+                                                type="checkbox"
+                                                checked={state.session.settings ? JSON.parse(state.session.settings).globalMute : false}
+                                                onChange={async (e) => {
+                                                    await fetch(`/api/interact/sessions/${sessionId}/mute`, {
+                                                        method: "POST",
+                                                        headers: { "Content-Type": "application/json" },
+                                                        body: JSON.stringify({ globalMute: e.target.checked })
+                                                    });
+                                                }}
+                                                className="form-checkbox h-4 w-4 text-blue-600"
+                                            />
+                                            全员禁言
+                                        </label>
+                                    </div>
                                 </div>
                             )}
                         </div>
@@ -275,10 +340,18 @@ export function SessionView({ sessionId }: SessionViewProps) {
                             <div className="bg-white p-6 rounded-xl border shadow-sm">
                                 <h3 className="font-bold mb-4">互动控制</h3>
                                 <div className="grid grid-cols-2 gap-4">
-                                    <button className="p-4 border border-dashed rounded-lg hover:border-primary hover:text-primary transition-colors flex flex-col items-center gap-2">
-                                        <Hand className="h-6 w-6" /> 发起举手测试
+                                    <button
+                                        onClick={async () => {
+                                            await handleAction(isCurrentUserRaised ? "cancel" : "raise");
+                                        }}
+                                        className="p-4 border border-dashed rounded-lg hover:border-primary hover:text-primary transition-colors flex flex-col items-center gap-2"
+                                    >
+                                        <Hand className="h-6 w-6" /> {isCurrentUserRaised ? "取消测试举手" : "发起举手测试"}
                                     </button>
-                                    <button className="p-4 border border-dashed rounded-lg hover:border-primary hover:text-primary transition-colors flex flex-col items-center gap-2">
+                                    <button
+                                        onClick={handleCreateTestVote}
+                                        className="p-4 border border-dashed rounded-lg hover:border-primary hover:text-primary transition-colors flex flex-col items-center gap-2"
+                                    >
                                         <Mic className="h-6 w-6" /> 发起表决
                                     </button>
                                 </div>
@@ -292,6 +365,7 @@ export function SessionView({ sessionId }: SessionViewProps) {
                             queue={state.queue || []}
                             isTeacher={isTeacher}
                             onAction={handleAction}
+                            classSessionId={state.session.id}
                         />
                     </div>
                 </div>

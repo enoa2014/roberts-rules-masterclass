@@ -5,6 +5,9 @@ archive/
 # hidden directories
 .*/
 !.git/
+!.github/
+!.github/workflows/
+!.github/workflows/*.yml
 
 # local env
 .env.local
