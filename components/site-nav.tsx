@@ -8,6 +8,12 @@ import {
   Menu,
   X,
   BookOpen,
+  Users,
+  FileText,
+  Wrench,
+  LibraryBig,
+  FolderOpen,
+  MessageSquare,
   GraduationCap,
   HelpCircle,
   LogIn,
@@ -23,6 +29,19 @@ const links = [
   { label: "FAQ", href: "/faq", icon: HelpCircle },
 ];
 
+const learnerLinks = [
+  { label: "课程总览", href: "/course", icon: BookOpen },
+  { label: "学习中心", href: "/rules", icon: BookOpen },
+  { label: "阅读探究", href: "/reading", icon: LibraryBig },
+  { label: "工具库", href: "/tools", icon: Wrench },
+  { label: "资源中心", href: "/resources", icon: FolderOpen },
+  { label: "互动课堂", href: "/interact", icon: Users },
+  { label: "作业复盘", href: "/homework", icon: FileText },
+  { label: "留言讨论", href: "/discussion", icon: MessageSquare },
+];
+
+const registeredLinks = [{ label: "输入邀请码", href: "/invite", icon: ShieldCheck }];
+
 export function SiteNav() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
@@ -30,6 +49,13 @@ export function SiteNav() {
   const role = session?.user?.role;
   const isSignedIn = Boolean(session?.user?.id);
   const isTeacherOrAdmin = role === "teacher" || role === "admin";
+  const isRegistered = role === "registered";
+  const shouldShowLearningLinks = role === "student" || role === "teacher" || role === "admin";
+  const navLinks = shouldShowLearningLinks
+    ? learnerLinks
+    : isRegistered
+      ? [...links, ...registeredLinks]
+      : links;
   const roleLabel =
     role === "admin"
       ? "管理员"
@@ -41,7 +67,7 @@ export function SiteNav() {
             ? "已注册"
             : "";
 
-  const isActive = (path: string) => pathname === path;
+  const isActive = (path: string) => pathname === path || pathname.startsWith(`${path}/`);
 
   return (
     <nav className="sticky top-0 z-50 w-full">
@@ -58,8 +84,8 @@ export function SiteNav() {
           </Link>
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex md:gap-1">
-            {links.map(({ label, href }) => (
+          <div className="hidden md:flex md:gap-1 md:flex-1 md:justify-center md:overflow-x-auto md:px-3">
+            {navLinks.map(({ label, href }) => (
               <Link
                 key={href}
                 href={href}
@@ -122,7 +148,7 @@ export function SiteNav() {
       {isOpen && (
         <div className="md:hidden mx-4 mt-2 rounded-2xl border border-white/30 bg-white/95 backdrop-blur-xl shadow-soft animate-fadeInUp overflow-hidden">
           <div className="p-4 grid gap-1">
-            {links.map(({ label, href, icon: Icon }) => (
+            {navLinks.map(({ label, href, icon: Icon }) => (
               <Link
                 key={href}
                 href={href}

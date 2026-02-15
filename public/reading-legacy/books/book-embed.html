@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>阅读花园 - 模块加载器</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@400;600&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/map.css">
+  <link rel="stylesheet" href="../css/cards.css">
+  <link rel="stylesheet" href="../css/quiz.css">
+  <link rel="stylesheet" href="../css/characters.css">
+  <style>
+    /* Override header/footer visibility — this embed has no chrome */
+    .header, .garden-footer, footer { display: none !important; }
+    body { margin: 0; padding: 0; min-height: 100vh; }
+    .main-content { padding-top: 0 !important; margin-top: 0 !important; }
+  </style>
+</head>
+
+<body>
+  <main class="main-content" id="runtimeMain">
+    <section class="view-panel active">
+      <div class="loading">加载中...</div>
+    </section>
+  </main>
+
+  <!-- Tab bar hidden — tabs controlled by parent via postMessage -->
+  <nav class="tab-bar" id="runtimeTabBar" style="display:none"></nav>
+
+  <script type="module">
+    import { BookRuntime } from '../js/core/book-runtime.js';
+
+    const params = new URLSearchParams(location.search);
+    const registryUrl = params.get('registry') || '../data/totto-chan/registry.json';
+
+    const runtime = new BookRuntime({ registryUrl });
+
+    runtime.start().then(() => {
+      // Notify parent that the runtime is ready, send module list
+      if (window.parent !== window) {
+        window.parent.postMessage({
+          type: 'book-embed-ready',
+          modules: runtime.registry?.modules?.map(m => ({
+            id: m.id,
+            title: m.title,
+            icon: m.icon,
+            active: !!m.active
+          })) || []
+        }, '*');
+      }
+    }).catch((err) => {
+      console.error(err);
+      const main = document.getElementById('runtimeMain');
+      if (main) {
+        main.innerHTML = '<section class="view-panel active"><div class="loading">页面初始化失败，请查看控制台</div></section>';
+      }
+    });
+
+    // Listen for tab-switch messages from parent Next.js page
+    window.addEventListener('message', (e) => {
+      if (e.data?.type === 'activateModule' && e.data?.id) {
+        runtime.activate(e.data.id);
+      }
+    });
+  </script>
+</body>
+
+</html>

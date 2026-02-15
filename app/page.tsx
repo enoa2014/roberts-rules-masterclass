@@ -1,5 +1,21 @@
 import Link from "next/link";
-import { ArrowRight, BookOpen, Users, Award, Zap, Star } from "lucide-react";
+import {
+  ArrowRight,
+  BookOpen,
+  Users,
+  Award,
+  Zap,
+  Star,
+  LibraryBig,
+  Wrench,
+  FolderOpen,
+  MessageSquare,
+  FileText,
+  KeyRound,
+  Info,
+  HelpCircle,
+  LayoutDashboard,
+} from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
 export default function HomePage() {
@@ -100,6 +116,26 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ===== Quick Entry ===== */}
+      <section className="py-16 md:py-20 bg-slate-50 border-y border-gray-100">
+        <div className="container max-w-6xl">
+          <div className="text-center mb-10">
+            <h2 className="text-2xl md:text-3xl font-extrabold tracking-tight text-gray-900">
+              快速入口
+            </h2>
+            <p className="mt-3 text-gray-500">
+              从首页直接进入学习、互动与管理相关页面
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
+            {quickEntries.map((entry) => (
+              <QuickEntryCard key={entry.href} entry={entry} />
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ===== Learning Path ===== */}
       <section className="py-20 md:py-24 gradient-hero">
         <div className="container max-w-4xl">
@@ -155,6 +191,45 @@ export default function HomePage() {
         </div>
       </section>
     </div>
+  );
+}
+
+type QuickEntry = {
+  title: string;
+  href: string;
+  icon: LucideIcon;
+};
+
+const quickEntries: QuickEntry[] = [
+  { title: "课程总览", href: "/course", icon: BookOpen },
+  { title: "学习中心", href: "/rules", icon: BookOpen },
+  { title: "阅读探究", href: "/reading", icon: LibraryBig },
+  { title: "工具库", href: "/tools", icon: Wrench },
+  { title: "资源中心", href: "/resources", icon: FolderOpen },
+  { title: "互动课堂", href: "/interact", icon: Users },
+  { title: "作业复盘", href: "/homework", icon: FileText },
+  { title: "留言讨论", href: "/discussion", icon: MessageSquare },
+  { title: "输入邀请码", href: "/invite", icon: KeyRound },
+  { title: "管理后台", href: "/admin", icon: LayoutDashboard },
+  { title: "关于课程", href: "/about", icon: Info },
+  { title: "常见问题", href: "/faq", icon: HelpCircle },
+];
+
+function QuickEntryCard({ entry }: { entry: QuickEntry }) {
+  const Icon = entry.icon;
+
+  return (
+    <Link
+      href={entry.href}
+      className="group rounded-2xl border border-gray-200 bg-white p-4 shadow-sm hover:shadow-md hover:border-blue-200 transition-all duration-200 cursor-pointer"
+    >
+      <div className="h-10 w-10 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center mb-3 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-200">
+        <Icon className="h-5 w-5" />
+      </div>
+      <div className="text-sm font-semibold text-gray-800 group-hover:text-primary transition-colors">
+        {entry.title}
+      </div>
+    </Link>
   );
 }
 
