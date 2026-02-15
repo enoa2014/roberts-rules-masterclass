@@ -38,19 +38,24 @@ npm run smoke:all
 
 ## 2.2 脚本覆盖的业务链路
 
-1. 登录（teacher/student/registered）
-2. registered 使用邀请码升级 student
-3. teacher 创建课堂并开始
-4. student 连接 SSE、举手
-5. teacher 发言计时 start/stop
-6. teacher 发起投票，student 投票，teacher 关闭投票
-7. student 提交作业（multipart + 附件），teacher 批阅
-8. student 提交课堂反馈
-9. student 发帖与评论，teacher 执行治理（hide comment）
-10. teacher 结束课堂
-11. 同一测试 IP 连续 21 次错误登录，第 21 次返回 `429`
-12. admin 查询用户、更新角色、创建并作废邀请码
-13. admin 查询并保存系统设置（注册开关、站点公告）
+1. 未登录直访 `/reading-legacy/index.html` 被重定向（受控入口验证）
+2. 登录（teacher/student/registered）
+3. registered 使用邀请码升级 student
+4. teacher 创建课堂并开始
+5. teacher 开启/关闭全员禁言
+6. student 连接 SSE、举手
+7. teacher 发言计时 start/stop
+8. teacher 发起投票，student 投票，teacher 关闭投票
+9. student 提交作业（multipart + 附件），teacher 批阅
+10. student 提交课堂反馈
+11. teacher 查询反馈列表并导出 CSV
+12. student 发帖与评论，teacher 执行治理（hide comment）
+13. teacher 查询治理日志
+14. teacher 踢出学员，被踢学员后续举手应返回 403
+15. teacher 结束课堂
+16. 同一测试 IP 连续 21 次错误登录，第 21 次返回 `429`
+17. admin 查询用户、更新角色、创建并作废邀请码
+18. admin 查询并保存系统设置（注册开关、站点公告）
 
 ## 2.3 可配置环境变量
 
@@ -66,6 +71,7 @@ npm run smoke:all
 | `SMOKE_REGISTERED_USERNAME` | `smoke_registered` | 冒烟待升级账号 |
 | `SMOKE_REGISTERED_PASSWORD` | `SmokePass123!` | 冒烟待升级密码 |
 | `SMOKE_INVITE_CODE` | `SMOKE2026` | 冒烟邀请码 |
+| `SMOKE_ALLOW_NON_LOCAL` | `false` | 默认仅允许对本地地址执行冒烟；设为 `true` 才允许非本地目标 |
 
 ## 2.4 Playwright E2E（页面级联调）
 
@@ -244,6 +250,29 @@ npm run test:e2e
 {
   "action": "close",
   "pollId": 1
+}
+```
+
+## 4.7 踢人与全员禁言（teacher/admin）
+
+踢出学员：
+
+- `POST /api/interact/sessions/{id}/kick`
+
+```json
+{
+  "userId": 3,
+  "reason": "课堂纪律违规（可选）"
+}
+```
+
+全员禁言：
+
+- `POST /api/interact/sessions/{id}/mute`
+
+```json
+{
+  "globalMute": true
 }
 ```
 

@@ -18,7 +18,7 @@ archive/
 node_modules/
 .next/
 data/
-logs/
+/logs/
 uploads/
 
 # session planning files

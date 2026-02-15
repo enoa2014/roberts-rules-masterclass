@@ -38,6 +38,7 @@
 ### POST `/api/auth/register`
 
 - 鉴权：无
+- 密码策略：8~72 位，且至少包含 3 类字符（大写字母/小写字母/数字/符号）
 
 请求：
 
@@ -62,7 +63,7 @@
 }
 ```
 
-错误：`INVALID_INPUT`、`CONFLICT`
+错误：`INVALID_INPUT`、`CONFLICT`、`FORBIDDEN`（注册开关关闭）
 
 ### POST `/api/auth/[...nextauth]`
 
@@ -154,13 +155,17 @@
 ### POST `/api/interact/sessions/{id}/timer`
 
 - 鉴权：`teacher/admin`
-- 请求：
+- 请求（兼容字段）：
 
 ```json
-{ "action": "start", "userId": 3, "duration": 120 }
+{ "action": "start", "speakerId": 3, "durationSec": 120 }
 ```
 
-`action` 可取 `start` / `stop`
+说明：
+
+- `action` 可取 `start` / `stop`
+- `start` 支持 `speakerId`（推荐）或 `userId`（兼容）
+- `start` 支持 `durationSec`（推荐）或 `duration`（兼容）
 
 ### POST `/api/interact/sessions/{id}/vote`
 
@@ -183,15 +188,41 @@
 ```json
 {
   "action": "cast",
-  "voteId": 1,
-  "selected": ["赞成"]
+  "pollId": 1,
+  "selected": [2]
 }
 ```
+
+说明：
+
+- `selected` 传入 **optionId** 列表（非文案）。
 
 关闭：
 
 ```json
-{ "action": "close", "voteId": 1 }
+{ "action": "close", "pollId": 1 }
+```
+
+### POST `/api/interact/sessions/{id}/kick`
+
+- 鉴权：`teacher/admin`
+- 作用：将用户移出当前课堂（并同步清理其举手/计时状态）
+
+请求：
+
+```json
+{ "userId": 12, "reason": "课堂纪律违规（可选）" }
+```
+
+### POST `/api/interact/sessions/{id}/mute`
+
+- 鉴权：`teacher/admin`
+- 作用：设置课堂全员禁言开关
+
+请求：
+
+```json
+{ "globalMute": true }
 ```
 
 ---
@@ -244,6 +275,17 @@
 }
 ```
 
+### GET `/api/feedbacks`
+
+- 鉴权：`teacher/admin`
+- 作用：查看反馈列表，支持 CSV 导出
+
+查询参数：
+
+- `classSessionId`（可选）
+- `limit`（可选，默认 300，最大 2000）
+- `format`（可选，`json`/`csv`，默认 `json`）
+
 ---
 
 ## 6. 留言讨论与治理
@@ -288,6 +330,17 @@
   "reason": "与课堂无关"
 }
 ```
+
+### GET `/api/admin/moderation/logs`
+
+- 鉴权：`teacher/admin`
+- 用途：查询治理日志
+
+查询参数：
+
+- `targetType`（可选）：`post|comment|user`
+- `action`（可选）：`hide|delete|block|unblock`
+- `limit`（可选，默认 200，最大 1000）
 
 ---
 

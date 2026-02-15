@@ -7,6 +7,7 @@ const publicRoutes = ["/", "/course", "/about", "/faq", "/login", "/register"];
 const registeredRoutes = ["/invite", "/profile"];
 const adminRoutes = ["/admin"];
 const adminOnlyRoutes = ["/admin/users", "/admin/invites"];
+const protectedStaticPrefixes = ["/reading-legacy"];
 
 function matchesRoute(pathname: string, routes: string[]) {
     return routes.some((route) => pathname === route || pathname.startsWith(`${route}/`));
@@ -14,12 +15,16 @@ function matchesRoute(pathname: string, routes: string[]) {
 
 export async function proxy(request: NextRequest) {
     const { pathname } = request.nextUrl;
+    const isProtectedStatic = protectedStaticPrefixes.some(
+        (prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`),
+    );
+    const isStaticFile = Boolean(pathname.match(/\.[^/]+$/));
 
     if (
         pathname.startsWith("/_next") ||
         pathname.startsWith("/api") ||
         pathname === "/favicon.ico" ||
-        pathname.match(/\.[^/]+$/)
+        (isStaticFile && !isProtectedStatic)
     ) {
         return NextResponse.next();
     }
@@ -70,4 +75,3 @@ export async function proxy(request: NextRequest) {
 export const config = {
     matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],
 };
-

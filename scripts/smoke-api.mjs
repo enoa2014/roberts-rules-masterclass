@@ -1,22 +1,29 @@
+import {
+  DEFAULT_SMOKE_PASSWORD,
+  DEFAULT_SMOKE_TIMER_DURATION_SEC,
+  ensureLocalSmokeTarget,
+  parseJsonOrText,
+} from "./shared.mjs";
+
 const baseUrl = process.env.SMOKE_BASE_URL || "http://127.0.0.1:3000";
 const inviteCode = process.env.SMOKE_INVITE_CODE || "SMOKE2026";
 
 const users = {
   teacher: {
     username: process.env.SMOKE_TEACHER_USERNAME || "smoke_teacher",
-    password: process.env.SMOKE_TEACHER_PASSWORD || "SmokePass123!",
+    password: process.env.SMOKE_TEACHER_PASSWORD || DEFAULT_SMOKE_PASSWORD,
   },
   admin: {
     username: process.env.SMOKE_ADMIN_USERNAME || "smoke_admin",
-    password: process.env.SMOKE_ADMIN_PASSWORD || "SmokePass123!",
+    password: process.env.SMOKE_ADMIN_PASSWORD || DEFAULT_SMOKE_PASSWORD,
   },
   student: {
     username: process.env.SMOKE_STUDENT_USERNAME || "smoke_student",
-    password: process.env.SMOKE_STUDENT_PASSWORD || "SmokePass123!",
+    password: process.env.SMOKE_STUDENT_PASSWORD || DEFAULT_SMOKE_PASSWORD,
   },
   registered: {
     username: process.env.SMOKE_REGISTERED_USERNAME || "smoke_registered",
-    password: process.env.SMOKE_REGISTERED_PASSWORD || "SmokePass123!",
+    password: process.env.SMOKE_REGISTERED_PASSWORD || DEFAULT_SMOKE_PASSWORD,
   },
 };
 
@@ -78,14 +85,7 @@ class ApiClient {
     this.storeSetCookie(response);
 
     const text = await response.text();
-    let data = null;
-    if (text) {
-      try {
-        data = JSON.parse(text);
-      } catch {
-        data = text;
-      }
-    }
+    const data = parseJsonOrText(text, `smoke-api:${this.name}:${options.method || "GET"}:${path}`);
 
     return {
       status: response.status,
@@ -173,7 +173,18 @@ async function openStreamAndReadOnce(client, sessionId) {
 }
 
 async function main() {
+  ensureLocalSmokeTarget(baseUrl);
   console.log("[smoke:api] start", { baseUrl });
+
+  const anonymousReading = await fetch(`${baseUrl}/reading-legacy/index.html`, {
+    method: "GET",
+    redirect: "manual",
+  });
+  if (anonymousReading.status !== 307) {
+    throw new Error(
+      `未登录访问 reading-legacy 应被重定向，实际 status=${anonymousReading.status}`,
+    );
+  }
 
   const teacherClient = new ApiClient("teacher");
   const adminClient = new ApiClient("admin");
@@ -263,7 +274,11 @@ async function main() {
     headers: {
       "content-type": "application/json",
     },
-    body: JSON.stringify({ action: "start", speakerId: Number(student.id), durationSec: 60 }),
+    body: JSON.stringify({
+      action: "start",
+      speakerId: Number(student.id),
+      durationSec: DEFAULT_SMOKE_TIMER_DURATION_SEC,
+    }),
   });
   ensureOk(timerStart, [200], "计时开始");
 
@@ -358,6 +373,25 @@ async function main() {
   });
   ensureOk(feedback, [201], "提交反馈");
 
+  const feedbackList = await teacherClient.request("/api/feedbacks?limit=50", {
+    method: "GET",
+  });
+  const feedbackListData = ensureOk(feedbackList, [200], "教师查看反馈列表");
+  if (!Array.isArray(feedbackListData.feedbacks)) {
+    throw new Error("教师查看反馈失败: feedbacks 字段不是数组");
+  }
+
+  const feedbackCsv = await teacherClient.request("/api/feedbacks?format=csv&limit=50", {
+    method: "GET",
+  });
+  if (feedbackCsv.status !== 200) {
+    throw new Error(`教师导出反馈失败: status=${feedbackCsv.status}`);
+  }
+  const csvContentType = feedbackCsv.headers.get("content-type") || "";
+  if (!csvContentType.includes("text/csv")) {
+    throw new Error(`教师导出反馈失败: content-type=${csvContentType}`);
+  }
+
   const post = await studentClient.request("/api/discussion/posts", {
     method: "POST",
     headers: {
@@ -393,6 +427,14 @@ async function main() {
     }),
   });
   ensureOk(moderation, [200], "治理评论");
+
+  const moderationLogs = await teacherClient.request("/api/admin/moderation/logs?limit=50", {
+    method: "GET",
+  });
+  const moderationLogsData = ensureOk(moderationLogs, [200], "查询治理日志");
+  if (!Array.isArray(moderationLogsData.logs) || moderationLogsData.logs.length === 0) {
+    throw new Error("查询治理日志失败: logs 为空");
+  }
 
   const kick = await teacherClient.request(`/api/interact/sessions/${sessionId}/kick`, {
     method: "POST",

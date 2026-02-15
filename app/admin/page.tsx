@@ -1,11 +1,12 @@
 import { PageShell } from "@/components/page-shell";
 import Link from "next/link";
-import { Users, FileText, Settings, Shield } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
+import { Users, FileText, Settings, Shield, MessageSquareWarning, MessagesSquare } from "lucide-react";
 
 export default function AdminPage() {
   return (
     <PageShell title="管理后台" description="系统概览与核心管理功能">
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 mt-8">
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 mt-8">
         <AdminCard
           title="学员管理"
           description="查看学员列表，管理角色与权限。"
@@ -28,6 +29,18 @@ export default function AdminPage() {
           stat="3 份待批"
         />
         <AdminCard
+          title="反馈管理"
+          description="查看课堂反馈并导出 CSV。"
+          icon={MessagesSquare}
+          href="/admin/feedbacks"
+        />
+        <AdminCard
+          title="内容治理"
+          description="治理帖子/评论/用户并查看治理日志。"
+          icon={MessageSquareWarning}
+          href="/admin/moderation"
+        />
+        <AdminCard
           title="系统设置"
           description="配置系统参数与全局通知。"
           icon={Settings}
@@ -38,7 +51,15 @@ export default function AdminPage() {
   );
 }
 
-function AdminCard({ title, description, icon: Icon, href, stat }: any) {
+type AdminCardProps = {
+  title: string;
+  description: string;
+  icon: LucideIcon;
+  href: string;
+  stat?: string;
+};
+
+function AdminCard({ title, description, icon: Icon, href, stat }: AdminCardProps) {
   return (
     <Link href={href} className="block p-6 bg-white rounded-xl border border-gray-200 hover:shadow-md transition-all group">
       <div className="flex justify-between items-start mb-4">

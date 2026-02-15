@@ -1,18 +1,12 @@
-import path from "node:path";
 import fs from "node:fs";
 import Database from "better-sqlite3";
+import { ensureLocalSmokeTarget, resolveDbPath } from "./shared.mjs";
 
 const baseUrl = process.env.SMOKE_BASE_URL || "http://127.0.0.1:3000";
 const username = process.env.SMOKE_TEACHER_USERNAME || "smoke_teacher";
 const invalidPassword = process.env.SMOKE_RATE_LIMIT_INVALID_PASSWORD || "WrongPass123!";
 const testIp =
   process.env.SMOKE_TEST_IP || `203.0.113.${Math.max(1, Math.floor(Math.random() * 254))}`;
-
-function resolveDbPath() {
-  const raw = process.env.DATABASE_URL || "file:./data/course.db";
-  const filePath = raw.startsWith("file:") ? raw.slice(5) : raw;
-  return path.isAbsolute(filePath) ? filePath : path.join(process.cwd(), filePath);
-}
 
 function resetIpFailureRecords(ip) {
   const dbPath = resolveDbPath();
@@ -89,6 +83,7 @@ class ApiClient {
 }
 
 async function main() {
+  ensureLocalSmokeTarget(baseUrl);
   resetIpFailureRecords(testIp);
 
   const client = new ApiClient({

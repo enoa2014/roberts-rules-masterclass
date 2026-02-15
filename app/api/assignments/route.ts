@@ -11,20 +11,31 @@ const createAssignmentSchema = z
   .object({
     lessonId: z.string().min(1).max(64),
     content: z.string().max(5000).optional(),
-    filePath: z.string().max(255).optional(),
+    hasFile: z.boolean().optional(),
   })
   .superRefine((value, ctx) => {
-    if (!value.content && !value.filePath) {
+    if (!value.content && !value.hasFile) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
         path: ["content"],
-        message: "content 与 filePath 至少需要一个",
+        message: "content 与 file 至少需要一个",
       });
     }
   });
 
 const ALLOWED_FILE_EXTENSIONS = new Set(["pdf", "docx", "doc", "jpg", "png"]);
 const MAX_FILE_SIZE = 10 * 1024 * 1024;
+const ALLOWED_MIME_BY_EXTENSION: Record<string, Set<string>> = {
+  pdf: new Set(["application/pdf"]),
+  doc: new Set(["application/msword", "application/octet-stream"]),
+  docx: new Set([
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    "application/zip",
+    "application/octet-stream",
+  ]),
+  jpg: new Set(["image/jpeg", "image/pjpeg"]),
+  png: new Set(["image/png"]),
+};
 
 function toErrorResponse(code: string, message: string, status: number) {
   return NextResponse.json(
@@ -57,6 +68,15 @@ async function persistAssignmentFile(file: File, userId: number) {
     return {
       ok: false as const,
       message: "附件大小不能超过 10MB",
+      status: 400,
+    };
+  }
+
+  const expectedMime = ALLOWED_MIME_BY_EXTENSION[ext];
+  if (file.type && expectedMime && !expectedMime.has(file.type)) {
+    return {
+      ok: false as const,
+      message: `附件 MIME 类型不匹配: ${file.type}`,
       status: 400,
     };
   }
@@ -139,8 +159,9 @@ export async function POST(request: Request) {
     let payload: {
       lessonId: string;
       content?: string;
-      filePath?: string;
+      hasFile?: boolean;
     };
+    let persistedFilePath: string | null = null;
 
     if (isMultipart) {
       const form = await request.formData();
@@ -158,10 +179,24 @@ export async function POST(request: Request) {
         if (!saved.ok) {
           return toErrorResponse("INVALID_INPUT", saved.message, saved.status);
         }
-        payload.filePath = saved.filePath;
+        payload.hasFile = true;
+        persistedFilePath = saved.filePath;
       }
     } else {
-      payload = await request.json();
+      const jsonPayload = await request.json();
+      if (!jsonPayload || typeof jsonPayload !== "object") {
+        return toErrorResponse("INVALID_INPUT", "作业参数不合法", 400);
+      }
+
+      payload = jsonPayload as {
+        lessonId: string;
+        content?: string;
+        hasFile?: boolean;
+      };
+      // JSON 提交不允许客户端直接指定文件路径。
+      if ("filePath" in payload) {
+        return toErrorResponse("INVALID_INPUT", "filePath 不是可提交字段", 400);
+      }
     }
 
     const parsed = createAssignmentSchema.safeParse(payload);
@@ -179,7 +214,7 @@ export async function POST(request: Request) {
         auth.ctx.userId,
         parsed.data.lessonId,
         parsed.data.content ?? null,
-        parsed.data.filePath ?? null,
+        persistedFilePath,
       );
 
     const assignment = sqlite

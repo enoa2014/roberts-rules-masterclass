@@ -3,21 +3,16 @@ import path from "node:path";
 
 import bcrypt from "bcryptjs";
 import Database from "better-sqlite3";
-
-function resolveDbPath() {
-  const raw = process.env.DATABASE_URL || "file:./data/course.db";
-  const filePath = raw.startsWith("file:") ? raw.slice(5) : raw;
-  return path.isAbsolute(filePath) ? filePath : path.join(process.cwd(), filePath);
-}
+import { DEFAULT_SMOKE_PASSWORD, resolveDbPath } from "./shared.mjs";
 
 const teacherUsername = process.env.SMOKE_TEACHER_USERNAME || "smoke_teacher";
-const teacherPassword = process.env.SMOKE_TEACHER_PASSWORD || "SmokePass123!";
+const teacherPassword = process.env.SMOKE_TEACHER_PASSWORD || DEFAULT_SMOKE_PASSWORD;
 const adminUsername = process.env.SMOKE_ADMIN_USERNAME || "smoke_admin";
-const adminPassword = process.env.SMOKE_ADMIN_PASSWORD || "SmokePass123!";
+const adminPassword = process.env.SMOKE_ADMIN_PASSWORD || DEFAULT_SMOKE_PASSWORD;
 const studentUsername = process.env.SMOKE_STUDENT_USERNAME || "smoke_student";
-const studentPassword = process.env.SMOKE_STUDENT_PASSWORD || "SmokePass123!";
+const studentPassword = process.env.SMOKE_STUDENT_PASSWORD || DEFAULT_SMOKE_PASSWORD;
 const registeredUsername = process.env.SMOKE_REGISTERED_USERNAME || "smoke_registered";
-const registeredPassword = process.env.SMOKE_REGISTERED_PASSWORD || "SmokePass123!";
+const registeredPassword = process.env.SMOKE_REGISTERED_PASSWORD || DEFAULT_SMOKE_PASSWORD;
 const inviteCode = process.env.SMOKE_INVITE_CODE || "SMOKE2026";
 
 const dbPath = resolveDbPath();
@@ -119,12 +114,12 @@ function main() {
   console.log(
     JSON.stringify(
       {
-        teacher: { username: teacherUsername, password: teacherPassword, id: teacherId },
-        admin: { username: adminUsername, password: adminPassword, id: adminId },
-        student: { username: studentUsername, password: studentPassword, id: studentId },
+        teacher: { username: teacherUsername, password: "***", id: teacherId },
+        admin: { username: adminUsername, password: "***", id: adminId },
+        student: { username: studentUsername, password: "***", id: studentId },
         registered: {
           username: registeredUsername,
-          password: registeredPassword,
+          password: "***",
           id: registeredId,
         },
         inviteCode: { code: inviteCode, id: inviteId },

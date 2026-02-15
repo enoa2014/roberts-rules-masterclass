@@ -3,12 +3,7 @@ import path from "node:path";
 
 import bcrypt from "bcryptjs";
 import Database from "better-sqlite3";
-
-function resolveDbPath() {
-  const raw = process.env.DATABASE_URL || "file:./data/course.db";
-  const filePath = raw.startsWith("file:") ? raw.slice(5) : raw;
-  return path.isAbsolute(filePath) ? filePath : path.join(process.cwd(), filePath);
-}
+import { resolveDbPath } from "./shared.mjs";
 
 const username = process.env.ADMIN_USERNAME || "admin";
 const password = process.env.ADMIN_PASSWORD;

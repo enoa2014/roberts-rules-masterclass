@@ -5,9 +5,22 @@ import { hashPassword } from "@/lib/password";
 import { getSystemSettings } from "@/lib/system-settings";
 import { createUsernameUser, findUserByUsername } from "@/lib/user-store";
 
+function hasStrongPassword(password: string) {
+  let groups = 0;
+  if (/[a-z]/.test(password)) groups += 1;
+  if (/[A-Z]/.test(password)) groups += 1;
+  if (/\d/.test(password)) groups += 1;
+  if (/[^A-Za-z0-9]/.test(password)) groups += 1;
+  return groups >= 3;
+}
+
 const registerSchema = z.object({
   username: z.string().min(3).max(32).regex(/^[a-zA-Z0-9_\-]+$/),
-  password: z.string().min(8).max(72),
+  password: z
+    .string()
+    .min(8)
+    .max(72)
+    .refine(hasStrongPassword, "密码强度不足"),
   nickname: z.string().min(1).max(32).optional(),
 });
 
@@ -34,7 +47,7 @@ export async function POST(request: Request) {
         {
           error: {
             code: "INVALID_INPUT",
-            message: "用户名或密码格式不正确",
+            message: "用户名或密码格式不正确（密码需至少包含大小写字母、数字、符号中的任意三类）",
           },
         },
         { status: 400 },
