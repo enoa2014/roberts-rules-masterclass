@@ -19,6 +19,7 @@ type SessionRow = {
   created_by: number;
   created_at: string;
   ended_at: string | null;
+  settings: string | null;
 };
 
 type QueueRow = {
@@ -48,9 +49,59 @@ function err(code: ServiceErrorCode, message: string, status = 400): ServiceErr 
 function getSessionById(sessionId: number) {
   return sqlite
     .prepare(
-      `SELECT id, title, status, created_by, created_at, ended_at FROM class_sessions WHERE id = ? LIMIT 1`,
+      `SELECT id, title, status, created_by, created_at, ended_at, settings FROM class_sessions WHERE id = ? LIMIT 1`,
     )
     .get(sessionId) as SessionRow | undefined;
+}
+
+function parseSessionSettings(raw: string | null) {
+  if (!raw) {
+    return {};
+  }
+
+  let current: unknown = raw;
+
+  // Compatibility: some rows may have been double-serialized as JSON string.
+  for (let i = 0; i < 2; i += 1) {
+    if (typeof current !== "string") {
+      break;
+    }
+
+    try {
+      current = JSON.parse(current) as unknown;
+    } catch {
+      return {};
+    }
+  }
+
+  if (current && typeof current === "object" && !Array.isArray(current)) {
+    return current as Record<string, unknown>;
+  }
+
+  return {};
+}
+
+export function isUserBannedInSession(sessionId: number, userId: number) {
+  const row = sqlite
+    .prepare(
+      `SELECT 1 as banned
+       FROM session_bans
+       WHERE class_session_id = ? AND user_id = ?
+       LIMIT 1`,
+    )
+    .get(sessionId, userId) as { banned: number } | undefined;
+
+  return Boolean(row?.banned);
+}
+
+export function isSessionGlobalMuteEnabled(sessionId: number) {
+  const session = getSessionById(sessionId);
+  if (!session) {
+    return false;
+  }
+
+  const settings = parseSessionSettings(session.settings);
+  return settings.globalMute === true;
 }
 
 function canManageSession(session: SessionRow, userId: number, role: UserRole) {
@@ -83,12 +134,12 @@ function resolveVoteSummary(pollId: number): VoteSummary | null {
     )
     .get(pollId) as
     | {
-        id: number;
-        question: string;
-        type: "single" | "multiple";
-        anonymous: 0 | 1;
-        status: "open" | "closed";
-      }
+      id: number;
+      question: string;
+      type: "single" | "multiple";
+      anonymous: 0 | 1;
+      status: "open" | "closed";
+    }
     | undefined;
 
   if (!poll) {
@@ -222,11 +273,11 @@ export function getClassSessionSnapshot(sessionId: number): ServiceResult<{
     )
     .get(sessionId) as
     | {
-        userId: number;
-        nickname: string;
-        durationSec: number;
-        startedAt: string;
-      }
+      userId: number;
+      nickname: string;
+      durationSec: number;
+      startedAt: string;
+    }
     | undefined;
 
   const openPollRow = sqlite
@@ -258,11 +309,19 @@ export function handleHandAction(input: {
     return err("NOT_FOUND", "课堂不存在", 404);
   }
 
+  if (isUserBannedInSession(input.sessionId, input.userId)) {
+    return err("FORBIDDEN", "您已被移出该课堂", 403);
+  }
+
   if (session.status !== "active") {
     return err("STATE_INVALID", "课堂未开始或已结束", 422);
   }
 
   if (input.action === "raise") {
+    if (isSessionGlobalMuteEnabled(input.sessionId)) {
+      return err("STATE_INVALID", "当前处于全员禁言状态", 422);
+    }
+
     const existing = sqlite
       .prepare(
         `
@@ -392,11 +451,11 @@ export function handleTimerAction(input: {
           `,
         )
         .get(input.sessionId) as {
-        userId: number;
-        durationSec: number;
-        startedAt: string;
-        endedAt: string | null;
-      };
+          userId: number;
+          durationSec: number;
+          startedAt: string;
+          endedAt: string | null;
+        };
     });
 
     return { ok: true, data: { action: "start", timer: tx() } };
@@ -415,11 +474,11 @@ export function handleTimerAction(input: {
       )
       .get(input.sessionId) as
       | {
-          id: number;
-          userId: number;
-          durationSec: number;
-          startedAt: string;
-        }
+        id: number;
+        userId: number;
+        durationSec: number;
+        startedAt: string;
+      }
       | undefined;
 
     if (!active) {

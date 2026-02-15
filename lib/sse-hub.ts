@@ -44,6 +44,8 @@ export function publishSessionEvent(sessionId: number, event: string, data: unkn
   }
 }
 
+export const broadcast = publishSessionEvent;
+
 export function createSseResponse(
   sessionId: number,
   getSnapshot: () => Promise<unknown>,

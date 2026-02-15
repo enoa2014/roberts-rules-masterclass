@@ -2,7 +2,11 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 
 import { requireAuth, STUDENT_ROLES } from "@/lib/authz";
-import { getClassSessionSnapshot, handleVoteAction } from "@/lib/interact-service";
+import {
+  getClassSessionSnapshot,
+  handleVoteAction,
+  isUserBannedInSession,
+} from "@/lib/interact-service";
 import { publishSessionEvent } from "@/lib/sse-hub";
 
 const createVoteSchema = z.object({
@@ -65,6 +69,10 @@ export async function POST(
   const sessionId = await resolveSessionId(context.params);
   if (!sessionId) {
     return toErrorResponse("INVALID_INPUT", "课堂 ID 不合法", 400);
+  }
+
+  if (isUserBannedInSession(sessionId, auth.ctx.userId)) {
+    return toErrorResponse("FORBIDDEN", "您已被移出该课堂", 403);
   }
 
   try {

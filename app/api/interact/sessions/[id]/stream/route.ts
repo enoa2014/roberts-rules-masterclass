@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 
 import { requireAuth, STUDENT_ROLES } from "@/lib/authz";
 import { createSseResponse } from "@/lib/sse-hub";
-import { getClassSessionSnapshot } from "@/lib/interact-service";
+import { getClassSessionSnapshot, isUserBannedInSession } from "@/lib/interact-service";
 
 function toErrorResponse(code: string, message: string, status: number) {
   return NextResponse.json(
@@ -39,6 +39,10 @@ export async function GET(
   const sessionId = await resolveSessionId(context.params);
   if (!sessionId) {
     return toErrorResponse("INVALID_INPUT", "课堂 ID 不合法", 400);
+  }
+
+  if (isUserBannedInSession(sessionId, auth.ctx.userId)) {
+    return toErrorResponse("FORBIDDEN", "您已被移出该课堂", 403);
   }
 
   const snapshot = getClassSessionSnapshot(sessionId);

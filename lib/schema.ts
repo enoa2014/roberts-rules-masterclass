@@ -78,7 +78,28 @@ export const classSessions = sqliteTable(
     createdBy: integer("created_by").notNull().references(() => users.id),
     createdAt: text("created_at").notNull().default(sql`(datetime('now'))`),
     endedAt: text("ended_at"),
+    settings: text("settings", { mode: "json" }), // JSON: { globalMute: boolean }
   },
+);
+
+export const sessionBans = sqliteTable(
+  "session_bans",
+  {
+    id: integer("id").primaryKey({ autoIncrement: true }),
+    classSessionId: integer("class_session_id")
+      .notNull()
+      .references(() => classSessions.id),
+    userId: integer("user_id").notNull().references(() => users.id),
+    reason: text("reason"),
+    bannedAt: text("banned_at").notNull().default(sql`(datetime('now'))`),
+    bannedBy: integer("banned_by").notNull().references(() => users.id),
+  },
+  (table) => ({
+    uniqueBan: uniqueIndex("idx_session_bans_unique").on(
+      table.classSessionId,
+      table.userId,
+    ),
+  }),
 );
 
 export const handRaises = sqliteTable(
