@@ -21,9 +21,9 @@ export default function IndependentLayout({
             <body className="font-serif">
                 <ThemeProvider>
                     <Providers>
-                        <div className="min-h-screen bg-gradient-to-br from-gray-50 to-green-50/20">
+                        <main className="min-h-screen bg-gradient-to-br from-gray-50 to-green-50/20">
                             {children}
-                        </div>
+                        </main>
                     </Providers>
                 </ThemeProvider>
             </body>

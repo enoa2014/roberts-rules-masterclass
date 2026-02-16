@@ -1,8 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;600&family=Impact&family=Noto+Sans+SC:wght@400;500;600;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;600&family=Impact&family=Noto+Sans+SC:wght@400;500;600;700;900&family=Noto+Serif+SC:wght@400;500;600;700;900&display=swap');
 @import "tailwindcss";
 @config "../tailwind.config.js";
 @import "../styles/festival-civic-theme.css";
 @import "../styles/mint-campaign-theme.css";
+@import "../styles/charcoal-grid-theme.css";
+@import "../styles/copper-lecture-theme.css";
 
 /* ===== Enhanced Animations ===== */
 @keyframes fadeInUp {

@@ -1,0 +1,632 @@
+/* ===== 炭黑栅格主题样式 ===== */
+/* 炭黑栅格主题变量 */
+:root[data-theme="charcoal-grid"] {
+  /* 炭黑色彩系统 */
+  --cg-primary: #1f2937;
+  --cg-primary-light: #374151;
+  --cg-primary-dark: #111827;
+  --cg-secondary: #374151;
+  --cg-accent: #10b981;
+  --cg-accent-light: #34d399;
+
+  /* 背景与表面 */
+  --cg-bg: #f9fafb;
+  --cg-surface: #ffffff;
+  --cg-surface-elevated: #f3f4f6;
+  --cg-surface-glass: rgba(255, 255, 255, 0.95);
+
+  /* 文字色彩 */
+  --cg-text: #111827;
+  --cg-text-light: #1f2937;
+  --cg-text-muted: #6b7280;
+  --cg-text-inverse: #ffffff;
+
+  /* 炭黑渐变 */
+  --cg-gradient-primary: linear-gradient(135deg, #1f2937 0%, #374151 50%, #4b5563 100%);
+  --cg-gradient-accent: linear-gradient(135deg, #10b981 0%, #34d399 50%, #6ee7b7 100%);
+  --cg-gradient-hero: linear-gradient(135deg, #f9fafb 0%, rgba(31, 41, 55, 0.03) 25%, rgba(16, 185, 129, 0.02) 75%, #f3f4f6 100%);
+
+  /* 阴影系统 */
+  --cg-shadow-sm: 0 2px 8px rgba(31, 41, 55, 0.08);
+  --cg-shadow: 0 4px 16px rgba(31, 41, 55, 0.12);
+  --cg-shadow-lg: 0 8px 32px rgba(31, 41, 55, 0.16);
+  --cg-shadow-xl: 0 16px 48px rgba(31, 41, 55, 0.2);
+  --cg-shadow-glow: 0 0 32px rgba(16, 185, 129, 0.25);
+
+  /* 炭黑动画时长 */
+  --cg-duration-fast: 0.1s;
+  --cg-duration-normal: 0.2s;
+  --cg-duration-slow: 0.4s;
+  --cg-duration-snappy: 0.15s;
+}
+
+/* 炭黑栅格主题激活时的全局样式 */
+[data-theme="charcoal-grid"] {
+  /* 字体系统 */
+  font-family: 'Noto Sans SC', sans-serif;
+  background: var(--cg-bg);
+  color: var(--cg-text);
+
+  /* 快速过渡 */
+  transition: all var(--cg-duration-snappy) ease-out;
+}
+
+[data-theme="charcoal-grid"] h1,
+[data-theme="charcoal-grid"] h2,
+[data-theme="charcoal-grid"] h3,
+[data-theme="charcoal-grid"] h4,
+[data-theme="charcoal-grid"] h5,
+[data-theme="charcoal-grid"] h6 {
+  font-family: 'Arial Black', 'Noto Sans SC', sans-serif;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+}
+
+[data-theme="charcoal-grid"] .font-mono {
+  font-family: 'Consolas', monospace;
+}
+
+/* ===== 炭黑动画系统 ===== */
+@keyframes charcoalGlow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(16, 185, 129, 0.4);
+  }
+}
+
+@keyframes charcoalSlide {
+  0% {
+    transform: translateX(-20px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes charcoalSnap {
+  0% {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes charcoalPop {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+}
+
+/* ===== 炭黑组件样式 ===== */
+
+/* 炭黑卡片 - Brutal 风格 */
+[data-theme="charcoal-grid"] .cg-card {
+  background: var(--cg-surface);
+  border: 3px solid var(--cg-primary);
+  border-radius: 0;
+  box-shadow: 6px 6px 0 var(--cg-primary);
+  transition: all var(--cg-duration-snappy) ease-out;
+  position: relative;
+}
+
+[data-theme="charcoal-grid"] .cg-card:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 9px 9px 0 var(--cg-primary);
+}
+
+/* 炭黑按钮 - Brutal 风格 */
+[data-theme="charcoal-grid"] .cg-btn {
+  font-family: 'Arial', sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-radius: 0;
+  padding: 16px 32px;
+  border: 3px solid;
+  cursor: pointer;
+  position: relative;
+  transition: all var(--cg-duration-snappy) ease-out;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+
+[data-theme="charcoal-grid"] .cg-btn-primary {
+  background: var(--cg-primary);
+  color: var(--cg-text-inverse);
+  border-color: var(--cg-primary);
+  box-shadow: 4px 4px 0 var(--cg-primary-light);
+}
+
+[data-theme="charcoal-grid"] .cg-btn-primary:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--cg-primary-light);
+}
+
+[data-theme="charcoal-grid"] .cg-btn-accent {
+  background: var(--cg-accent);
+  color: var(--cg-text-inverse);
+  border-color: var(--cg-accent);
+  box-shadow: 4px 4px 0 var(--cg-accent-light);
+}
+
+[data-theme="charcoal-grid"] .cg-btn-accent:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--cg-accent-light);
+}
+
+[data-theme="charcoal-grid"] .cg-btn-ghost {
+  background: transparent;
+  color: var(--cg-primary);
+  border-color: var(--cg-primary);
+  box-shadow: 4px 4px 0 var(--cg-primary);
+}
+
+[data-theme="charcoal-grid"] .cg-btn-ghost:hover {
+  background: var(--cg-primary);
+  color: var(--cg-text-inverse);
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--cg-primary-light);
+}
+
+/* 炭黑导航 - Boxed 风格 */
+[data-theme="charcoal-grid"] .cg-nav {
+  background: var(--cg-surface);
+  border: 3px solid var(--cg-primary);
+  border-radius: 0;
+  box-shadow: 4px 4px 0 var(--cg-primary-light);
+  padding: 16px 24px;
+}
+
+/* 炭黑英雄区 - Bento 布局风格 */
+[data-theme="charcoal-grid"] .cg-hero {
+  background: var(--cg-gradient-hero);
+  position: relative;
+  overflow: hidden;
+  border: 3px solid var(--cg-primary);
+  border-radius: 0;
+  padding: 80px 40px;
+}
+
+[data-theme="charcoal-grid"] .cg-hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background:
+    linear-gradient(90deg, transparent 0%, var(--cg-primary) 1px, transparent 1px),
+    linear-gradient(0deg, transparent 0%, var(--cg-primary) 1px, transparent 1px);
+  background-size: 40px 40px;
+  opacity: 0.05;
+  pointer-events: none;
+}
+
+/* 页面壳层专用：仅提供背景，不覆盖页面自身内边距 */
+[data-theme="charcoal-grid"] .cg-page-hero {
+  background: var(--cg-gradient-hero);
+  position: relative;
+  overflow: hidden;
+  border: 2px solid var(--cg-primary);
+  border-radius: 0;
+  isolation: isolate;
+}
+
+[data-theme="charcoal-grid"] .cg-page-hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background:
+    linear-gradient(90deg, transparent 0%, var(--cg-primary) 1px, transparent 1px),
+    linear-gradient(0deg, transparent 0%, var(--cg-primary) 1px, transparent 1px);
+  background-size: 30px 30px;
+  opacity: 0.03;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* 炭黑标题 */
+[data-theme="charcoal-grid"] .cg-title-hero {
+  font-size: clamp(2.5rem, 7vw, 5rem);
+  line-height: 0.9;
+  font-weight: 900;
+  color: var(--cg-primary);
+  text-shadow: 3px 3px 0 var(--cg-accent);
+  position: relative;
+  z-index: 2;
+}
+
+[data-theme="charcoal-grid"] .cg-title-section {
+  font-size: clamp(1.8rem, 4.5vw, 3rem);
+  line-height: 1.1;
+  font-weight: 900;
+  color: var(--cg-text);
+  margin-bottom: 20px;
+}
+
+/* 炭黑徽章 */
+[data-theme="charcoal-grid"] .cg-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--cg-primary);
+  color: var(--cg-text-inverse);
+  padding: 8px 16px;
+  border: 2px solid var(--cg-primary);
+  border-radius: 0;
+  font-family: 'Arial', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  box-shadow: 3px 3px 0 var(--cg-primary-light);
+}
+
+/* 炭黑统计卡片 */
+[data-theme="charcoal-grid"] .cg-stat-card {
+  background: var(--cg-surface);
+  border: 3px solid var(--cg-primary);
+  border-radius: 0;
+  padding: 24px;
+  text-align: center;
+  box-shadow: 4px 4px 0 var(--cg-primary-light);
+  transition: all var(--cg-duration-snappy) ease-out;
+  position: relative;
+}
+
+[data-theme="charcoal-grid"] .cg-stat-card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--cg-primary-light);
+}
+
+[data-theme="charcoal-grid"] .cg-stat-value {
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: var(--cg-primary);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+[data-theme="charcoal-grid"] .cg-stat-label {
+  font-family: 'Arial', sans-serif;
+  font-size: 0.875rem;
+  color: var(--cg-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+}
+
+/* 炭黑快速入口 */
+[data-theme="charcoal-grid"] .cg-quick-entry {
+  background: var(--cg-surface);
+  border: 2px solid var(--cg-primary);
+  border-radius: 0;
+  padding: 20px;
+  text-align: center;
+  transition: all var(--cg-duration-snappy) ease-out;
+  cursor: pointer;
+  box-shadow: 3px 3px 0 var(--cg-primary-light);
+}
+
+[data-theme="charcoal-grid"] .cg-quick-entry:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0 var(--cg-primary-light);
+  animation: charcoalPop 0.3s ease;
+}
+
+[data-theme="charcoal-grid"] .cg-quick-icon {
+  width: 48px;
+  height: 48px;
+  background: var(--cg-primary);
+  border: 2px solid var(--cg-primary);
+  border-radius: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 12px;
+  color: var(--cg-text-inverse);
+  transition: all var(--cg-duration-snappy) ease-out;
+  box-shadow: 2px 2px 0 var(--cg-primary-light);
+}
+
+[data-theme="charcoal-grid"] .cg-quick-entry:hover .cg-quick-icon {
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0 var(--cg-primary-light);
+}
+
+/* 炭黑动画类 */
+[data-theme="charcoal-grid"] .cg-animate-glow {
+  animation: charcoalGlow 2s ease-in-out infinite;
+}
+
+[data-theme="charcoal-grid"] .cg-animate-slide {
+  animation: charcoalSlide var(--cg-duration-slow) ease-out;
+}
+
+[data-theme="charcoal-grid"] .cg-animate-snap {
+  animation: charcoalSnap var(--cg-duration-snappy) ease-out;
+}
+
+[data-theme="charcoal-grid"] .cg-animate-pop {
+  animation: charcoalPop 0.3s ease;
+}
+
+/* 炭黑延迟动画 */
+[data-theme="charcoal-grid"] .cg-delay-100 { animation-delay: 100ms; }
+[data-theme="charcoal-grid"] .cg-delay-200 { animation-delay: 200ms; }
+[data-theme="charcoal-grid"] .cg-delay-300 { animation-delay: 300ms; }
+[data-theme="charcoal-grid"] .cg-delay-400 { animation-delay: 400ms; }
+[data-theme="charcoal-grid"] .cg-delay-500 { animation-delay: 500ms; }
+
+/* 炭黑栅格图案 */
+[data-theme="charcoal-grid"] .cg-pattern {
+  background-image:
+    linear-gradient(90deg, rgba(31, 41, 55, 0.06) 1px, transparent 1px),
+    linear-gradient(0deg, rgba(31, 41, 55, 0.06) 1px, transparent 1px);
+  background-size: 50px 50px;
+  background-position: 0 0, 0 0;
+}
+
+/* ===== 通用组件炭黑样式扩展 ===== */
+
+/* 炭黑导航栏样式 */
+[data-theme="charcoal-grid"] .nav-glass {
+  background: var(--cg-surface);
+  backdrop-filter: none;
+  border: 2px solid var(--cg-primary);
+  border-radius: 0;
+  box-shadow: 4px 4px 0 var(--cg-primary-light);
+}
+
+[data-theme="charcoal-grid"] .nav-glass:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 5px 5px 0 var(--cg-primary-light);
+}
+
+/* 炭黑输入框样式 */
+[data-theme="charcoal-grid"] .input {
+  border: 3px solid var(--cg-primary);
+  border-radius: 0;
+  background: var(--cg-surface);
+  color: var(--cg-text);
+  transition: all var(--cg-duration-snappy) ease-out;
+  box-shadow: 2px 2px 0 var(--cg-primary-light);
+}
+
+[data-theme="charcoal-grid"] .input:focus {
+  border-color: var(--cg-accent);
+  box-shadow: 3px 3px 0 var(--cg-accent-light);
+  outline: none;
+  transform: translate(-1px, -1px);
+}
+
+[data-theme="charcoal-grid"] .input::placeholder {
+  color: var(--cg-text-muted);
+}
+
+/* 炭黑玻璃卡片 */
+[data-theme="charcoal-grid"] .glass-card {
+  background: var(--cg-surface);
+  backdrop-filter: none;
+  border: 2px solid var(--cg-primary);
+  border-radius: 0;
+  box-shadow: 3px 3px 0 var(--cg-primary-light);
+  transition: all var(--cg-duration-snappy) ease-out;
+}
+
+[data-theme="charcoal-grid"] .glass-card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0 var(--cg-primary-light);
+}
+
+/* 炭黑链接样式 */
+[data-theme="charcoal-grid"] main a {
+  color: var(--cg-primary);
+  transition: all var(--cg-duration-fast) ease-out;
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+}
+
+[data-theme="charcoal-grid"] main a:hover {
+  color: var(--cg-accent);
+  border-bottom-color: var(--cg-accent);
+}
+
+/* 炭黑按钮通用样式 */
+[data-theme="charcoal-grid"] main button:not(.cg-btn):not(.btn) {
+  background: var(--cg-primary);
+  color: var(--cg-text-inverse);
+  border: 2px solid var(--cg-primary);
+  border-radius: 0;
+  padding: 12px 24px;
+  font-weight: 700;
+  transition: all var(--cg-duration-snappy) ease-out;
+  cursor: pointer;
+  box-shadow: 2px 2px 0 var(--cg-primary-light);
+}
+
+[data-theme="charcoal-grid"] main button:not(.cg-btn):not(.btn):hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0 var(--cg-primary-light);
+}
+
+/* 炭黑选择器样式 */
+[data-theme="charcoal-grid"] select {
+  border: 3px solid var(--cg-primary);
+  border-radius: 0;
+  background: var(--cg-surface);
+  color: var(--cg-text);
+  padding: 12px 16px;
+  transition: all var(--cg-duration-snappy) ease-out;
+  box-shadow: 2px 2px 0 var(--cg-primary-light);
+}
+
+[data-theme="charcoal-grid"] select:focus {
+  border-color: var(--cg-accent);
+  box-shadow: 3px 3px 0 var(--cg-accent-light);
+  outline: none;
+  transform: translate(-1px, -1px);
+}
+
+/* 炭黑分割线 */
+[data-theme="charcoal-grid"] hr {
+  border: none;
+  height: 3px;
+  background: var(--cg-primary);
+  border-radius: 0;
+  margin: 32px 0;
+}
+
+/* 炭黑代码块 */
+[data-theme="charcoal-grid"] code {
+  background: var(--cg-surface-elevated);
+  color: var(--cg-primary);
+  padding: 4px 8px;
+  border: 1px solid var(--cg-primary);
+  border-radius: 0;
+  font-family: 'Consolas', monospace;
+  font-size: 0.875em;
+}
+
+[data-theme="charcoal-grid"] pre {
+  background: var(--cg-surface-elevated);
+  border: 2px solid var(--cg-primary);
+  border-radius: 0;
+  padding: 20px;
+  overflow-x: auto;
+  box-shadow: 3px 3px 0 var(--cg-primary-light);
+}
+
+/* 炭黑表格样式 */
+[data-theme="charcoal-grid"] table {
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 100%;
+  background: var(--cg-surface);
+  border: 3px solid var(--cg-primary);
+  border-radius: 0;
+  overflow: hidden;
+  box-shadow: 4px 4px 0 var(--cg-primary-light);
+}
+
+[data-theme="charcoal-grid"] th {
+  background: var(--cg-primary);
+  color: var(--cg-text-inverse);
+  padding: 16px;
+  text-align: left;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 2px solid var(--cg-primary-light);
+}
+
+[data-theme="charcoal-grid"] td {
+  padding: 16px;
+  border-bottom: 1px solid var(--cg-primary-light);
+  color: var(--cg-text);
+}
+
+[data-theme="charcoal-grid"] tr:hover {
+  background: var(--cg-surface-elevated);
+}
+
+/* 炭黑列表样式 */
+[data-theme="charcoal-grid"] ul li::marker {
+  color: var(--cg-primary);
+}
+
+[data-theme="charcoal-grid"] ol li::marker {
+  color: var(--cg-primary);
+  font-weight: 700;
+}
+
+/* 炭黑引用块 */
+[data-theme="charcoal-grid"] blockquote {
+  border-left: 4px solid var(--cg-primary);
+  background: var(--cg-surface-elevated);
+  padding: 20px 24px;
+  margin: 24px 0;
+  border-radius: 0;
+  color: var(--cg-text);
+  font-style: normal;
+  box-shadow: 2px 2px 0 var(--cg-primary-light);
+}
+
+/* 炭黑进度条 */
+[data-theme="charcoal-grid"] progress {
+  appearance: none;
+  width: 100%;
+  height: 8px;
+  border-radius: 0;
+  background: var(--cg-surface-elevated);
+  border: 1px solid var(--cg-primary);
+}
+
+[data-theme="charcoal-grid"] progress::-webkit-progress-bar {
+  background: var(--cg-surface-elevated);
+  border-radius: 0;
+}
+
+[data-theme="charcoal-grid"] progress::-webkit-progress-value {
+  background: var(--cg-accent);
+  border-radius: 0;
+}
+
+/* 炭黑滚动条 */
+[data-theme="charcoal-grid"] ::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+[data-theme="charcoal-grid"] ::-webkit-scrollbar-track {
+  background: var(--cg-surface-elevated);
+  border: 1px solid var(--cg-primary);
+}
+
+[data-theme="charcoal-grid"] ::-webkit-scrollbar-thumb {
+  background: var(--cg-primary);
+  border: 1px solid var(--cg-primary-light);
+}
+
+[data-theme="charcoal-grid"] ::-webkit-scrollbar-thumb:hover {
+  background: var(--cg-primary-light);
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+  [data-theme="charcoal-grid"] .cg-hero {
+    padding: 40px 20px;
+  }
+
+  [data-theme="charcoal-grid"] .cg-title-hero {
+    font-size: clamp(2rem, 8vw, 3.5rem);
+  }
+
+  [data-theme="charcoal-grid"] .cg-btn {
+    padding: 12px 24px;
+    font-size: 0.875rem;
+  }
+}
+
+/* 减少动画（用户偏好） */
+@media (prefers-reduced-motion: reduce) {
+  [data-theme="charcoal-grid"] * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

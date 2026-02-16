@@ -273,6 +273,41 @@
   animation: festivalFloat 6s ease-in-out infinite reverse;
 }
 
+/* 页面壳层专用：仅提供背景，不覆盖页面自身内边距 */
+[data-theme="festival-civic"] .fc-page-hero {
+  background: var(--fc-gradient-hero);
+  position: relative;
+  overflow: hidden;
+  border-radius: 24px;
+  isolation: isolate;
+}
+
+[data-theme="festival-civic"] .fc-page-hero::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(190, 18, 60, 0.08) 0%, transparent 70%);
+  animation: festivalFloat 8s ease-in-out infinite;
+  pointer-events: none;
+  z-index: -1;
+}
+
+[data-theme="festival-civic"] .fc-page-hero::after {
+  content: '';
+  position: absolute;
+  bottom: -30%;
+  right: -30%;
+  width: 150%;
+  height: 150%;
+  background: radial-gradient(circle, rgba(37, 99, 235, 0.06) 0%, transparent 60%);
+  animation: festivalFloat 6s ease-in-out infinite reverse;
+  pointer-events: none;
+  z-index: -1;
+}
+
 /* 节庆标题 */
 [data-theme="festival-civic"] .fc-title-hero {
   font-size: clamp(3rem, 8vw, 6rem);
@@ -511,19 +546,19 @@
 }
 
 /* 节庆链接样式 */
-[data-theme="festival-civic"] a {
+[data-theme="festival-civic"] main a {
   color: var(--fc-primary);
   transition: all var(--fc-duration-fast) ease;
 }
 
-[data-theme="festival-civic"] a:hover {
+[data-theme="festival-civic"] main a:hover {
   color: var(--fc-primary-light);
   text-decoration: underline;
   text-decoration-color: var(--fc-primary-light);
 }
 
 /* 节庆表单元素 */
-[data-theme="festival-civic"] button:not(.fc-btn):not(.btn) {
+[data-theme="festival-civic"] main button:not(.fc-btn):not(.btn) {
   background: var(--fc-gradient-primary);
   color: var(--fc-text-inverse);
   border: none;
@@ -534,7 +569,7 @@
   cursor: pointer;
 }
 
-[data-theme="festival-civic"] button:not(.fc-btn):not(.btn):hover {
+[data-theme="festival-civic"] main button:not(.fc-btn):not(.btn):hover {
   transform: translateY(-2px);
   box-shadow: var(--fc-shadow);
 }

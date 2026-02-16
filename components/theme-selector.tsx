@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { useTheme } from './theme-provider';
-import { Palette, Sparkles, Crown, Zap } from 'lucide-react';
+import { Palette, Sparkles, Crown, Zap, Grid3X3, ScrollText } from 'lucide-react';
 
 type ThemeSelectorProps = {
   placement?: 'down' | 'up';
@@ -74,6 +74,22 @@ export function ThemeSelector({ placement = 'down' }: ThemeSelectorProps) {
       icon: Zap,
       colors: ['#0f766e', '#14b8a6', '#f97316'],
       preview: 'bg-gradient-to-r from-teal-700 via-teal-500 to-orange-500'
+    },
+    {
+      id: 'charcoal-grid' as const,
+      name: '炭黑栅格',
+      description: '结构化的深灰风格',
+      icon: Grid3X3,
+      colors: ['#1f2937', '#374151', '#10b981'],
+      preview: 'bg-gradient-to-r from-gray-800 via-gray-600 to-emerald-500'
+    },
+    {
+      id: 'copper-lecture' as const,
+      name: '铜色讲堂',
+      description: '讲座质感的铜棕风格',
+      icon: ScrollText,
+      colors: ['#9a3412', '#b45309', '#1d4ed8'],
+      preview: 'bg-gradient-to-r from-orange-900 via-amber-700 to-blue-700'
     }
   ];
 
@@ -95,7 +111,11 @@ export function ThemeSelector({ placement = 'down' }: ThemeSelectorProps) {
               ? 'bg-white border-blue-200 text-blue-800 shadow-lg hover:shadow-xl focus:ring-blue-500'
               : theme === 'festival-civic'
                 ? 'bg-white border-rose-200 text-rose-800 shadow-lg hover:shadow-xl fc-animate-glow focus:ring-rose-500'
-                : 'bg-white border-teal-200 text-teal-800 shadow-lg hover:shadow-xl mc-animate-glow focus:ring-teal-500'
+              : theme === 'mint-campaign'
+                  ? 'bg-white border-teal-200 text-teal-800 shadow-lg hover:shadow-xl mc-animate-glow focus:ring-teal-500'
+                  : theme === 'copper-lecture'
+                    ? 'bg-white border-amber-700 text-amber-900 shadow-lg hover:shadow-xl cl-animate-glow focus:ring-amber-700'
+                    : 'bg-white border-gray-700 text-gray-800 shadow-lg hover:shadow-xl cg-animate-glow focus:ring-gray-500'
             }
           `}
           aria-expanded={isOpen}
@@ -121,7 +141,11 @@ export function ThemeSelector({ placement = 'down' }: ThemeSelectorProps) {
             ? 'border-blue-200'
             : theme === 'festival-civic'
               ? 'border-rose-200'
-              : 'border-teal-200'
+            : theme === 'mint-campaign'
+                ? 'border-teal-200'
+                : theme === 'copper-lecture'
+                  ? 'border-amber-700'
+                : 'border-gray-700'
           }
         `}>
           <div className="p-6">
@@ -157,7 +181,11 @@ export function ThemeSelector({ placement = 'down' }: ThemeSelectorProps) {
                           ? 'border-blue-500 bg-blue-50 shadow-lg focus:ring-blue-500'
                           : themeOption.id === 'festival-civic'
                             ? 'border-rose-500 bg-rose-50 shadow-lg fc-animate-pulse focus:ring-rose-500'
-                            : 'border-teal-500 bg-teal-50 shadow-lg mc-animate-pulse focus:ring-teal-500'
+                            : themeOption.id === 'mint-campaign'
+                              ? 'border-teal-500 bg-teal-50 shadow-lg mc-animate-pulse focus:ring-teal-500'
+                              : themeOption.id === 'copper-lecture'
+                                ? 'border-amber-700 bg-amber-50 shadow-lg cl-animate-pulse focus:ring-amber-700'
+                              : 'border-gray-700 bg-gray-50 shadow-lg cg-animate-glow focus:ring-gray-500'
                         : 'border-gray-200 hover:border-gray-300 hover:shadow-md focus:ring-gray-400'
                       }
                     `}
@@ -171,7 +199,11 @@ export function ThemeSelector({ placement = 'down' }: ThemeSelectorProps) {
                           ? 'bg-gradient-to-br from-blue-500 to-blue-600'
                           : themeOption.id === 'festival-civic'
                             ? 'bg-gradient-to-br from-rose-500 to-rose-600'
-                            : 'bg-gradient-to-br from-teal-500 to-teal-600'
+                            : themeOption.id === 'mint-campaign'
+                              ? 'bg-gradient-to-br from-teal-500 to-teal-600'
+                              : themeOption.id === 'copper-lecture'
+                                ? 'bg-gradient-to-br from-amber-800 to-orange-700'
+                              : 'bg-gradient-to-br from-gray-700 to-gray-800'
                         }
                       `}>
                         <Icon className="h-5 w-5 text-white" />
@@ -188,7 +220,11 @@ export function ThemeSelector({ placement = 'down' }: ThemeSelectorProps) {
                                 ? 'bg-blue-100 text-blue-700'
                                 : themeOption.id === 'festival-civic'
                                   ? 'bg-rose-100 text-rose-700'
-                                  : 'bg-teal-100 text-teal-700'
+                                  : themeOption.id === 'mint-campaign'
+                                    ? 'bg-teal-100 text-teal-700'
+                                    : themeOption.id === 'copper-lecture'
+                                      ? 'bg-amber-100 text-amber-800'
+                                    : 'bg-gray-100 text-gray-700'
                               }
                             `}>
                               当前
@@ -229,6 +265,8 @@ export function ThemeSelector({ placement = 'down' }: ThemeSelectorProps) {
                 <strong>经典政务</strong> 保持稳重专业风格。
                 <strong>节庆公民</strong> 采用高饱和与戏剧性动画。
                 <strong>薄荷行动</strong> 强调清新活力与行动感。
+                <strong>炭黑栅格</strong> 结构化深灰风格，信息边界明确。
+                <strong>铜色讲堂</strong> 强调讲座质感与内容层次。
               </p>
             </div>
           </div>

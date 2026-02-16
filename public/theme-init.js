@@ -2,7 +2,13 @@
 (function() {
   try {
     const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'festival-civic' || savedTheme === 'default' || savedTheme === 'mint-campaign') {
+    if (
+      savedTheme === 'festival-civic' ||
+      savedTheme === 'default' ||
+      savedTheme === 'mint-campaign' ||
+      savedTheme === 'charcoal-grid' ||
+      savedTheme === 'copper-lecture'
+    ) {
       document.documentElement.setAttribute('data-theme', savedTheme);
     } else {
       document.documentElement.setAttribute('data-theme', 'default');

@@ -270,6 +270,41 @@
   animation: mintFloat 4s ease-in-out infinite reverse;
 }
 
+/* 页面壳层专用：仅提供背景，不覆盖页面自身内边距 */
+[data-theme="mint-campaign"] .mc-page-hero {
+  background: var(--mc-gradient-hero);
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+  isolation: isolate;
+}
+
+[data-theme="mint-campaign"] .mc-page-hero::before {
+  content: '';
+  position: absolute;
+  top: -40%;
+  left: -40%;
+  width: 180%;
+  height: 180%;
+  background: radial-gradient(circle, rgba(15, 118, 110, 0.06) 0%, transparent 60%);
+  animation: mintFloat 6s ease-in-out infinite;
+  pointer-events: none;
+  z-index: -1;
+}
+
+[data-theme="mint-campaign"] .mc-page-hero::after {
+  content: '';
+  position: absolute;
+  bottom: -25%;
+  right: -25%;
+  width: 120%;
+  height: 120%;
+  background: radial-gradient(circle, rgba(249, 115, 22, 0.05) 0%, transparent 50%);
+  animation: mintFloat 4s ease-in-out infinite reverse;
+  pointer-events: none;
+  z-index: -1;
+}
+
 /* 薄荷标题 */
 [data-theme="mint-campaign"] .mc-title-hero {
   font-size: clamp(2.5rem, 7vw, 5rem);
@@ -472,19 +507,19 @@
 }
 
 /* 薄荷链接样式 */
-[data-theme="mint-campaign"] a {
+[data-theme="mint-campaign"] main a {
   color: var(--mc-primary);
   transition: all var(--mc-duration-fast) ease;
 }
 
-[data-theme="mint-campaign"] a:hover {
+[data-theme="mint-campaign"] main a:hover {
   color: var(--mc-primary-light);
   text-decoration: underline;
   text-decoration-color: var(--mc-primary-light);
 }
 
 /* 薄荷按钮通用样式 */
-[data-theme="mint-campaign"] button:not(.mc-btn):not(.btn) {
+[data-theme="mint-campaign"] main button:not(.mc-btn):not(.btn) {
   background: var(--mc-gradient-primary);
   color: var(--mc-text-inverse);
   border: none;
@@ -495,7 +530,7 @@
   cursor: pointer;
 }
 
-[data-theme="mint-campaign"] button:not(.mc-btn):not(.btn):hover {
+[data-theme="mint-campaign"] main button:not(.mc-btn):not(.btn):hover {
   transform: translateY(-2px);
   box-shadow: var(--mc-shadow);
 }

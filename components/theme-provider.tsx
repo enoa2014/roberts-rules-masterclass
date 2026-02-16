@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useEffect, useState } from 'react';
 
-type Theme = 'default' | 'festival-civic' | 'mint-campaign';
+type Theme = 'default' | 'festival-civic' | 'mint-campaign' | 'charcoal-grid' | 'copper-lecture';
 
 interface ThemeContextType {
   theme: Theme;
@@ -21,7 +21,14 @@ function getInitialTheme(): Theme {
 
   try {
     const savedTheme = localStorage.getItem('theme') as Theme;
-    if (savedTheme && (savedTheme === 'default' || savedTheme === 'festival-civic' || savedTheme === 'mint-campaign')) {
+    if (
+      savedTheme &&
+      (savedTheme === 'default' ||
+        savedTheme === 'festival-civic' ||
+        savedTheme === 'mint-campaign' ||
+        savedTheme === 'charcoal-grid' ||
+        savedTheme === 'copper-lecture')
+    ) {
       return savedTheme;
     }
   } catch (error) {
@@ -55,7 +62,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   };
 
   const toggleTheme = () => {
-    const themeOrder: Theme[] = ['default', 'festival-civic', 'mint-campaign'];
+    const themeOrder: Theme[] = ['default', 'festival-civic', 'mint-campaign', 'charcoal-grid', 'copper-lecture'];
     const currentIndex = themeOrder.indexOf(theme);
     const nextIndex = (currentIndex + 1) % themeOrder.length;
     setTheme(themeOrder[nextIndex]);

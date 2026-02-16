@@ -8,6 +8,8 @@ export default function FAQPage() {
   const { theme } = useTheme();
   const isFestival = theme === "festival-civic";
   const isMint = theme === "mint-campaign";
+  const isCharcoal = theme === "charcoal-grid";
+  const isCopper = theme === "copper-lecture";
 
   const faqs = [
     {
@@ -30,8 +32,8 @@ export default function FAQPage() {
 
   return (
     <PageShell
-      title={isFestival ? "节庆常见问题" : isMint ? "行动常见问题" : "常见问题"}
-      description={isFestival ? "这里有节庆学习中最常见的问题解答" : isMint ? "这里有行动学习中最常见的问题解答" : "这里有您可能关心的问题解答"}
+      title={isFestival ? "节庆常见问题" : isMint ? "行动常见问题" : isCharcoal ? "栅格常见问题" : isCopper ? "讲堂常见问题" : "常见问题"}
+      description={isFestival ? "这里有节庆学习中最常见的问题解答" : isMint ? "这里有行动学习中最常见的问题解答" : isCharcoal ? "这里有结构化学习中最常见的问题解答" : isCopper ? "这里有讲堂学习中最常见的问题解答" : "这里有您可能关心的问题解答"}
     >
       <div className="max-w-3xl mx-auto space-y-4">
         {faqs.map((item, index) => (
@@ -43,6 +45,10 @@ export default function FAQPage() {
                 ? "fc-card border-rose-100"
                 : isMint
                   ? "mc-card border-teal-100"
+                  : isCharcoal
+                    ? "cg-card border-gray-700"
+                    : isCopper
+                      ? "cl-card border-orange-200"
                   : "bg-white border-gray-100"}
             `}
           >
@@ -54,6 +60,10 @@ export default function FAQPage() {
                     ? "text-rose-900 hover:bg-rose-50/80"
                     : isMint
                       ? "text-teal-900 hover:bg-teal-50/80"
+                      : isCharcoal
+                        ? "text-gray-900 hover:bg-gray-100/80"
+                        : isCopper
+                          ? "text-orange-900 hover:bg-orange-50/80"
                       : "text-gray-900 hover:bg-gray-50/80"}
                 `}
               >
@@ -64,6 +74,10 @@ export default function FAQPage() {
                       ? "bg-rose-100 text-rose-700"
                       : isMint
                         ? "bg-teal-100 text-teal-700"
+                        : isCharcoal
+                          ? "bg-gray-200 text-gray-800"
+                          : isCopper
+                            ? "bg-orange-100 text-orange-800"
                         : "bg-blue-50 text-primary"}
                   `}
                 >
@@ -79,6 +93,10 @@ export default function FAQPage() {
                     ? "border-rose-50"
                     : isMint
                       ? "border-teal-50"
+                      : isCharcoal
+                        ? "border-gray-200"
+                        : isCopper
+                          ? "border-orange-100"
                       : "border-gray-50"}
                 `}
               >
@@ -89,10 +107,14 @@ export default function FAQPage() {
                       ? "border-rose-200"
                       : isMint
                         ? "border-teal-200"
+                        : isCharcoal
+                          ? "border-gray-400"
+                          : isCopper
+                            ? "border-orange-300"
                         : "border-blue-200"}
                   `}
                 >
-                  <p className={`leading-relaxed text-sm ${isFestival ? "text-rose-700" : isMint ? "text-teal-700" : "text-gray-600"}`}>{item.a}</p>
+                  <p className={`leading-relaxed text-sm ${isFestival ? "text-rose-700" : isMint ? "text-teal-700" : isCharcoal ? "text-gray-700" : isCopper ? "text-orange-800" : "text-gray-600"}`}>{item.a}</p>
                 </div>
               </div>
             </details>
@@ -108,14 +130,18 @@ export default function FAQPage() {
               ? "bg-rose-50 border-rose-100"
               : isMint
                 ? "bg-teal-50 border-teal-100"
+                : isCharcoal
+                  ? "bg-gray-100 border-gray-300"
+                  : isCopper
+                    ? "bg-orange-50 border-orange-200"
                 : "bg-gray-50 border-gray-100"}
           `}
         >
-          <HelpCircle className={`h-8 w-8 mb-3 ${isFestival ? "text-rose-300" : isMint ? "text-teal-300" : "text-gray-300"}`} />
-          <p className={`text-sm ${isFestival ? "text-rose-600" : isMint ? "text-teal-600" : "text-gray-500"}`}>还有其他问题？</p>
+          <HelpCircle className={`h-8 w-8 mb-3 ${isFestival ? "text-rose-300" : isMint ? "text-teal-300" : isCharcoal ? "text-gray-500" : isCopper ? "text-orange-400" : "text-gray-300"}`} />
+          <p className={`text-sm ${isFestival ? "text-rose-600" : isMint ? "text-teal-600" : isCharcoal ? "text-gray-700" : isCopper ? "text-orange-700" : "text-gray-500"}`}>还有其他问题？</p>
           <a
             href="mailto:contact@yiqidu.com"
-            className={`text-sm font-semibold mt-1 transition-colors cursor-pointer ${isFestival ? "text-rose-600 hover:text-rose-500" : isMint ? "text-teal-600 hover:text-teal-500" : "text-primary hover:text-primary/80"}`}
+            className={`text-sm font-semibold mt-1 transition-colors cursor-pointer ${isFestival ? "text-rose-600 hover:text-rose-500" : isMint ? "text-teal-600 hover:text-teal-500" : isCharcoal ? "text-emerald-700 hover:text-emerald-600" : isCopper ? "text-orange-800 hover:text-orange-700" : "text-primary hover:text-primary/80"}`}
           >
             联系我们 →
           </a>

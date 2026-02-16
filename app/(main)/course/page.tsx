@@ -25,6 +25,8 @@ export default function CoursePage() {
   const { theme } = useTheme();
   const isFestival = theme === 'festival-civic';
   const isMint = theme === 'mint-campaign';
+  const isCharcoal = theme === 'charcoal-grid';
+  const isCopper = theme === 'copper-lecture';
   return (
     <div className="flex flex-col pt-20 min-h-screen">
       {/* Enhanced Page Header */}
@@ -34,12 +36,16 @@ export default function CoursePage() {
           ? 'fc-hero fc-pattern'
           : isMint
             ? 'mc-hero mc-pattern'
+            : isCharcoal
+              ? 'cg-hero cg-pattern'
+              : isCopper
+                ? 'cl-hero cl-pattern'
             : 'gradient-hero'
         }
       `}>
         <div className={`
           absolute inset-0 opacity-30
-          ${isFestival ? '' : isMint ? '' : 'parliament-pattern'}
+          ${isFestival || isMint || isCharcoal || isCopper ? '' : 'parliament-pattern'}
         `}></div>
 
         {/* 节庆背景元素 */}
@@ -55,6 +61,18 @@ export default function CoursePage() {
           <>
             <div className="absolute top-10 left-10 w-28 h-28 bg-gradient-to-r from-teal-600/20 to-teal-500/10 rounded-full blur-3xl mc-animate-float" />
             <div className="absolute bottom-10 right-10 w-36 h-36 bg-gradient-to-r from-orange-500/15 to-orange-400/10 rounded-full blur-3xl mc-animate-float mc-delay-300" />
+          </>
+        )}
+        {isCharcoal && (
+          <>
+            <div className="absolute top-10 left-10 w-24 h-24 bg-gradient-to-r from-gray-700/20 to-gray-600/10 rounded-none blur-2xl" />
+            <div className="absolute bottom-10 right-10 w-28 h-28 bg-gradient-to-r from-emerald-500/15 to-emerald-400/10 rounded-none blur-2xl" />
+          </>
+        )}
+        {isCopper && (
+          <>
+            <div className="absolute top-10 left-10 w-28 h-28 bg-gradient-to-r from-orange-800/20 to-amber-700/10 rounded-2xl blur-3xl cl-animate-float" />
+            <div className="absolute bottom-10 right-10 w-36 h-36 bg-gradient-to-r from-blue-700/15 to-orange-700/10 rounded-2xl blur-3xl cl-animate-float cl-delay-300" />
           </>
         )}
         <div className="container max-w-7xl relative z-10">
@@ -74,6 +92,10 @@ export default function CoursePage() {
                 ? 'fc-animate-slide'
                 : isMint
                   ? 'mc-animate-slide'
+                  : isCharcoal
+                    ? 'cg-animate-slide'
+                    : isCopper
+                      ? 'cl-animate-slide'
                   : 'animate-fadeInUp'
               }
             `}>
@@ -83,12 +105,16 @@ export default function CoursePage() {
                   ? 'fc-badge fc-animate-glow'
                   : isMint
                     ? 'mc-badge mc-animate-glow'
+                    : isCharcoal
+                      ? 'cg-badge cg-animate-glow'
+                      : isCopper
+                        ? 'cl-badge cl-animate-glow'
                     : 'bg-blue-50 border border-blue-200 text-blue-700'
                 }
               `}>
                 <BookOpen className="h-4 w-4" />
                 <span className="uppercase tracking-wide">
-                  {isFestival ? '节庆课程' : isMint ? '行动课程' : '学习路径'}
+                  {isFestival ? '节庆课程' : isMint ? '行动课程' : isCharcoal ? '结构课程' : isCopper ? '讲堂课程' : '学习路径'}
                 </span>
               </div>
               <h1 className={`
@@ -97,10 +123,14 @@ export default function CoursePage() {
                   ? 'fc-title-hero'
                   : isMint
                     ? 'mc-title-hero'
+                    : isCharcoal
+                      ? 'cg-title-hero'
+                      : isCopper
+                        ? 'cl-title-hero'
                     : 'text-hero text-gray-900'
                 }
               `}>
-                {isFestival ? '节庆课程总览' : isMint ? '行动课程总览' : '课程总览'}
+                {isFestival ? '节庆课程总览' : isMint ? '行动课程总览' : isCharcoal ? '结构课程总览' : isCopper ? '讲堂课程总览' : '课程总览'}
               </h1>
               <p className={`
                 max-w-2xl
@@ -108,6 +138,10 @@ export default function CoursePage() {
                   ? 'text-lg text-rose-800'
                   : isMint
                     ? 'text-lg text-teal-800'
+                    : isCharcoal
+                      ? 'text-lg text-gray-700'
+                      : isCopper
+                        ? 'text-lg text-orange-800'
                     : 'text-body text-gray-600'
                 }
               `}>
@@ -122,6 +156,18 @@ export default function CoursePage() {
                     在清新活力的行动氛围中掌握议事技能，从基础理论到实战应用，
                     <br className="hidden md:block" />
                     与志同道合的伙伴一起激发公民参与热情。
+                  </>
+                ) : isCharcoal ? (
+                  <>
+                    在边界清晰的结构化学习中掌握议事技能，从基础理论到实战应用，
+                    <br className="hidden md:block" />
+                    通过标准化训练流程，持续提升公民参与效率。
+                  </>
+                ) : isCopper ? (
+                  <>
+                    在讲堂式的深度学习中掌握议事技能，从规则原理到案例研判，
+                    <br className="hidden md:block" />
+                    通过“讲解+演练+复盘”稳步提升公共表达与协作能力。
                   </>
                 ) : (
                   <>
@@ -140,14 +186,18 @@ export default function CoursePage() {
                 ? 'fc-animate-slide fc-delay-200'
                 : isMint
                   ? 'mc-animate-slide mc-delay-200'
+                  : isCharcoal
+                    ? 'cg-animate-slide cg-delay-200'
+                    : isCopper
+                      ? 'cl-animate-slide cl-delay-200'
                   : 'animate-fadeInUp delay-200'
               }
             `}>
               {[
-                { icon: BookOpen, value: "12", label: isFestival ? "节庆课程" : isMint ? "行动课程" : "门课程", color: isFestival ? "text-rose-600" : isMint ? "text-teal-600" : "text-blue-600" },
-                { icon: Users, value: "500+", label: isFestival ? "节庆参与者" : isMint ? "行动参与者" : "学员", color: isFestival ? "text-blue-600" : isMint ? "text-orange-600" : "text-purple-600" },
+                { icon: BookOpen, value: "12", label: isFestival ? "节庆课程" : isMint ? "行动课程" : isCharcoal ? "结构课程" : isCopper ? "讲堂课程" : "门课程", color: isFestival ? "text-rose-600" : isMint ? "text-teal-600" : isCharcoal ? "text-gray-700" : isCopper ? "text-orange-700" : "text-blue-600" },
+                { icon: Users, value: "500+", label: isFestival ? "节庆参与者" : isMint ? "行动参与者" : isCharcoal ? "结构学员" : isCopper ? "讲堂学员" : "学员", color: isFestival ? "text-blue-600" : isMint ? "text-orange-600" : isCharcoal ? "text-emerald-600" : isCopper ? "text-blue-700" : "text-purple-600" },
                 { icon: Clock, value: "40+", label: "小时", color: "text-amber-600" },
-                { icon: Award, value: "98%", label: isFestival ? "节庆好评" : isMint ? "行动好评" : "完成率", color: "text-green-600" },
+                { icon: Award, value: "98%", label: isFestival ? "节庆好评" : isMint ? "行动好评" : isCharcoal ? "结构好评" : isCopper ? "讲堂好评" : "完成率", color: "text-green-600" },
               ].map((stat, i) => (
                 <div key={stat.label} className={`
                   p-4 text-center transition-all duration-300
@@ -155,6 +205,10 @@ export default function CoursePage() {
                     ? `fc-card fc-animate-bounce fc-delay-${(i + 3) * 100}`
                     : isMint
                       ? `mc-card mc-animate-bounce mc-delay-${(i + 3) * 100}`
+                      : isCharcoal
+                        ? `cg-stat-card cg-animate-snap cg-delay-${(i + 3) * 100}`
+                        : isCopper
+                          ? `cl-stat-card cl-animate-bounce cl-delay-${(i + 3) * 100}`
                       : 'glass-card hover-lift'
                   }
                 `}>
@@ -164,6 +218,10 @@ export default function CoursePage() {
                       ? 'bg-gradient-to-br from-rose-500 to-rose-600 text-white'
                       : isMint
                         ? 'bg-gradient-to-br from-teal-500 to-teal-600 text-white'
+                        : isCharcoal
+                          ? 'bg-gradient-to-br from-gray-700 to-gray-800 text-white'
+                          : isCopper
+                            ? 'bg-gradient-to-br from-orange-800 to-amber-700 text-white'
                         : `bg-white ${stat.color}`
                     }
                   `}>
@@ -171,13 +229,13 @@ export default function CoursePage() {
                   </div>
                   <div className={`
                     text-2xl font-bold
-                    ${isFestival ? 'fc-stat-value' : isMint ? 'mc-stat-value' : 'text-gray-900'}
+                    ${isFestival ? 'fc-stat-value' : isMint ? 'mc-stat-value' : isCharcoal ? 'cg-stat-value' : isCopper ? 'cl-stat-value' : 'text-gray-900'}
                   `}>
                     {stat.value}
                   </div>
                   <div className={`
                     font-mono text-xs uppercase tracking-wide
-                    ${isFestival ? 'fc-stat-label' : isMint ? 'mc-stat-label' : 'text-gray-500'}
+                    ${isFestival ? 'fc-stat-label' : isMint ? 'mc-stat-label' : isCharcoal ? 'cg-stat-label' : isCopper ? 'cl-stat-label' : 'text-gray-500'}
                   `}>
                     {stat.label}
                   </div>
@@ -191,7 +249,7 @@ export default function CoursePage() {
       {/* Search and Filter Section */}
       <section className={`
         py-8 border-b border-gray-100
-        ${isFestival ? 'bg-white' : isMint ? 'bg-teal-50/30' : 'bg-white'}
+        ${isFestival ? 'bg-white' : isMint ? 'bg-teal-50/30' : isCharcoal ? 'bg-gray-50/80' : isCopper ? 'bg-orange-50/60' : 'bg-white'}
       `}>
         <div className="container max-w-7xl">
           <div className="flex flex-col lg:flex-row gap-6 items-start lg:items-center justify-between">
@@ -201,13 +259,17 @@ export default function CoursePage() {
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
                 <input
                   type="text"
-                  placeholder={isFestival ? "搜索节庆课程..." : isMint ? "搜索行动课程..." : "搜索课程..."}
+                  placeholder={isFestival ? "搜索节庆课程..." : isMint ? "搜索行动课程..." : isCharcoal ? "搜索结构课程..." : isCopper ? "搜索讲堂课程..." : "搜索课程..."}
                   className={`
                     input pl-10 pr-4
                     ${isFestival
                       ? 'border-rose-200 focus:border-rose-500 focus:ring-rose-500'
                       : isMint
                         ? 'border-teal-200 focus:border-teal-500 focus:ring-teal-500'
+                        : isCharcoal
+                          ? 'border-gray-400 focus:border-emerald-500 focus:ring-emerald-500'
+                          : isCopper
+                            ? 'border-orange-300 focus:border-orange-700 focus:ring-orange-700'
                       : ''
                     }
                   `}
@@ -224,15 +286,23 @@ export default function CoursePage() {
                     key={filter}
                     className={`px-4 py-2 rounded-lg font-mono text-sm font-medium transition-all duration-200 ${
                       index === 0
-                        ? isFestival
-                          ? "bg-gradient-to-r from-rose-600 to-rose-700 text-white fc-animate-glow"
+                          ? isFestival
+                            ? "bg-gradient-to-r from-rose-600 to-rose-700 text-white fc-animate-glow"
                           : isMint
                             ? "bg-gradient-to-r from-teal-600 to-teal-700 text-white mc-animate-glow"
+                          : isCharcoal
+                            ? "bg-gradient-to-r from-gray-700 to-gray-800 text-white cg-animate-glow"
+                          : isCopper
+                            ? "bg-gradient-to-r from-orange-800 to-amber-700 text-white cl-animate-glow"
                             : "bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-political"
                         : isFestival
                           ? "bg-gray-100 text-gray-600 hover:bg-rose-50 hover:text-rose-600"
                           : isMint
                             ? "bg-gray-100 text-gray-600 hover:bg-teal-50 hover:text-teal-600"
+                            : isCharcoal
+                              ? "bg-gray-100 text-gray-700 hover:bg-gray-200 hover:text-emerald-700"
+                              : isCopper
+                                ? "bg-orange-100 text-orange-800 hover:bg-orange-200 hover:text-orange-900"
                             : "bg-gray-100 text-gray-600 hover:bg-blue-50 hover:text-blue-600"
                     }`}
                   >
@@ -262,13 +332,17 @@ export default function CoursePage() {
           ? 'bg-gradient-to-b from-white to-rose-50/30'
           : isMint
             ? 'bg-gradient-to-b from-white to-teal-50/40'
+            : isCharcoal
+              ? 'bg-gradient-to-b from-white to-gray-100/80'
+              : isCopper
+                ? 'bg-gradient-to-b from-white to-orange-100/60'
             : 'bg-gradient-to-b from-white to-gray-50'
         }
       `}>
         <div className="container max-w-7xl">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {courses.map((course, index) => (
-              <CourseCard key={course.id} course={course} index={index} isFestival={isFestival} isMint={isMint} />
+              <CourseCard key={course.id} course={course} index={index} isFestival={isFestival} isMint={isMint} isCharcoal={isCharcoal} isCopper={isCopper} />
             ))}
           </div>
 
@@ -280,10 +354,14 @@ export default function CoursePage() {
                 ? 'fc-btn fc-btn-ghost'
                 : isMint
                   ? 'mc-btn mc-btn-ghost'
+                  : isCharcoal
+                    ? 'cg-btn cg-btn-ghost'
+                    : isCopper
+                      ? 'cl-btn cl-btn-ghost'
                   : 'btn btn-ghost'
               }
             `}>
-              <span>{isFestival ? '加载更多节庆课程' : isMint ? '加载更多行动课程' : '加载更多课程'}</span>
+              <span>{isFestival ? '加载更多节庆课程' : isMint ? '加载更多行动课程' : isCharcoal ? '加载更多结构课程' : isCopper ? '加载更多讲堂课程' : '加载更多课程'}</span>
               <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
             </button>
           </div>
@@ -300,12 +378,16 @@ export default function CoursePage() {
                 ? 'fc-badge fc-animate-glow'
                 : isMint
                   ? 'mc-badge mc-animate-glow'
+                  : isCharcoal
+                    ? 'cg-badge cg-animate-glow'
+                    : isCopper
+                      ? 'cl-badge cl-animate-glow'
                   : 'bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 text-blue-700'
               }
             `}>
               <TrendingUp className="h-4 w-4" />
               <span className="uppercase tracking-wide">
-                {isFestival ? '节庆路径' : isMint ? '行动路径' : '推荐路径'}
+                {isFestival ? '节庆路径' : isMint ? '行动路径' : isCharcoal ? '结构路径' : isCopper ? '讲堂路径' : '推荐路径'}
               </span>
             </div>
             <h2 className={`
@@ -314,10 +396,14 @@ export default function CoursePage() {
                 ? 'fc-title-section fc-animate-slide fc-delay-100'
                 : isMint
                   ? 'mc-title-section mc-animate-slide mc-delay-100'
+                  : isCharcoal
+                    ? 'cg-title-section cg-animate-slide cg-delay-100'
+                    : isCopper
+                      ? 'cl-title-section cl-animate-slide cl-delay-100'
                   : 'text-display text-gray-900'
               }
             `}>
-              {isFestival ? '节庆学习路径' : isMint ? '行动学习路径' : '个性化学习路径'}
+              {isFestival ? '节庆学习路径' : isMint ? '行动学习路径' : isCharcoal ? '结构化学习路径' : isCopper ? '讲堂学习路径' : '个性化学习路径'}
             </h2>
             <p className={`
               max-w-2xl mx-auto
@@ -325,6 +411,10 @@ export default function CoursePage() {
                 ? 'text-lg text-rose-800 fc-animate-slide fc-delay-200'
                 : isMint
                   ? 'text-lg text-teal-800 mc-animate-slide mc-delay-200'
+                  : isCharcoal
+                    ? 'text-lg text-gray-700 cg-animate-slide cg-delay-200'
+                    : isCopper
+                      ? 'text-lg text-orange-800 cl-animate-slide cl-delay-200'
                   : 'text-body text-gray-600'
               }
             `}>
@@ -332,6 +422,10 @@ export default function CoursePage() {
                 ? '根据你的基础和目标，我们为你推荐最适合的节庆学习路径'
                 : isMint
                   ? '根据你的基础和目标，我们为你推荐最适合的行动学习路径'
+                  : isCharcoal
+                    ? '根据你的基础与目标，我们为你推荐最适合的结构化学习路径'
+                    : isCopper
+                      ? '根据你的基础与目标，我们为你推荐最适合的讲堂学习路径'
                   : '根据你的基础和目标，我们为你推荐最适合的学习路径'
               }
             </p>
@@ -339,7 +433,7 @@ export default function CoursePage() {
 
           <div className="grid md:grid-cols-3 gap-8">
             {learningPaths.map((path, index) => (
-              <LearningPathCard key={path.id} path={path} index={index} isFestival={isFestival} isMint={isMint} />
+              <LearningPathCard key={path.id} path={path} index={index} isFestival={isFestival} isMint={isMint} isCharcoal={isCharcoal} isCopper={isCopper} />
             ))}
           </div>
         </div>
@@ -474,42 +568,46 @@ function CourseCard({
   index,
   isFestival,
   isMint,
+  isCharcoal,
+  isCopper,
 }: {
   course: any;
   index: number;
   isFestival: boolean;
   isMint: boolean;
+  isCharcoal: boolean;
+  isCopper: boolean;
 }) {
   const colorMap = {
     blue: {
-      bg: isFestival ? "from-rose-500 to-rose-600" : isMint ? "from-teal-500 to-teal-600" : "from-blue-500 to-blue-600",
-      text: isFestival ? "text-rose-600" : isMint ? "text-teal-600" : "text-blue-600",
-      badge: isFestival ? "bg-rose-50 text-rose-700 border-rose-200" : isMint ? "bg-teal-50 text-teal-700 border-teal-200" : "bg-blue-50 text-blue-700 border-blue-200",
+      bg: isFestival ? "from-rose-500 to-rose-600" : isMint ? "from-teal-500 to-teal-600" : isCharcoal ? "from-gray-700 to-gray-800" : isCopper ? "from-orange-800 to-amber-700" : "from-blue-500 to-blue-600",
+      text: isFestival ? "text-rose-600" : isMint ? "text-teal-600" : isCharcoal ? "text-gray-700" : isCopper ? "text-orange-800" : "text-blue-600",
+      badge: isFestival ? "bg-rose-50 text-rose-700 border-rose-200" : isMint ? "bg-teal-50 text-teal-700 border-teal-200" : isCharcoal ? "bg-gray-100 text-gray-800 border-gray-300" : isCopper ? "bg-orange-50 text-orange-800 border-orange-200" : "bg-blue-50 text-blue-700 border-blue-200",
     },
     purple: {
-      bg: isFestival ? "from-blue-500 to-blue-600" : isMint ? "from-orange-500 to-orange-600" : "from-purple-500 to-purple-600",
-      text: isFestival ? "text-blue-600" : isMint ? "text-orange-600" : "text-purple-600",
-      badge: isFestival ? "bg-blue-50 text-blue-700 border-blue-200" : isMint ? "bg-orange-50 text-orange-700 border-orange-200" : "bg-purple-50 text-purple-700 border-purple-200",
+      bg: isFestival ? "from-blue-500 to-blue-600" : isMint ? "from-orange-500 to-orange-600" : isCharcoal ? "from-emerald-600 to-emerald-500" : isCopper ? "from-blue-700 to-blue-600" : "from-purple-500 to-purple-600",
+      text: isFestival ? "text-blue-600" : isMint ? "text-orange-600" : isCharcoal ? "text-emerald-700" : isCopper ? "text-blue-700" : "text-purple-600",
+      badge: isFestival ? "bg-blue-50 text-blue-700 border-blue-200" : isMint ? "bg-orange-50 text-orange-700 border-orange-200" : isCharcoal ? "bg-emerald-50 text-emerald-800 border-emerald-200" : isCopper ? "bg-blue-50 text-blue-800 border-blue-200" : "bg-purple-50 text-purple-700 border-purple-200",
     },
     cyan: {
-      bg: isFestival ? "from-rose-400 to-rose-500" : isMint ? "from-teal-400 to-teal-500" : "from-cyan-500 to-cyan-600",
-      text: isFestival ? "text-rose-500" : isMint ? "text-teal-500" : "text-cyan-600",
-      badge: isFestival ? "bg-rose-50 text-rose-600 border-rose-200" : isMint ? "bg-teal-50 text-teal-600 border-teal-200" : "bg-cyan-50 text-cyan-700 border-cyan-200",
+      bg: isFestival ? "from-rose-400 to-rose-500" : isMint ? "from-teal-400 to-teal-500" : isCharcoal ? "from-gray-600 to-gray-700" : isCopper ? "from-amber-700 to-orange-700" : "from-cyan-500 to-cyan-600",
+      text: isFestival ? "text-rose-500" : isMint ? "text-teal-500" : isCharcoal ? "text-gray-700" : isCopper ? "text-amber-700" : "text-cyan-600",
+      badge: isFestival ? "bg-rose-50 text-rose-600 border-rose-200" : isMint ? "bg-teal-50 text-teal-600 border-teal-200" : isCharcoal ? "bg-gray-100 text-gray-700 border-gray-300" : isCopper ? "bg-amber-50 text-amber-800 border-amber-200" : "bg-cyan-50 text-cyan-700 border-cyan-200",
     },
     green: {
-      bg: isFestival ? "from-blue-400 to-blue-500" : isMint ? "from-emerald-500 to-emerald-600" : "from-green-500 to-green-600",
-      text: isFestival ? "text-blue-500" : isMint ? "text-emerald-600" : "text-green-600",
-      badge: isFestival ? "bg-blue-50 text-blue-600 border-blue-200" : isMint ? "bg-emerald-50 text-emerald-700 border-emerald-200" : "bg-green-50 text-green-700 border-green-200",
+      bg: isFestival ? "from-blue-400 to-blue-500" : isMint ? "from-emerald-500 to-emerald-600" : isCharcoal ? "from-emerald-600 to-emerald-500" : isCopper ? "from-orange-700 to-blue-700" : "from-green-500 to-green-600",
+      text: isFestival ? "text-blue-500" : isMint ? "text-emerald-600" : isCharcoal ? "text-emerald-700" : isCopper ? "text-orange-700" : "text-green-600",
+      badge: isFestival ? "bg-blue-50 text-blue-600 border-blue-200" : isMint ? "bg-emerald-50 text-emerald-700 border-emerald-200" : isCharcoal ? "bg-emerald-50 text-emerald-800 border-emerald-300" : isCopper ? "bg-orange-50 text-orange-700 border-orange-200" : "bg-green-50 text-green-700 border-green-200",
     },
     amber: {
-      bg: isMint ? "from-orange-500 to-orange-600" : "from-amber-500 to-amber-600",
-      text: isMint ? "text-orange-600" : "text-amber-600",
-      badge: isMint ? "bg-orange-50 text-orange-700 border-orange-200" : "bg-amber-50 text-amber-700 border-amber-200",
+      bg: isMint ? "from-orange-500 to-orange-600" : isCharcoal ? "from-emerald-500 to-emerald-600" : isCopper ? "from-orange-800 to-amber-600" : "from-amber-500 to-amber-600",
+      text: isMint ? "text-orange-600" : isCharcoal ? "text-emerald-700" : isCopper ? "text-orange-800" : "text-amber-600",
+      badge: isMint ? "bg-orange-50 text-orange-700 border-orange-200" : isCharcoal ? "bg-emerald-50 text-emerald-800 border-emerald-300" : isCopper ? "bg-orange-50 text-orange-800 border-orange-200" : "bg-amber-50 text-amber-700 border-amber-200",
     },
     red: {
-      bg: isFestival ? "from-rose-600 to-rose-700" : isMint ? "from-red-500 to-orange-500" : "from-red-500 to-red-600",
-      text: isFestival ? "text-rose-700" : isMint ? "text-orange-700" : "text-red-600",
-      badge: isFestival ? "bg-rose-50 text-rose-800 border-rose-200" : isMint ? "bg-orange-50 text-orange-800 border-orange-200" : "bg-red-50 text-red-700 border-red-200",
+      bg: isFestival ? "from-rose-600 to-rose-700" : isMint ? "from-red-500 to-orange-500" : isCharcoal ? "from-gray-700 to-gray-800" : isCopper ? "from-orange-900 to-orange-700" : "from-red-500 to-red-600",
+      text: isFestival ? "text-rose-700" : isMint ? "text-orange-700" : isCharcoal ? "text-gray-800" : isCopper ? "text-orange-900" : "text-red-600",
+      badge: isFestival ? "bg-rose-50 text-rose-800 border-rose-200" : isMint ? "bg-orange-50 text-orange-800 border-orange-200" : isCharcoal ? "bg-gray-100 text-gray-800 border-gray-300" : isCopper ? "bg-orange-100 text-orange-900 border-orange-300" : "bg-red-50 text-red-700 border-red-200",
     },
   };
 
@@ -522,6 +620,10 @@ function CourseCard({
         ? `fc-card fc-animate-bounce fc-delay-${(index % 3 + 1) * 100}`
         : isMint
           ? `mc-card mc-animate-bounce mc-delay-${(index % 3 + 1) * 100}`
+          : isCharcoal
+            ? `cg-card cg-animate-snap cg-delay-${(index % 3 + 1) * 100}`
+            : isCopper
+              ? `cl-card cl-animate-bounce cl-delay-${(index % 3 + 1) * 100}`
           : `card hover-lift animate-fadeInUp delay-${(index % 3 + 1) * 100}`
       }
     `}>
@@ -543,6 +645,10 @@ function CourseCard({
           ? 'text-rose-800 group-hover:text-rose-600'
           : isMint
             ? 'text-teal-800 group-hover:text-teal-600'
+            : isCharcoal
+              ? 'text-gray-900 group-hover:text-emerald-700'
+              : isCopper
+                ? 'text-orange-900 group-hover:text-orange-700'
             : 'text-gray-900 group-hover:text-blue-600'
         }
       `}>
@@ -550,7 +656,7 @@ function CourseCard({
       </h3>
       <p className={`
         text-sm leading-relaxed mb-4
-        ${isFestival ? 'text-rose-700' : isMint ? 'text-teal-700' : 'text-gray-600'}
+        ${isFestival ? 'text-rose-700' : isMint ? 'text-teal-700' : isCharcoal ? 'text-gray-700' : isCopper ? 'text-orange-800' : 'text-gray-600'}
       `}>
         {course.description}
       </p>
@@ -622,6 +728,14 @@ function CourseCard({
                 ? course.status === "locked"
                   ? "mc-btn mc-btn-ghost opacity-50 cursor-not-allowed"
                   : "mc-btn mc-btn-primary"
+                : isCharcoal
+                  ? course.status === "locked"
+                    ? "cg-btn cg-btn-ghost opacity-50 cursor-not-allowed"
+                    : "cg-btn cg-btn-primary"
+                  : isCopper
+                    ? course.status === "locked"
+                      ? "cl-btn cl-btn-ghost opacity-50 cursor-not-allowed"
+                      : "cl-btn cl-btn-primary"
                 : course.status === "locked"
                   ? "btn btn-ghost opacity-50 cursor-not-allowed"
                   : "btn btn-primary"
@@ -656,24 +770,28 @@ function LearningPathCard({
   index,
   isFestival,
   isMint,
+  isCharcoal,
+  isCopper,
 }: {
   path: any;
   index: number;
   isFestival: boolean;
   isMint: boolean;
+  isCharcoal: boolean;
+  isCopper: boolean;
 }) {
   const colorMap = {
     blue: {
-      bg: isFestival ? "from-rose-500 to-rose-600" : isMint ? "from-teal-500 to-teal-600" : "from-blue-500 to-blue-600",
-      text: isFestival ? "text-rose-600" : isMint ? "text-teal-600" : "text-blue-600",
+      bg: isFestival ? "from-rose-500 to-rose-600" : isMint ? "from-teal-500 to-teal-600" : isCharcoal ? "from-gray-700 to-gray-800" : isCopper ? "from-orange-800 to-amber-700" : "from-blue-500 to-blue-600",
+      text: isFestival ? "text-rose-600" : isMint ? "text-teal-600" : isCharcoal ? "text-gray-700" : isCopper ? "text-orange-800" : "text-blue-600",
     },
     purple: {
-      bg: isFestival ? "from-blue-500 to-blue-600" : isMint ? "from-orange-500 to-orange-600" : "from-purple-500 to-purple-600",
-      text: isFestival ? "text-blue-600" : isMint ? "text-orange-600" : "text-purple-600",
+      bg: isFestival ? "from-blue-500 to-blue-600" : isMint ? "from-orange-500 to-orange-600" : isCharcoal ? "from-emerald-600 to-emerald-500" : isCopper ? "from-blue-700 to-blue-600" : "from-purple-500 to-purple-600",
+      text: isFestival ? "text-blue-600" : isMint ? "text-orange-600" : isCharcoal ? "text-emerald-700" : isCopper ? "text-blue-700" : "text-purple-600",
     },
     amber: {
-      bg: isMint ? "from-orange-500 to-orange-600" : "from-amber-500 to-amber-600",
-      text: isMint ? "text-orange-600" : "text-amber-600",
+      bg: isMint ? "from-orange-500 to-orange-600" : isCharcoal ? "from-emerald-500 to-emerald-600" : isCopper ? "from-orange-900 to-orange-700" : "from-amber-500 to-amber-600",
+      text: isMint ? "text-orange-600" : isCharcoal ? "text-emerald-700" : isCopper ? "text-orange-800" : "text-amber-600",
     },
   };
 
@@ -687,6 +805,10 @@ function LearningPathCard({
         ? `fc-card fc-animate-bounce fc-delay-${(index + 1) * 100}`
         : isMint
           ? `mc-card mc-animate-bounce mc-delay-${(index + 1) * 100}`
+          : isCharcoal
+            ? `cg-card cg-animate-snap cg-delay-${(index + 1) * 100}`
+            : isCopper
+              ? `cl-card cl-animate-bounce cl-delay-${(index + 1) * 100}`
           : `card hover-lift animate-fadeInUp delay-${(index + 1) * 100}`
       }
     `}>
@@ -696,6 +818,10 @@ function LearningPathCard({
           ? `bg-gradient-to-br ${colors.bg} group-hover:shadow-2xl fc-animate-glow`
           : isMint
             ? `bg-gradient-to-br ${colors.bg} group-hover:shadow-xl mc-animate-glow`
+            : isCharcoal
+              ? `bg-gradient-to-br ${colors.bg} group-hover:shadow-xl cg-animate-glow`
+              : isCopper
+                ? `bg-gradient-to-br ${colors.bg} group-hover:shadow-xl cl-animate-glow`
             : `bg-gradient-to-br ${colors.bg} group-hover:shadow-xl`
         }
       `}>
@@ -708,6 +834,10 @@ function LearningPathCard({
           ? 'text-rose-800 group-hover:text-rose-600'
           : isMint
             ? 'text-teal-800 group-hover:text-teal-600'
+            : isCharcoal
+              ? 'text-gray-900 group-hover:text-emerald-700'
+              : isCopper
+                ? 'text-orange-900 group-hover:text-orange-700'
             : 'text-gray-900 group-hover:text-blue-600'
         }
       `}>
@@ -716,7 +846,7 @@ function LearningPathCard({
 
       <p className={`
         text-sm leading-relaxed mb-6
-        ${isFestival ? 'text-rose-700' : isMint ? 'text-teal-700' : 'text-gray-600'}
+        ${isFestival ? 'text-rose-700' : isMint ? 'text-teal-700' : isCharcoal ? 'text-gray-700' : isCopper ? 'text-orange-800' : 'text-gray-600'}
       `}>
         {path.description}
       </p>
@@ -725,13 +855,13 @@ function LearningPathCard({
         <div>
           <div className={`
             text-lg font-bold
-            ${isFestival ? 'text-rose-800' : isMint ? 'text-teal-800' : 'text-gray-900'}
+            ${isFestival ? 'text-rose-800' : isMint ? 'text-teal-800' : isCharcoal ? 'text-gray-900' : isCopper ? 'text-orange-900' : 'text-gray-900'}
           `}>
             {path.courses}
           </div>
           <div className={`
             font-mono text-xs uppercase tracking-wide
-            ${isFestival ? 'text-rose-600' : isMint ? 'text-teal-600' : 'text-gray-500'}
+            ${isFestival ? 'text-rose-600' : isMint ? 'text-teal-600' : isCharcoal ? 'text-gray-600' : isCopper ? 'text-orange-700' : 'text-gray-500'}
           `}>
             门课程
           </div>
@@ -739,13 +869,13 @@ function LearningPathCard({
         <div>
           <div className={`
             text-lg font-bold
-            ${isFestival ? 'text-rose-800' : isMint ? 'text-teal-800' : 'text-gray-900'}
+            ${isFestival ? 'text-rose-800' : isMint ? 'text-teal-800' : isCharcoal ? 'text-gray-900' : isCopper ? 'text-orange-900' : 'text-gray-900'}
           `}>
             {path.duration}
           </div>
           <div className={`
             font-mono text-xs uppercase tracking-wide
-            ${isFestival ? 'text-rose-600' : isMint ? 'text-teal-600' : 'text-gray-500'}
+            ${isFestival ? 'text-rose-600' : isMint ? 'text-teal-600' : isCharcoal ? 'text-gray-600' : isCopper ? 'text-orange-700' : 'text-gray-500'}
           `}>
             总时长
           </div>
@@ -754,7 +884,7 @@ function LearningPathCard({
           <div className={`text-lg font-bold ${colors.text}`}>{path.difficulty}</div>
           <div className={`
             font-mono text-xs uppercase tracking-wide
-            ${isFestival ? 'text-rose-600' : isMint ? 'text-teal-600' : 'text-gray-500'}
+            ${isFestival ? 'text-rose-600' : isMint ? 'text-teal-600' : isCharcoal ? 'text-gray-600' : isCopper ? 'text-orange-700' : 'text-gray-500'}
           `}>
             难度
           </div>
@@ -767,11 +897,15 @@ function LearningPathCard({
           ? 'fc-btn fc-btn-primary'
           : isMint
             ? 'mc-btn mc-btn-primary'
+            : isCharcoal
+              ? 'cg-btn cg-btn-primary'
+              : isCopper
+                ? 'cl-btn cl-btn-primary'
             : 'btn btn-primary'
         }
       `}>
         <Zap className="h-4 w-4 transition-transform group-hover:scale-110" />
-        <span>{isFestival ? '开始节庆学习' : isMint ? '开始行动学习' : '开始学习'}</span>
+        <span>{isFestival ? '开始节庆学习' : isMint ? '开始行动学习' : isCharcoal ? '开始结构学习' : isCopper ? '开始讲堂学习' : '开始学习'}</span>
         <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
       </button>
     </div>
