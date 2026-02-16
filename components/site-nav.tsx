@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
@@ -21,7 +21,11 @@ import {
   Info,
   LogOut,
   ShieldCheck,
+  Crown,
+  Sparkles,
+  ChevronDown,
 } from "lucide-react";
+import { ThemeSelector } from "./theme-selector";
 
 const links = [
   { label: "课程总览", href: "/course", icon: BookOpen },
@@ -45,172 +49,283 @@ const registeredLinks = [{ label: "输入邀请码", href: "/invite", icon: Shie
 export function SiteNav() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const { data: session } = useSession();
   const role = session?.user?.role;
   const isSignedIn = Boolean(session?.user?.id);
   const isTeacherOrAdmin = role === "teacher" || role === "admin";
   const isRegistered = role === "registered";
   const shouldShowLearningLinks = role === "student" || role === "teacher" || role === "admin";
+
   const navLinks = shouldShowLearningLinks
     ? learnerLinks
     : isRegistered
       ? [...links, ...registeredLinks]
       : links;
-  const roleLabel =
-    role === "admin"
-      ? "管理员"
-      : role === "teacher"
-        ? "教师"
-        : role === "student"
-          ? "学员"
-          : role === "registered"
-            ? "已注册"
-            : "";
+
+  const roleConfig = {
+    admin: { label: "管理员", icon: Crown, color: "text-red-600", bgColor: "bg-red-50 border-red-200" },
+    teacher: { label: "教师", icon: GraduationCap, color: "text-purple-600", bgColor: "bg-purple-50 border-purple-200" },
+    student: { label: "学员", icon: Sparkles, color: "text-blue-600", bgColor: "bg-blue-50 border-blue-200" },
+    registered: { label: "已注册", icon: ShieldCheck, color: "text-green-600", bgColor: "bg-green-50 border-green-200" },
+  };
+
+  const currentRole = role ? roleConfig[role as keyof typeof roleConfig] : null;
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const isActive = (path: string) => pathname === path || pathname.startsWith(`${path}/`);
 
   return (
-    <nav className="sticky top-0 z-50 w-full">
-      <div className="mx-4 mt-3 mb-0 rounded-2xl border border-white/30 bg-white/80 backdrop-blur-xl shadow-soft">
-        <div className="container flex h-16 items-center justify-between">
-          {/* Logo */}
-          <Link className="flex items-center gap-2.5 font-extrabold text-xl group cursor-pointer" href="/">
-            <div className="h-9 w-9 gradient-primary rounded-xl flex items-center justify-center shadow-glow transition-shadow duration-300 group-hover:shadow-glow-lg">
-              <GraduationCap className="h-5 w-5 text-white" />
-            </div>
-            <span className="bg-gradient-to-r from-blue-800 to-indigo-700 bg-clip-text text-transparent">
-              议起读
-            </span>
-          </Link>
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+      scrolled ? "py-2" : "py-4"
+    }`}>
+      <div className="container">
+        <div className={`nav-glass rounded-2xl transition-all duration-500 ${
+          scrolled ? "shadow-political" : "shadow-lg"
+        }`}>
+          <div className="flex h-16 items-center justify-between px-6">
+            {/* Enhanced Logo */}
+            <Link
+              className="flex items-center gap-3 font-bold text-xl group cursor-pointer"
+              href="/"
+            >
+              <div className="relative">
+                <div className="h-10 w-10 gradient-political rounded-xl flex items-center justify-center shadow-political transition-all duration-300 group-hover:shadow-accent group-hover:scale-110">
+                  <GraduationCap className="h-5 w-5 text-white" />
+                </div>
+                <div className="absolute -top-1 -right-1 h-3 w-3 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full animate-pulse opacity-80"></div>
+              </div>
+              <div className="flex flex-col">
+                <span className="text-gradient-political font-bold text-lg leading-none">
+                  议起读
+                </span>
+                <span className="font-mono text-xs text-muted-foreground uppercase tracking-wider">
+                  DELIBERATION
+                </span>
+              </div>
+            </Link>
 
-          {/* Desktop Menu */}
-          <div className="hidden md:flex md:gap-1 md:flex-1 md:justify-center md:overflow-x-auto md:px-3">
-            {navLinks.map(({ label, href }) => (
-              <Link
-                key={href}
-                href={href}
-                className={`relative text-sm font-medium px-4 py-2 rounded-lg transition-all duration-200 cursor-pointer ${isActive(href)
-                    ? "text-primary bg-blue-50"
-                    : "text-gray-600 hover:text-primary hover:bg-gray-50"
+            {/* Desktop Navigation */}
+            <div className="hidden lg:flex lg:items-center lg:gap-1 lg:flex-1 lg:justify-center lg:px-8">
+              {navLinks.map(({ label, href, icon: Icon }) => (
+                <Link
+                  key={href}
+                  href={href}
+                  className={`group relative flex items-center gap-2 px-4 py-2.5 rounded-xl font-medium text-sm transition-all duration-300 cursor-pointer ${
+                    isActive(href)
+                      ? "text-white bg-gradient-to-r from-blue-600 to-blue-700 shadow-political"
+                      : "text-gray-700 hover:text-blue-600 hover:bg-blue-50"
                   }`}
-              >
-                {label}
-              </Link>
-            ))}
-          </div>
-
-          {/* Desktop Auth */}
-          <div className="hidden md:flex items-center gap-3">
-            {isSignedIn ? (
-              <>
-                {roleLabel ? (
-                  <span className="badge-primary">
-                    <ShieldCheck className="h-3.5 w-3.5" />
-                    {roleLabel}
-                  </span>
-                ) : null}
-                {isTeacherOrAdmin ? (
-                  <Link href="/admin" className="text-sm font-medium text-gray-600 hover:text-primary transition-colors cursor-pointer">
-                    管理后台
-                  </Link>
-                ) : null}
-                <button
-                  type="button"
-                  className="text-sm font-medium text-gray-500 hover:text-red-500 transition-colors cursor-pointer"
-                  onClick={() => signOut({ callbackUrl: "/login" })}
                 >
-                  退出
-                </button>
-              </>
-            ) : (
-              <>
-                <Link href="/login" className="text-sm font-medium text-gray-600 hover:text-primary transition-colors cursor-pointer">
-                  登录
+                  <Icon className={`h-4 w-4 transition-transform duration-300 ${
+                    isActive(href) ? "scale-110" : "group-hover:scale-110"
+                  }`} />
+                  <span className="font-mono text-xs uppercase tracking-wide">
+                    {label}
+                  </span>
+                  {isActive(href) && (
+                    <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-yellow-400 rounded-full animate-pulse"></div>
+                  )}
                 </Link>
-                <Link href="/register" className="button h-9 px-4 text-sm">
-                  注册
-                </Link>
-              </>
-            )}
-          </div>
+              ))}
+            </div>
 
-          {/* Mobile Menu Button */}
-          <button
-            className="md:hidden p-2 text-gray-500 hover:text-primary hover:bg-gray-50 rounded-lg transition-all duration-200 cursor-pointer"
-            onClick={() => setIsOpen(!isOpen)}
-          >
-            {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-          </button>
-        </div>
-      </div>
+            {/* Desktop Auth Section */}
+            <div className="hidden lg:flex items-center gap-4">
+              {/* 主题选择器 */}
+              <ThemeSelector placement="down" />
 
-      {/* Mobile Menu */}
-      {isOpen && (
-        <div className="md:hidden mx-4 mt-2 rounded-2xl border border-white/30 bg-white/95 backdrop-blur-xl shadow-soft animate-fadeInUp overflow-hidden">
-          <div className="p-4 grid gap-1">
-            {navLinks.map(({ label, href, icon: Icon }) => (
-              <Link
-                key={href}
-                href={href}
-                className={`flex items-center gap-3 text-sm font-medium p-3 rounded-xl transition-all duration-200 cursor-pointer ${isActive(href)
-                    ? "bg-blue-50 text-primary"
-                    : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
-                  }`}
-                onClick={() => setIsOpen(false)}
-              >
-                <Icon className="h-4.5 w-4.5" />
-                {label}
-              </Link>
-            ))}
-            <div className="border-t my-2" />
-            {isSignedIn ? (
-              <>
-                {roleLabel ? (
-                  <div className="flex items-center gap-2 text-sm font-medium p-3 rounded-xl bg-blue-50 text-blue-700">
-                    <ShieldCheck className="h-4 w-4" /> 当前身份：{roleLabel}
-                  </div>
-                ) : null}
-                {isTeacherOrAdmin ? (
+              {isSignedIn ? (
+                <>
+                  {currentRole && (
+                    <div className={`flex items-center gap-2 px-3 py-1.5 rounded-full border ${currentRole.bgColor} ${currentRole.color}`}>
+                      <currentRole.icon className="h-4 w-4" />
+                      <span className="font-mono text-xs font-semibold uppercase tracking-wide">
+                        {currentRole.label}
+                      </span>
+                    </div>
+                  )}
+                  {isTeacherOrAdmin && (
+                    <Link
+                      href="/admin"
+                      className="flex items-center gap-2 px-4 py-2 rounded-lg font-mono text-sm font-medium text-gray-600 hover:text-purple-600 hover:bg-purple-50 transition-all duration-200 cursor-pointer"
+                    >
+                      <Crown className="h-4 w-4" />
+                      <span className="uppercase tracking-wide">管理后台</span>
+                    </Link>
+                  )}
+                  <button
+                    type="button"
+                    className="flex items-center gap-2 px-4 py-2 rounded-lg font-mono text-sm font-medium text-gray-500 hover:text-red-500 hover:bg-red-50 transition-all duration-200 cursor-pointer"
+                    onClick={() => signOut({ callbackUrl: "/login" })}
+                  >
+                    <LogOut className="h-4 w-4" />
+                    <span className="uppercase tracking-wide">退出</span>
+                  </button>
+                </>
+              ) : (
+                <>
                   <Link
-                    href="/admin"
-                    className="flex items-center gap-3 text-sm font-medium p-3 rounded-xl text-gray-600 hover:bg-gray-50 cursor-pointer"
+                    href="/login"
+                    className="flex items-center gap-2 px-4 py-2 rounded-lg font-mono text-sm font-medium text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-all duration-200 cursor-pointer"
+                  >
+                    <LogIn className="h-4 w-4" />
+                    <span className="uppercase tracking-wide">登录</span>
+                  </Link>
+                  <Link
+                    href="/register"
+                    className="btn btn-primary relative overflow-hidden"
+                  >
+                    <UserPlus className="h-4 w-4" />
+                    <span className="uppercase tracking-wide">注册</span>
+                  </Link>
+                </>
+              )}
+            </div>
+
+            {/* Mobile Menu Button */}
+            <button
+              className="lg:hidden p-2 text-gray-500 hover:text-blue-600 hover:bg-blue-50 rounded-xl transition-all duration-200 cursor-pointer"
+              onClick={() => setIsOpen(!isOpen)}
+            >
+              <div className="relative w-6 h-6">
+                <Menu className={`absolute inset-0 h-6 w-6 transition-all duration-300 ${isOpen ? 'opacity-0 rotate-180' : 'opacity-100 rotate-0'}`} />
+                <X className={`absolute inset-0 h-6 w-6 transition-all duration-300 ${isOpen ? 'opacity-100 rotate-0' : 'opacity-0 -rotate-180'}`} />
+              </div>
+            </button>
+          </div>
+        </div>
+
+        {/* Enhanced Mobile Menu */}
+        <div className={`lg:hidden mt-3 transition-all duration-500 ease-out ${
+          isOpen
+            ? 'opacity-100 transform translate-y-0'
+            : 'opacity-0 transform -translate-y-4 pointer-events-none'
+        }`}>
+          <div className="glass-card p-6 animate-fadeInUp">
+            {/* Mobile Role Badge */}
+            {isSignedIn && currentRole && (
+              <div className={`flex items-center justify-center gap-2 mb-6 px-4 py-3 rounded-xl ${currentRole.bgColor} ${currentRole.color}`}>
+                <currentRole.icon className="h-5 w-5" />
+                <span className="font-mono text-sm font-bold uppercase tracking-wide">
+                  当前身份：{currentRole.label}
+                </span>
+              </div>
+            )}
+
+            {/* Mobile Navigation Links */}
+            <div className="grid gap-2 mb-6">
+              {navLinks.map(({ label, href, icon: Icon }, index) => (
+                <Link
+                  key={href}
+                  href={href}
+                  className={`flex items-center gap-4 p-4 rounded-xl font-medium transition-all duration-300 cursor-pointer animate-slideInLeft ${
+                    isActive(href)
+                      ? "bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-political"
+                      : "text-gray-700 hover:bg-blue-50 hover:text-blue-600"
+                  }`}
+                  style={{ animationDelay: `${index * 50}ms` }}
+                  onClick={() => setIsOpen(false)}
+                >
+                  <div className={`p-2 rounded-lg transition-all duration-300 ${
+                    isActive(href)
+                      ? "bg-white/20"
+                      : "bg-blue-100 text-blue-600"
+                  }`}>
+                    <Icon className="h-5 w-5" />
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="font-semibold">{label}</span>
+                    <span className="font-mono text-xs opacity-70 uppercase tracking-wide">
+                      {href.replace('/', '').toUpperCase() || 'HOME'}
+                    </span>
+                  </div>
+                </Link>
+              ))}
+            </div>
+
+            {/* Mobile Auth Section */}
+            <div className="border-t border-gray-200 pt-6">
+              {/* 移动端主题选择器 */}
+              <div className="mb-6">
+                <ThemeSelector placement="up" />
+              </div>
+
+              {isSignedIn ? (
+                <div className="grid gap-2">
+                  {isTeacherOrAdmin && (
+                    <Link
+                      href="/admin"
+                      className="flex items-center gap-4 p-4 rounded-xl text-gray-700 hover:bg-purple-50 hover:text-purple-600 transition-all duration-300 cursor-pointer"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      <div className="p-2 bg-purple-100 text-purple-600 rounded-lg">
+                        <Crown className="h-5 w-5" />
+                      </div>
+                      <div className="flex flex-col">
+                        <span className="font-semibold">管理后台</span>
+                        <span className="font-mono text-xs opacity-70 uppercase tracking-wide">ADMIN</span>
+                      </div>
+                    </Link>
+                  )}
+                  <button
+                    type="button"
+                    className="flex items-center gap-4 p-4 rounded-xl text-gray-500 hover:bg-red-50 hover:text-red-600 transition-all duration-300 cursor-pointer w-full text-left"
+                    onClick={() => {
+                      setIsOpen(false);
+                      void signOut({ callbackUrl: "/login" });
+                    }}
+                  >
+                    <div className="p-2 bg-red-100 text-red-600 rounded-lg">
+                      <LogOut className="h-5 w-5" />
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="font-semibold">退出登录</span>
+                      <span className="font-mono text-xs opacity-70 uppercase tracking-wide">LOGOUT</span>
+                    </div>
+                  </button>
+                </div>
+              ) : (
+                <div className="grid gap-2">
+                  <Link
+                    href="/login"
+                    className="flex items-center gap-4 p-4 rounded-xl text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-all duration-300 cursor-pointer"
                     onClick={() => setIsOpen(false)}
                   >
-                    <ShieldCheck className="h-4 w-4" /> 管理后台
+                    <div className="p-2 bg-blue-100 text-blue-600 rounded-lg">
+                      <LogIn className="h-5 w-5" />
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="font-semibold">登录</span>
+                      <span className="font-mono text-xs opacity-70 uppercase tracking-wide">LOGIN</span>
+                    </div>
                   </Link>
-                ) : null}
-                <button
-                  type="button"
-                  className="flex items-center gap-3 text-sm font-medium p-3 rounded-xl text-gray-500 hover:bg-red-50 hover:text-red-600 cursor-pointer w-full text-left"
-                  onClick={() => {
-                    setIsOpen(false);
-                    void signOut({ callbackUrl: "/login" });
-                  }}
-                >
-                  <LogOut className="h-4 w-4" /> 退出登录
-                </button>
-              </>
-            ) : (
-              <>
-                <Link
-                  href="/login"
-                  className="flex items-center gap-3 text-sm font-medium p-3 rounded-xl text-gray-600 hover:bg-gray-50 cursor-pointer"
-                  onClick={() => setIsOpen(false)}
-                >
-                  <LogIn className="h-4 w-4" /> 登录
-                </Link>
-                <Link
-                  href="/register"
-                  className="flex items-center gap-3 text-sm font-semibold p-3 rounded-xl gradient-primary text-white cursor-pointer"
-                  onClick={() => setIsOpen(false)}
-                >
-                  <UserPlus className="h-4 w-4" /> 注册账号
-                </Link>
-              </>
-            )}
+                  <Link
+                    href="/register"
+                    className="flex items-center gap-4 p-4 rounded-xl gradient-political text-white shadow-political transition-all duration-300 cursor-pointer hover:shadow-accent"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    <div className="p-2 bg-white/20 rounded-lg">
+                      <UserPlus className="h-5 w-5" />
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="font-semibold">注册账号</span>
+                      <span className="font-mono text-xs opacity-80 uppercase tracking-wide">REGISTER</span>
+                    </div>
+                  </Link>
+                </div>
+              )}
+            </div>
           </div>
         </div>
-      )}
+      </div>
     </nav>
   );
 }

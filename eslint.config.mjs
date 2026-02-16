@@ -21,6 +21,7 @@ const eslintConfig = defineConfig([
     // Project-specific ignores:
     "archive/**",
     "public/**",
+    "vendor/**",
   ]),
 ]);
 

@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>主题设计展示 - Theme Gallery</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Space+Mono:wght@400;700&family=Cormorant+Garamond:wght@300;400;600&family=Fira+Code:wght@300;400;500&family=Merriweather:wght@300;400;700&family=Source+Sans+Pro:wght@300;400;600&family=Lora:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-bg: #0a0a0a;
+            --secondary-bg: #1a1a1a;
+            --accent-color: #ff6b35;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --border-color: #333;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --shadow-color: rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--primary-bg);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: radial-gradient(circle at 30% 20%, #ff6b35 0%, transparent 50%),
+                        radial-gradient(circle at 70% 80%, #4ecdc4 0%, transparent 50%),
+                        var(--primary-bg);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="0.5" fill="%23ffffff" opacity="0.1"/><circle cx="75" cy="75" r="0.3" fill="%23ffffff" opacity="0.05"/><circle cx="50" cy="10" r="0.4" fill="%23ffffff" opacity="0.08"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 2;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3rem, 8vw, 8rem);
+            font-weight: 900;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #ff6b35, #4ecdc4, #45b7d1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: titleGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes titleGlow {
+            0% { filter: drop-shadow(0 0 20px rgba(255, 107, 53, 0.3)); }
+            100% { filter: drop-shadow(0 0 40px rgba(78, 205, 196, 0.5)); }
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-10px); }
+            60% { transform: translateX(-50%) translateY(-5px); }
+        }
+
+        .gallery {
+            padding: 5rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .gallery-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .gallery-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .themes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .theme-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .theme-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.6s;
+        }
+
+        .theme-card:hover::before {
+            left: 100%;
+        }
+
+        .theme-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px var(--shadow-color);
+            border-color: var(--accent-color);
+        }
+
+        .theme-preview {
+            width: 100%;
+            height: 200px;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .theme-info h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .theme-info p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .theme-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tag {
+            background: rgba(255, 107, 53, 0.2);
+            color: var(--accent-color);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            border: 1px solid rgba(255, 107, 53, 0.3);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: modalFadeIn 0.3s ease-out;
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            width: 90%;
+            max-width: 1200px;
+            height: 80%;
+            background: var(--secondary-bg);
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 50%;
+            transition: background 0.3s;
+        }
+
+        .close-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .modal-preview {
+            width: 100%;
+            height: calc(100% - 80px);
+            overflow-y: auto;
+        }
+
+        /* Theme Previews */
+        .theme-1 { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .theme-2 { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+        .theme-3 { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+        .theme-4 { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
+        .theme-5 { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); }
+        .theme-6 { background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); }
+        .theme-7 { background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%); }
+        .theme-8 { background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%); }
+        .theme-9 { background: linear-gradient(135deg, #fad0c4 0%, #ffd1ff 100%); }
+        .theme-10 { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); }
+        .theme-11 { background: linear-gradient(135deg, #ff8a80 0%, #ea80fc 100%); }
+        .theme-12 { background: linear-gradient(135deg, #8fd3f4 0%, #84fab0 100%); }
+        .theme-13 { background: linear-gradient(135deg, #d299c2 0%, #fef9d7 100%); }
+        .theme-14 { background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%); }
+        .theme-15 { background: linear-gradient(135deg, #fdbb2d 0%, #22c1c3 100%); }
+        .theme-16 { background: linear-gradient(135deg, #e0c3fc 0%, #9bb5ff 100%); }
+        .theme-17 { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+        .theme-18 { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+        .theme-19 { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
+        .theme-20 { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); }
+
+        @media (max-width: 768px) {
+            .themes-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            .modal-content {
+                width: 95%;
+                height: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <section class="hero">
+        <div class="hero-content">
+            <h1>主题设计展示</h1>
+            <p>探索20个精心设计的网站主题，每个都有独特的视觉风格、交互体验和设计理念</p>
+        </div>
+        <div class="scroll-indicator">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M7 13l3 3 7-7"/>
+                <path d="M7 6l3 3 7-7"/>
+            </svg>
+        </div>
+    </section>
+
+    <section class="gallery">
+        <div class="gallery-header">
+            <h2>主题画廊</h2>
+            <p>点击任意主题卡片预览完整设计</p>
+        </div>
+
+        <div class="themes-grid">
+            <!-- Theme 1: 商务专业 -->
+            <div class="theme-card" data-theme="1">
+                <div class="theme-preview theme-1"></div>
+                <div class="theme-info">
+                    <h3>商务专业</h3>
+                    <p>现代企业级设计，注重专业性和信任感，适合金融、咨询等行业</p>
+                    <div class="theme-tags">
+                        <span class="tag">商务</span>
+                        <span class="tag">专业</span>
+                        <span class="tag">企业</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Theme 2: 创意工作室 -->
+            <div class="theme-card" data-theme="2">
+                <div class="theme-preview theme-2"></div>
+                <div class="theme-info">
+                    <h3>创意工作室</h3>
+                    <p>充满活力的创意设计，大胆的色彩搭配和动态效果</p>
+                    <div class="theme-tags">
+                        <span class="tag">创意</span>
+                        <span class="tag">艺术</span>
+                        <span class="tag">动态</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Theme 3: 极简主义 -->
+            <div class="theme-card" data-theme="3">
+                <div class="theme-preview theme-3"></div>
+                <div class="theme-info">
+                    <h3>极简主义</h3>
+                    <p>简洁至上的设计理念，注重留白和typography的精致平衡</p>
+                    <div class="theme-tags">
+                        <span class="tag">极简</span>
+                        <span class="tag">简洁</span>
+                        <span class="tag">现代</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Theme 4: 科技未来 -->
+            <div class="theme-card" data-theme="4">
+                <div class="theme-preview theme-4"></div>
+                <div class="theme-info">
+                    <h3>科技未来</h3>
+                    <p>未来感十足的科技风格，霓虹色彩和几何元素的完美融合</p>
+                    <div class="theme-tags">
+                        <span class="tag">科技</span>
+                        <span class="tag">未来</span>
+                        <span class="tag">霓虹</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Theme 5: 艺术画廊 -->
+            <div class="theme-card" data-theme="5">
+                <div class="theme-preview theme-5"></div>
+                <div class="theme-info">
+                    <h3>艺术画廊</h3>
+                    <p>优雅的艺术展示空间，注重作品呈现和视觉层次</p>
+                    <div class="theme-tags">
+                        <span class="tag">艺术</span>
+                        <span class="tag">画廊</span>
+                        <span class="tag">优雅</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Theme 6: 教育平台 -->
+            <div class="theme-card" data-theme="6">
+                <div class="theme-preview theme-6"></div>
+                <div class="theme-info">
+                    <h3>教育平台</h3>
+                    <p>友好的学习环境设计，清晰的信息架构和温和的色彩</p>
+                    <div class="theme-tags">
+                        <span class="tag">教育</span>
+                        <span class="tag">学习</span>
+                        <span class="tag">友好</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Theme 7: 电商时尚 -->
+            <div class="theme-card" data-theme="7">
+                <div class="theme-preview theme-7"></div>
+                <div class="theme-info">
+                    <h3>电商时尚</h3>
+                    <p>时尚购物体验，精美的产品展示和流畅的购买流程</p>
+                    <div class="theme-tags">
+                        <span class="tag">电商</span>
+                        <span class="tag">时尚</span>
+                        <span class="tag">购物</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Theme 8: 个人博客 -->
+            <div class="theme-card" data-theme="8">
+                <div class="theme-preview theme-8"></div>
+                <div class="theme-info">
+                    <h3>个人博客</h3>
+                    <p>温馨的个人空间，注重阅读体验和内容呈现</p>
+                    <div class="theme-tags">
+                        <span class="tag">博客</span>
+                        <span class="tag">个人</span>
+                        <span class="tag">阅读</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Theme 9: 作品集 -->
+            <div class="theme-card" data-theme="9">
+                <div class="theme-preview theme-9"></div>
+                <div class="theme-info">
+                    <h3>作品集</h3>
+                    <p>专业的作品展示平台，突出创作者的个人风格</p>
+                    <div class="theme-tags">
+                        <span class="tag">作品集</span>
+                        <span class="tag">展示</span>
+                        <span class="tag">创意</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Theme 10: 餐饮美食 -->
+            <div class="theme-card" data-theme="10">
+                <div class="theme-preview theme-10"></div>
+                <div class="theme-info">
+                    <h3>餐饮美食</h3>
+                    <p>诱人的美食展示，温暖的色调营造食欲感</p>
+                    <div class="theme-tags">
+                        <span class="tag">餐饮</span>
+                        <span class="tag">美食</span>
+                        <span class="tag">温暖</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Theme 11: 健康医疗 -->
+            <div class="theme-card" data-theme="11">
+                <div class="theme-preview theme-11"></div>
+                <div class="theme-info">
+                    <h3>健康医疗</h3>
+                    <p>专业可信的医疗平台设计，清洁的视觉风格</p>
+                    <div class="theme-tags">
+                        <span class="tag">医疗</span>
+                        <span class="tag">健康</span>
+                        <span class="tag">专业</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Theme 12: 旅游探索 -->
+            <div class="theme-card" data-theme="12">
+                <div class="theme-preview theme-12"></div>
+                <div class="theme-info">
+                    <h3>旅游探索</h3>
+                    <p>激发旅行欲望的设计，丰富的视觉元素和地图交互</p>
+                    <div class="theme-tags">
+                        <span class="tag">旅游</span>
+                        <span class="tag">探索</span>
+                        <span class="tag">地图</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Theme 13: 音乐娱乐 -->
+            <div class="theme-card" data-theme="13">
+                <div class="theme-preview theme-13"></div>
+                <div class="theme-info">
+                    <h3>音乐娱乐</h3>
+                    <p>动感的音乐平台，节奏感强的视觉设计和音频可视化</p>
+                    <div class="theme-tags">
+                        <span class="tag">音乐</span>
+                        <span class="tag">娱乐</span>
+                        <span class="tag">动感</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Theme 14: 金融科技 -->
+            <div class="theme-card" data-theme="14">
+                <div class="theme-preview theme-14"></div>
+                <div class="theme-info">
+                    <h3>金融科技</h3>
+                    <p>现代金融服务设计，数据可视化和安全感的平衡</p>
+                    <div class="theme-tags">
+                        <span class="tag">金融</span>
+                        <span class="tag">科技</span>
+                        <span class="tag">数据</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Theme 15: 房地产 -->
+            <div class="theme-card" data-theme="15">
+                <div class="theme-preview theme-15"></div>
+                <div class="theme-info">
+                    <h3>房地产</h3>
+                    <p>高端房产展示平台，奢华感与实用性的完美结合</p>
+                    <div class="theme-tags">
+                        <span class="tag">房产</span>
+                        <span class="tag">奢华</span>
+                        <span class="tag">展示</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Theme 16: 新闻媒体 -->
+            <div class="theme-card" data-theme="16">
+                <div class="theme-preview theme-16"></div>
+                <div class="theme-info">
+                    <h3>新闻媒体</h3>
+                    <p>清晰的信息传达设计，优秀的内容组织和阅读体验</p>
+                    <div class="theme-tags">
+                        <span class="tag">新闻</span>
+                        <span class="tag">媒体</span>
+                        <span class="tag">信息</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Theme 17: 游戏娱乐 -->
+            <div class="theme-card" data-theme="17">
+                <div class="theme-preview theme-17"></div>
+                <div class="theme-info">
+                    <h3>游戏娱乐</h3>
+                    <p>充满趣味的游戏平台设计，丰富的动效和互动元素</p>
+                    <div class="theme-tags">
+                        <span class="tag">游戏</span>
+                        <span class="tag">娱乐</span>
+                        <span class="tag">互动</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Theme 18: 环保公益 -->
+            <div class="theme-card" data-theme="18">
+                <div class="theme-preview theme-18"></div>
+                <div class="theme-info">
+                    <h3>环保公益</h3>
+                    <p>自然环保主题设计，绿色理念与现代美学的融合</p>
+                    <div class="theme-tags">
+                        <span class="tag">环保</span>
+                        <span class="tag">公益</span>
+                        <span class="tag">自然</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Theme 19: 运动健身 -->
+            <div class="theme-card" data-theme="19">
+                <div class="theme-preview theme-19"></div>
+                <div class="theme-info">
+                    <h3>运动健身</h3>
+                    <p>活力四射的运动平台，动感的视觉效果和数据追踪</p>
+                    <div class="theme-tags">
+                        <span class="tag">运动</span>
+                        <span class="tag">健身</span>
+                        <span class="tag">活力</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Theme 20: 奢侈品牌 -->
+            <div class="theme-card" data-theme="20">
+                <div class="theme-preview theme-20"></div>
+                <div class="theme-info">
+                    <h3>奢侈品牌</h3>
+                    <p>高端奢华的品牌展示，精致的细节和优雅的交互</p>
+                    <div class="theme-tags">
+                        <span class="tag">奢侈</span>
+                        <span class="tag">品牌</span>
+                        <span class="tag">高端</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal -->
+    <div class="modal" id="themeModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">主题预览</h3>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-preview" id="modalPreview">
+                <!-- 主题预览内容将在这里动态加载 -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 主题数据
+        const themes = {
+            1: {
+                name: '商务专业',
+                colors: ['#2c3e50', '#3498db', '#ecf0f1', '#34495e'],
+                fonts: ['Playfair Display', 'Inter'],
+                description: '现代企业级设计风格'
+            },
+            2: {
+                name: '创意工作室',
+                colors: ['#e74c3c', '#f39c12', '#9b59b6', '#1abc9c'],
+                fonts: ['Crimson Text', 'Source Sans Pro'],
+                description: '充满创意活力的设计'
+            },
+            // 更多主题数据...
+        };
+
+        // 打开模态框
+        function openModal(themeId) {
+            const modal = document.getElementById('themeModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalPreview = document.getElementById('modalPreview');
+
+            const theme = themes[themeId] || { name: `主题 ${themeId}`, description: '精美的主题设计' };
+
+            modalTitle.textContent = theme.name;
+
+            // 生成主题预览页面
+            modalPreview.innerHTML = generateThemePreview(themeId);
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // 关闭模态框
+        function closeModal() {
+            const modal = document.getElementById('themeModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // 生成主题预览页面
+        function generateThemePreview(themeId) {
+            const previewStyles = {
+                1: `
+                    <div style="font-family: 'Playfair Display', serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); height: 100%; color: white; padding: 2rem;">
+                        <nav style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3rem; padding: 1rem 0; border-bottom: 1px solid rgba(255,255,255,0.2);">
+                            <div style="font-size: 1.5rem; font-weight: bold;">CORPORATE</div>
+                            <div style="display: flex; gap: 2rem; font-family: 'Inter', sans-serif;">
+                                <a href="#" style="color: white; text-decoration: none;">服务</a>
+                                <a href="#" style="color: white; text-decoration: none;">案例</a>
+                                <a href="#" style="color: white; text-decoration: none;">关于</a>
+                                <a href="#" style="color: white; text-decoration: none;">联系</a>
+                            </div>
+                        </nav>
+                        <div style="text-align: center; padding: 4rem 0;">
+                            <h1 style="font-size: 4rem; margin-bottom: 1rem; font-weight: 900;">专业企业解决方案</h1>
+                            <p style="font-size: 1.2rem; opacity: 0.9; max-width: 600px; margin: 0 auto 2rem;">为您的企业提供全方位的专业服务，助力业务增长与数字化转型</p>
+                            <button style="background: white; color: #667eea; padding: 1rem 2rem; border: none; border-radius: 50px; font-weight: 600; cursor: pointer; font-size: 1.1rem;">了解更多</button>
+                        </div>
+                    </div>
+                `,
+                2: `
+                    <div style="font-family: 'Crimson Text', serif; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); height: 100%; color: white; padding: 2rem; position: relative; overflow: hidden;">
+                        <div style="position: absolute; top: 10%; right: 10%; width: 200px; height: 200px; background: rgba(255,255,255,0.1); border-radius: 50%; animation: float 6s ease-in-out infinite;"></div>
+                        <nav style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3rem; z-index: 2; position: relative;">
+                      iv style="font-size: 2rem; font-weight: bold; font-style: italic;">CREATIVE</div>
+                            <div style="display: flex; gap: 2rem; font-family: 'Source Sans Pro', sans-serif;">
+                                <a href="#" style="color: white; text-decoration: none; position: relative;">作品</a>
+                                <a href="#" style="color: white; text-decoration: none;">服务</a>
+                                <a href="#" style="color: white; text-decoration: none;">团队</a>
+                            </div>
+                        </nav>
+                        <div style="padding: 4rem 0; z-index: 2; position: relative;">
+                            <h1 style="font-size: 5rem; margin-bottom: 1rem; font-weight: 400; line-height: 0.9;">创意<br/>无界限</h1>
+                            <p style="font-size: 1.3rem; opacity: 0.9; max-width: 500px; margin-bottom: 2rem;">我们用创意点亮品牌，用设计传达价值，让每个项目都成为艺术品</p>
+                            <div style="display: flex; gap: 1rem;">
+                                <button style="background: rgba(255,255,255,0.2); color: white; padding: 1rem 2rem; border: 2px solid white; border-radius: 0; font-weight: 600; cursor: pointer;">查看作品</button>
+                                <button style="background: white; color: #f5576c; padding: 1rem 2rem; border: none; border-radius: 0; font-weight: 600; cursor: pointer;">开始合作</button>
+                            </div>
+                        </div>
+                        <style>
+                            @keyframes float {
+                                0%, 100% { transform: translateY(0px) rotate(0deg); }
+                                50% { transform: translateY(-20px) rotate(180deg); }
+                            }
+                        </style>
+                    </div>
+                `,
+                3: `
+                    <div style="font-family: 'Inter', sans-serif; background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); height: 100%; color: #333; padding: 0; position: relative;">
+                        <div style="background: white; height: 100%; padding: 2rem;">
+                            <nav style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4rem; padding: 1rem 0;">
+                                <div style="font-size: 1.2rem; font-weight: 300; letter-spacing: 2px;">MINIMAL</div>
+                                <div style="display: flex; gap: 3rem; font-weight: 300;">
+                                    <a href="#" style="color: #333; text-decoration: none; font-size: 0.9rem;">WORK</a>
+                                    <a href="#" style="color: #333; text-decoration: none; font-size: 0.9rem;">ABOUT</a>
+                                    <a href="#" style="color: #333; text-decoration: none; font-size: 0.9rem;">CONTACT</a>
+                                </div>
+                            </nav>
+                            <div style="max-width: 8rgin: 0 auto; text-align: center; padding: 6rem 0;">
+                                <h1 style="font-size: 3.5rem; margin-bottom: 2rem; font-weight: 300; line-height: 1.2; color: #2c3e50;">Less is More</h1>
+                                <p style="font-size: 1.1rem; color: #7f8c8d; max-width: 500px; margin: 0 auto 3rem; line-height: 1.6;">简约设计的力量在于去除多余，保留精华，让内容自然地传达其价值</p>
+                                <div style="width: 60px; height: 2px; background: #4facfe; margin: 0 auto;"></div>
+                            </div>
+                            <div style="position: absolute; bottom: 2rem; right: 2rem; width: 100px; heigh; border: 1px solid #ecf0f1; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; color: #bdc3c7;">
+                                SCROLL
+                            </div>
+                        </div>
+                    </div>
+                `
+            };
+
+            return previewStyles[themeId] || `
+                <div style="font-family: 'Inter', sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); height: 100%; color: white; padding: 2rem; display: flex; align-items: center; justify-content: center;">
+                    <div style="text-align: center;">
+                        <h1 style="font-size: 3rem; margin-bottom: 1rem;">主题 ${themeId}</h1>
+                        <p style="font-size: 1.2rem; opacity: 0.8;">精美的主题设计预览</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        // 添加事件监听器
+        document.addEventListener('DOMContentLoaded', function() {
+            const themeCards = document.querySelectorAll('.theme-card');
+
+            themeCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const themeId = this.getAttribute('data-theme');
+                    openModal(themeId);
+                });
+            });
+
+            // 点击模态框外部关闭
+            document.getElementById('themeModal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeModal();
+                }
+            });
+
+            // ESC键关闭模态框
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeModal();
+                }
+            });
+        });
+
+        // 平滑滚动
+        document.querySelector('.scroll-indicator').addEventListener('click', function() {
+            document.querySelector('.gallery').scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    </script>
+</body>
+</html>

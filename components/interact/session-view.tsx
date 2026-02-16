@@ -165,7 +165,7 @@ export function SessionView({ sessionId }: SessionViewProps) {
 
     if (!state) {
         return (
-            <div className="flex items-center justify-center h-screen bg-gray-50">
+            <div className="flex items-center justify-center min-h-screen pt-20 bg-gray-50">
                 <div className="text-center">
                     <Loader2 className="h-8 w-8 animate-spin mx-auto text-primary mb-4" />
                     <p className="text-gray-500">正在连接课堂...</p>
@@ -180,9 +180,9 @@ export function SessionView({ sessionId }: SessionViewProps) {
     const isCurrentUserRaised = state.queue.some((h) => h.userId === currentUserId);
 
     return (
-        <div className="flex flex-col h-screen bg-gray-50">
+        <div className="flex flex-col min-h-screen pt-20 bg-gray-50">
             {/* Header */}
-            <header className="bg-white border-b px-6 py-4 flex items-center justify-between sticky top-0 z-10">
+            <header className="bg-white border-b px-6 py-4 flex items-center justify-between">
                 <div>
                     <h1 className="text-lg font-bold flex items-center gap-2">
                         <span className={`text-xs px-2 py-0.5 rounded-full ${connected ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
@@ -212,6 +212,7 @@ export function SessionView({ sessionId }: SessionViewProps) {
                                     });
                                 }}
                                 className="button bg-green-600 text-white hover:bg-green-700"
+                                data-testid="start-session-button"
                             >
                                 <PlayCircle className="mr-2 h-4 w-4" /> 开始课堂
                             </button>

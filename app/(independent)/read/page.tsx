@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
 
-export default function ReadPage() {
-  redirect("/reading-legacy/index.html");
+export default function LegacyReadRedirectPage() {
+  redirect("/reading");
 }

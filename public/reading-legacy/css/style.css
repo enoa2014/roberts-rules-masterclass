@@ -1,22 +1,22 @@
 /* ===== CSS Variables ===== */
 :root {
   /* Light theme (default) */
-  --bg-primary: #FFFBF5;
-  --bg-secondary: #FFF8E8;
-  --bg-tertiary: #FFF3D6;
-  --text-primary: #4A3728;
-  --text-secondary: #7D6B5D;
-  --text-muted: #A89888;
-  --accent: #FFD93D;
-  --accent-hover: #FFC800;
-  --accent-secondary: #87CEEB;
-  --accent-tertiary: #90EE90;
-  --border: #E8DDD0;
-  --shadow: rgba(74, 55, 40, 0.1);
-  --shadow-strong: rgba(74, 55, 40, 0.2);
-  --success: #4CAF50;
-  --warning: #FF9800;
-  --error: #F44336;
+  --bg-primary: var(--warm-bg);
+  --bg-secondary: var(--warm-bg-sec);
+  --bg-tertiary: var(--warm-bg-ter);
+  --text-primary: var(--warm-text);
+  --text-secondary: var(--warm-text-sec);
+  --text-muted: var(--warm-text-muted);
+  --accent: var(--warm-accent);
+  --accent-hover: var(--warm-accent-hover);
+  --accent-secondary: var(--warm-accent-sec);
+  --accent-tertiary: var(--warm-accent-ter);
+  --border: var(--warm-border);
+  --shadow: var(--warm-shadow);
+  --shadow-strong: var(--warm-shadow-strong);
+  --success: var(--warm-success);
+  --warning: var(--warm-warning);
+  --error: var(--warm-error);
 
   /* Sizes */
   --header-height: 56px;
@@ -29,19 +29,19 @@
 }
 
 [data-theme="dark"] {
-  --bg-primary: #2D2A26;
-  --bg-secondary: #3D3830;
-  --bg-tertiary: #4D4840;
-  --text-primary: #F5EDE6;
-  --text-secondary: #BDB0A3;
-  --text-muted: #8D8070;
-  --accent: #F0C040;
-  --accent-hover: #FFD050;
-  --accent-secondary: #5DADE2;
-  --accent-tertiary: #58D68D;
-  --border: #5D5850;
-  --shadow: rgba(0, 0, 0, 0.3);
-  --shadow-strong: rgba(0, 0, 0, 0.5);
+  --bg-primary: var(--warm-dark-bg);
+  --bg-secondary: var(--warm-dark-bg-sec);
+  --bg-tertiary: var(--warm-dark-bg-ter);
+  --text-primary: var(--warm-dark-text);
+  --text-secondary: var(--warm-dark-text-sec);
+  --text-muted: var(--warm-dark-text-muted);
+  --accent: var(--warm-dark-accent);
+  --accent-hover: var(--warm-dark-accent-hover);
+  --accent-secondary: var(--warm-dark-accent-sec);
+  --accent-tertiary: var(--warm-dark-accent-ter);
+  --border: var(--warm-dark-border);
+  --shadow: var(--warm-dark-shadow);
+  --shadow-strong: var(--warm-dark-shadow-strong);
 }
 
 /* ===== Reset & Base ===== */
@@ -658,7 +658,7 @@ body {
   display: none;
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.6);
+  background: var(--warm-black-60);
   z-index: 200;
   align-items: center;
   justify-content: center;

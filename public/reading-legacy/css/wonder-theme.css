@@ -2,26 +2,26 @@
 
 :root {
     /* Brand Colors */
-    --wonder-blue: #3AB8EB;
-    --wonder-blue-dark: #2a9ccb;
-    --wonder-blue-light: #e0f4fc;
-    --kindness-orange: #F97316;
-    --kindness-orange-light: #ffedd5;
-    --space-navy: #1E293B;
-    --starlight-cream: #FDFBF7;
-    --clean-white: #FFFFFF;
-    --growth-green: #10B981;
-    --text-primary: #1E293B;
-    --text-secondary: #64748B;
-    --text-muted: #94A3B8;
+    --wonder-blue: var(--wonder-sky);
+    --wonder-blue-dark: var(--wonder-sky-dark);
+    --wonder-blue-light: var(--wonder-sky-light);
+    --kindness-orange: var(--wonder-orange);
+    --kindness-orange-light: var(--wonder-orange-light);
+    --space-navy: var(--wonder-slate);
+    --starlight-cream: var(--wonder-bg);
+    --clean-var(--white): var(--white);
+    --growth-green: var(--wonder-green);
+    --text-primary: var(--wonder-slate);
+    --text-secondary: var(--text-secondary);
+    --text-muted: var(--text-secondary);
 
     /* Fonts */
     --font-heading: 'Fredoka', 'Noto Sans SC', sans-serif;
     --font-body: 'Nunito', 'Noto Sans SC', sans-serif;
 
     /* Shadows & Radius */
-    --shadow-card: 0 4px 20px rgba(58, 184, 235, 0.15);
-    --shadow-float: 0 10px 30px rgba(58, 184, 235, 0.25);
+    --shadow-card: 0 4px 20px var(--wonder-sky-15);
+    --shadow-float: 0 10px 30px var(--wonder-sky-25);
     --radius-lg: 24px;
     --radius-md: 16px;
     --radius-sm: 8px;
@@ -58,8 +58,8 @@ h6 {
 /* Sidebar */
 .pov-sidebar {
     width: var(--sidebar-width);
-    background: var(--clean-white);
-    border-right: 1px solid rgba(0, 0, 0, 0.05);
+    background: var(--clean-var(--white));
+    border-right: 1px solid var(--theme-black-05);
     display: flex;
     flex-direction: column;
     padding: 24px;
@@ -67,7 +67,7 @@ h6 {
     height: 100vh;
     overflow-y: auto;
     z-index: 100;
-    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.02);
+    box-shadow: 4px 0 20px var(--theme-black-02);
 }
 
 .book-cover-container {
@@ -126,8 +126,8 @@ h6 {
 
 .pov-btn.active {
     background: var(--wonder-blue);
-    color: white;
-    box-shadow: 0 4px 12px rgba(58, 184, 235, 0.4);
+    color: var(--white);
+    box-shadow: 0 4px 12px var(--wonder-sky-40);
 }
 
 .avatar-wrapper {
@@ -135,12 +135,12 @@ h6 {
     height: 40px;
     border-radius: 50%;
     overflow: hidden;
-    border: 2px solid white;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border: 2px solid var(--white);
+    box-shadow: 0 2px 5px var(--theme-black-10);
 }
 
 .pov-btn.active .avatar-wrapper {
-    border-color: rgba(255, 255, 255, 0.5);
+    border-color: var(--theme-var(--white)-50);
 }
 
 .avatar-wrapper img {
@@ -157,7 +157,7 @@ h6 {
 .nav-footer {
     margin-top: auto;
     padding-top: 24px;
-    border-top: 1px solid #eee;
+    border-top: 1px solid var(--theme-eee);
 }
 
 .back-link {
@@ -189,8 +189,8 @@ h6 {
 .wonder-hero {
     position: relative;
     height: 280px;
-    background: linear-gradient(135deg, var(--wonder-blue) 0%, #85d8f7 100%);
-    color: white;
+    background: linear-gradient(135deg, var(--wonder-blue) 0%, var(--wonder-sky-mid) 100%);
+    color: var(--white);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -205,7 +205,7 @@ h6 {
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: radial-gradient(white 1px, transparent 1px);
+    background-image: radial-gradient(var(--white) 1px, transparent 1px);
     background-size: 30px 30px;
     opacity: 0.2;
 }
@@ -219,9 +219,9 @@ h6 {
 
 .wonder-hero h2 {
     font-size: 3rem;
-    color: white;
+    color: var(--white);
     margin-bottom: 16px;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    text-shadow: 0 2px 10px var(--theme-black-10);
 }
 
 .precept-quote {
@@ -251,13 +251,13 @@ h6 {
 
 .tab-btn {
     padding: 12px 32px;
-    background: var(--clean-white);
+    background: var(--clean-var(--white));
     border: none;
     border-radius: 30px;
     font-size: 1.1rem;
     font-weight: 700;
     color: var(--text-secondary);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 10px var(--theme-black-05);
     cursor: pointer;
     transition: all 0.3s ease;
 }
@@ -269,8 +269,8 @@ h6 {
 
 .tab-btn.active {
     background: var(--wonder-blue);
-    color: white;
-    box-shadow: 0 6px 15px rgba(58, 184, 235, 0.4);
+    color: var(--white);
+    box-shadow: 0 6px 15px var(--wonder-sky-40);
 }
 
 /* Content Sections */
@@ -322,7 +322,7 @@ h6 {
 
 .chapter-nav-sidebar {
     width: 240px;
-    background: white;
+    background: var(--white);
     border-radius: var(--radius-md);
     padding: 24px;
     height: fit-content;
@@ -343,7 +343,7 @@ h6 {
 
 .chapter-viewer {
     flex: 1;
-    background: white;
+    background: var(--white);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-card);
     padding: 48px 64px;
@@ -353,7 +353,7 @@ h6 {
 .chapter-header {
     text-align: center;
     margin-bottom: 40px;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid var(--theme-eee);
     padding-bottom: 24px;
 }
 
@@ -389,12 +389,12 @@ h6 {
     display: flex;
     justify-content: space-between;
     padding-top: 24px;
-    border-top: 1px solid #eee;
+    border-top: 1px solid var(--theme-eee);
 }
 
 .nav-btn {
     padding: 12px 24px;
-    background: white;
+    background: var(--white);
     border: 2px solid var(--wonder-blue);
     color: var(--wonder-blue);
     border-radius: 30px;
@@ -405,7 +405,7 @@ h6 {
 
 .nav-btn:hover {
     background: var(--wonder-blue);
-    color: white;
+    color: var(--white);
 }
 
 /* --- Wonder Modular Reading (Phase B) --- */
@@ -422,7 +422,7 @@ h6 {
 }
 
 .wonder-reading-pov {
-    background: white;
+    background: var(--white);
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-card);
     padding: 20px;
@@ -560,14 +560,14 @@ h6 {
 
 .chapter-item.active button {
     background: var(--wonder-blue);
-    color: white;
+    color: var(--white);
 }
 
 .chapter-num {
     width: 24px;
     height: 24px;
     border-radius: 12px;
-    background: rgba(58, 184, 235, 0.16);
+    background: var(--wonder-sky-16);
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -577,7 +577,7 @@ h6 {
 }
 
 .chapter-item.active .chapter-num {
-    background: rgba(255, 255, 255, 0.28);
+    background: var(--theme-var(--white)-28);
 }
 
 .chapter-name {
@@ -588,7 +588,7 @@ h6 {
 .wonder-reading-empty {
     padding: 10px;
     border-radius: 10px;
-    background: #f8fafc;
+    background: var(--wonder-slate-light);
     color: var(--text-secondary);
     font-size: 0.9rem;
 }
@@ -706,8 +706,8 @@ h6 {
 .precept-front {
     background-size: cover;
     background-position: center;
-    color: white;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    color: var(--white);
+    text-shadow: 0 2px 4px var(--wonder-black-50);
 }
 
 /* Ensure background image is applied correctly */
@@ -718,7 +718,7 @@ h6 {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.2);
+    background: var(--wonder-black-20);
     /* Slight overlay for text readability */
     z-index: 0;
 }
@@ -732,17 +732,17 @@ h6 {
     position: absolute;
     top: 16px;
     left: 16px;
-    background: rgba(255, 255, 255, 0.9);
+    background: var(--wonder-white-90);
     color: var(--wonder-blue);
     padding: 4px 12px;
     border-radius: 12px;
     font-weight: 700;
     font-size: 0.9rem;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px var(--theme-black-10);
 }
 
 .precept-back {
-    background-color: white;
+    background-color: var(--white);
     color: var(--text-primary);
     transform: rotateY(180deg);
     border: 2px solid var(--wonder-blue-light);
@@ -777,10 +777,10 @@ h6 {
 .character-graph-container {
     width: 100%;
     height: 600px;
-    background: white;
+    background: var(--white);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-card);
-    border: 1px solid #eee;
+    border: 1px solid var(--theme-eee);
 }
 
 /* --- Interactive --- */
@@ -791,7 +791,7 @@ h6 {
 }
 
 .interactive-card {
-    background: white;
+    background: var(--white);
     border-radius: var(--radius-lg);
     padding: 32px;
     box-shadow: var(--shadow-card);
@@ -827,13 +827,13 @@ h6 {
     position: absolute;
     width: 100%;
     height: 100%;
-    background: rgba(30, 41, 59, 0.6);
+    background: var(--wonder-slate-60);
     backdrop-filter: blur(4px);
 }
 
 .modal-content {
     position: relative;
-    background: white;
+    background: var(--white);
     width: 600px;
     max-width: 90%;
     border-radius: var(--radius-lg);
@@ -868,16 +868,16 @@ h6 {
 
 /* --- Postcard Section --- */
 .submit-precept-box {
-    background-color: #fdfbf7;
+    background-color: var(--wonder-postcard-bg);
     background-image:
-        linear-gradient(90deg, transparent 49%, #cbd5e1 50%, transparent 51%),
-        radial-gradient(circle, #e5e7eb 1px, transparent 1px);
+        linear-gradient(90deg, transparent 49%, var(--wonder-postcard-line) 50%, transparent 51%),
+        radial-gradient(circle, var(--wonder-postcard-dot) 1px, transparent 1px);
     background-size: 100% 100%, 20px 20px;
-    border: 1px solid #cbd5e1;
+    border: 1px solid var(--wonder-postcard-line);
     border-radius: 2px;
     padding: 40px;
     margin-top: 60px;
-    box-shadow: 2px 4px 12px rgba(0, 0, 0, 0.08);
+    box-shadow: 2px 4px 12px var(--shelf-black-08);
     position: relative;
     max-width: 700px;
     /* Wider for 2 columns */
@@ -908,16 +908,16 @@ h6 {
 .stamp-placeholder {
     width: 60px;
     height: 70px;
-    border: 2px dashed #cbd5e1;
+    border: 2px dashed var(--wonder-postcard-line);
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
     font-size: 10px;
     font-weight: 700;
-    color: #cbd5e1;
+    color: var(--wonder-postcard-line);
     transform: rotate(3deg);
-    background: rgba(0, 0, 0, 0.02);
+    background: var(--theme-black-02);
     align-self: flex-end;
     /* Align right */
     margin-bottom: 40px;
@@ -931,12 +931,12 @@ h6 {
     display: block;
     font-family: 'Courier New', Courier, monospace;
     font-size: 14px;
-    color: #64748b;
+    color: var(--wonder-postcard-addr);
     margin-bottom: 8px;
 }
 
 .address-line {
-    border-bottom: 2px solid #e2e8f0;
+    border-bottom: 2px solid var(--wonder-postcard-rule);
     margin-bottom: 24px;
     height: 20px;
 }
@@ -959,7 +959,7 @@ h6 {
     border: none;
     background: repeating-linear-gradient(transparent,
             transparent 31px,
-            #cbd5e1 32px);
+            var(--wonder-postcard-line) 32px);
     background-attachment: local;
     padding: 0 4px;
     margin-bottom: 24px;
@@ -974,27 +974,27 @@ h6 {
     outline: none;
     background: repeating-linear-gradient(transparent,
             transparent 31px,
-            #3AB8EB 32px);
+            var(--wonder-sky) 32px);
 }
 
 .submit-precept-box .btn-primary {
     background: var(--kindness-orange);
-    color: white;
+    color: var(--white);
     border: none;
     padding: 10px 24px;
     border-radius: 4px;
     font-weight: 700;
     cursor: pointer;
     transition: all 0.2s;
-    box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.2);
+    box-shadow: 1px 2px 5px var(--wonder-black-20);
     float: right;
     /* Or inline-block if prefer */
 }
 
 .submit-precept-box .btn-primary:hover {
     transform: translateY(-2px);
-    background: #ea580c;
-    box-shadow: 0 6px 15px rgba(249, 115, 22, 0.4);
+    background: var(--wonder-orange-dark);
+    box-shadow: 0 6px 15px var(--wonder-orange-glow);
 }
 
 /* Clearfix */
@@ -1013,7 +1013,7 @@ h6 {
 }
 
 .scenario-item {
-    background: #f8fafc;
+    background: var(--wonder-slate-light);
     border-radius: var(--radius-md);
     padding: 24px;
     margin-bottom: 24px;
@@ -1022,7 +1022,7 @@ h6 {
 }
 
 .scenario-item:hover {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 12px var(--theme-black-05);
 }
 
 .scenario-context {
@@ -1030,10 +1030,10 @@ h6 {
     color: var(--text-secondary);
     margin-bottom: 16px;
     line-height: 1.6;
-    background: white;
+    background: var(--white);
     padding: 12px;
     border-radius: 8px;
-    border: 1px dashed #e2e8f0;
+    border: 1px dashed var(--wonder-postcard-rule);
 }
 
 .scenario-options {
@@ -1047,8 +1047,8 @@ h6 {
     flex: 1;
     min-width: 200px;
     padding: 12px 16px;
-    border: 2px solid #e2e8f0;
-    background: white;
+    border: 2px solid var(--wonder-postcard-rule);
+    background: var(--white);
     border-radius: 12px;
     text-align: left;
     cursor: pointer;
@@ -1066,7 +1066,7 @@ h6 {
 .option-btn.selected {
     border-color: var(--wonder-blue);
     background: var(--wonder-blue);
-    color: white;
+    color: var(--white);
 }
 
 .option-btn:disabled {
@@ -1078,8 +1078,8 @@ h6 {
     margin-top: 12px;
     padding: 12px 14px;
     border-radius: 10px;
-    background: #eff6ff;
-    color: #1e3a8a;
+    background: var(--wonder-result-bg);
+    color: var(--wonder-result-text);
     border-left: 4px solid var(--wonder-blue);
 }
 
@@ -1094,14 +1094,14 @@ h6 {
 .discussion-points {
     margin-top: 16px;
     padding: 16px;
-    background: #fffbeb;
+    background: var(--wonder-discuss-bg);
     /* Amber-50 */
     border-radius: 8px;
-    border-left: 4px solid #f59e0b;
+    border-left: 4px solid var(--wonder-discuss-border);
 }
 
 .discussion-points h5 {
-    color: #b45309;
+    color: var(--wonder-discuss-title);
     margin-bottom: 8px;
     font-size: 0.9rem;
     text-transform: uppercase;
@@ -1111,7 +1111,7 @@ h6 {
 .discussion-points ul {
     margin: 0;
     padding-left: 20px;
-    color: #92400e;
+    color: var(--wonder-discuss-text);
 }
 
 .discussion-points li {
@@ -1132,9 +1132,9 @@ h6 {
 .book-outcome-content {
     margin-top: 8px;
     padding: 12px;
-    background: #eff6ff;
+    background: var(--wonder-result-bg);
     border-radius: 8px;
-    color: #1e3a8a;
+    color: var(--wonder-result-text);
     font-size: 0.95rem;
     display: none;
     animation: fadeIn 0.3s;
@@ -1155,14 +1155,14 @@ h6 {
     cursor: pointer;
     border-radius: var(--radius-md);
     overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 8px var(--theme-black-10);
     transition: transform 0.2s;
-    background: white;
+    background: var(--white);
 }
 
 .scene-thumb:hover {
     transform: translateY(-4px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 8px 16px var(--wonder-black-15);
 }
 
 .scene-info {
@@ -1184,8 +1184,8 @@ h6 {
 .emotion-tag {
     font-size: 0.75rem;
     padding: 2px 8px;
-    background: #f1f5f9;
-    color: #64748b;
+    background: var(--wonder-tag-bg);
+    color: var(--wonder-postcard-addr);
     border-radius: 12px;
 }
 
@@ -1202,10 +1202,10 @@ h6 {
 }
 
 .tip-card {
-    background: #fff;
+    background: var(--wonder-tip-bg);
     padding: 24px;
     border-radius: 2px;
-    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.05);
+    box-shadow: 2px 4px 10px var(--theme-black-05);
     position: relative;
     border-top: 4px solid var(--growth-green);
 }
@@ -1219,7 +1219,7 @@ h6 {
     transform: translateX(-50%);
     width: 20px;
     height: 30px;
-    background: #cbd5e1;
+    background: var(--wonder-postcard-line);
     border-radius: 10px;
     z-index: 1;
     opacity: 0.5;

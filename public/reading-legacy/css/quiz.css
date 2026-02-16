@@ -115,7 +115,7 @@
 
 .option-btn.selected.excellent {
     border-color: var(--success);
-    background: rgba(76, 175, 80, 0.1);
+    background: var(--quiz-success-10);
 }
 
 .option-btn.selected.excellent .option-letter {
@@ -126,7 +126,7 @@
 .option-btn.selected.good,
 .option-btn.selected.neutral {
     border-color: var(--warning);
-    background: rgba(255, 152, 0, 0.1);
+    background: var(--quiz-warning-10);
 }
 
 .option-btn.selected.good .option-letter,
@@ -137,7 +137,7 @@
 
 .option-btn.selected.poor {
     border-color: var(--error);
-    background: rgba(244, 67, 54, 0.1);
+    background: var(--quiz-error-10);
 }
 
 .option-btn.selected.poor .option-letter {

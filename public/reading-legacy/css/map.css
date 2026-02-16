@@ -203,7 +203,7 @@
     border: none;
     border-radius: 2rem;
     cursor: pointer;
-    color: #4A3728;
+    color: var(--map-brown);
     font-weight: 600;
     font-size: 0.9375rem;
     transition: all 0.2s ease;
@@ -216,7 +216,7 @@
 }
 
 .audio-btn.playing {
-    background: linear-gradient(135deg, #90EE90 0%, #66CDAA 100%);
+    background: linear-gradient(135deg, var(--map-green-from) 0%, var(--map-green-to) 100%);
 }
 
 .audio-icon {

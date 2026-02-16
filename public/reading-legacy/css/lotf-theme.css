@@ -2,38 +2,38 @@
 
 :root {
     /* ===== Color System ===== */
-    --lotf-primary: #1E3A5F;
+    --lotf-primary: var(--lotf-navy);
     /* Deep Sea Blue */
-    --lotf-primary-light: #2C5282;
-    --lotf-primary-dark: #0F2A47;
+    --lotf-primary-light: var(--lotf-navy-mid);
+    --lotf-primary-dark: var(--lotf-navy-dark);
 
-    --lotf-fire: #E53E3E;
+    --lotf-fire: var(--lotf-red);
     /* Fire Red */
-    --lotf-fire-light: #FC8181;
-    --lotf-fire-dark: #9B2C2C;
+    --lotf-fire-light: var(--lotf-red-light);
+    --lotf-fire-dark: var(--lotf-red-dark);
 
-    --lotf-conch: #D69E2E;
+    --lotf-conch: var(--lotf-gold);
     /* Conch Gold */
-    --lotf-conch-light: #F6E05E;
+    --lotf-conch-light: var(--lotf-gold-light);
 
-    --lotf-jungle: #276749;
+    --lotf-jungle: var(--lotf-green);
     /* Jungle Green */
-    --lotf-sand: #EDF2D7;
+    --lotf-sand: var(--lotf-green-light);
     /* Sand */
 
     /* Semantic Colors */
-    --lotf-civilization: #3182CE;
-    --lotf-savagery: #C53030;
+    --lotf-civilization: var(--lotf-blue);
+    --lotf-savagery: var(--lotf-red-mid);
 
     /* Backgrounds */
-    --bg-light: #F7FAFC;
-    --bg-card: #FFFFFF;
-    --bg-sidebar: #EDF2F7;
+    --bg-light: var(--lotf-bg);
+    --bg-card: var(--white);
+    --bg-sidebar: var(--lotf-bg-alt);
 
     /* Text */
-    --text-primary: #1A202C;
-    --text-secondary: #4A5568;
-    --text-muted: #A0AEC0;
+    --text-primary: var(--lotf-text);
+    --text-secondary: var(--lotf-text-mid);
+    --text-muted: var(--lotf-text-muted);
 
     /* Fonts */
     --font-heading: 'Bitter', 'Noto Serif SC', serif;
@@ -43,17 +43,17 @@
 
 /* Dark Mode */
 [data-theme="dark"] {
-    --bg-light: #0D1B2A;
-    --bg-card: #1B2838;
-    --bg-sidebar: #101820;
+    --bg-light: var(--lotf-dark-bg);
+    --bg-card: var(--lotf-dark-bg-alt);
+    --bg-sidebar: var(--lotf-dark-bg-deep);
 
-    --text-primary: #E2E8F0;
-    --text-secondary: #A0AEC0;
-    --text-muted: #718096;
+    --text-primary: var(--lotf-border);
+    --text-secondary: var(--lotf-text-muted);
+    --text-muted: var(--lotf-text-light);
 
-    --lotf-primary: #4299E1;
-    --lotf-fire: #FC8181;
-    --lotf-conch: #F6E05E;
+    --lotf-primary: var(--lotf-blue-light);
+    --lotf-fire: var(--lotf-red-light);
+    --lotf-conch: var(--lotf-gold-light);
 }
 
 /* Base Styles */
@@ -109,7 +109,7 @@ body.lotf-theme {
 
 .lotf-toc-toggle:hover {
     background: var(--lotf-primary);
-    color: #fff;
+    color: var(--white);
 }
 
 .lotf-toc-toggle:focus-visible {
@@ -176,14 +176,14 @@ body.lotf-theme {
 }
 
 .chapter-btn:hover {
-    background: rgba(30, 58, 95, 0.05);
+    background: var(--lotf-navy-05);
     color: var(--lotf-primary);
 }
 
 .chapter-btn.active {
     background: var(--lotf-primary);
-    color: white;
-    box-shadow: 0 2px 8px rgba(30, 58, 95, 0.3);
+    color: var(--white);
+    box-shadow: 0 2px 8px var(--lotf-navy-30);
 }
 
 /* Content Typography */
@@ -217,7 +217,7 @@ body.lotf-theme {
 
 /* Highlighted Paragraph */
 .chapter-text p.highlight {
-    background: rgba(214, 158, 46, 0.1);
+    background: var(--lotf-gold-10);
     border-left: 4px solid var(--lotf-conch);
     padding-left: 1rem;
     text-indent: 0;
@@ -245,7 +245,7 @@ body.lotf-theme {
 
 .btn-nav:hover {
     background: var(--lotf-primary);
-    color: white;
+    color: var(--white);
 }
 
 .btn-nav:disabled {

@@ -145,8 +145,8 @@
 }
 
 .comparison-traditional {
-    background: rgba(244, 67, 54, 0.1);
-    border: 1px solid rgba(244, 67, 54, 0.3);
+    background: var(--cards-error-10);
+    border: 1px solid var(--cards-error-30);
 }
 
 .comparison-traditional .comparison-label {
@@ -156,8 +156,8 @@
 }
 
 .comparison-tomoe {
-    background: rgba(76, 175, 80, 0.1);
-    border: 1px solid rgba(76, 175, 80, 0.3);
+    background: var(--cards-success-10);
+    border: 1px solid var(--cards-success-30);
 }
 
 .comparison-tomoe .comparison-label {

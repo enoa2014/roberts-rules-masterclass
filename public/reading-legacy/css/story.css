@@ -1,10 +1,10 @@
 /* Ink & Time Theme */
 :root {
-    --bg-color: #F5F5F0;
-    --ink-color: #2C3E50;
-    --accent-color: #C0392B;
-    --text-main: #333;
-    --text-fade: #666;
+    --bg-color: var(--totto-bg);
+    --ink-color: var(--totto-ink);
+    --accent-color: var(--totto-accent);
+    --text-main: var(--totto-text);
+    --text-fade: var(--totto-text-fade);
     --font-serif: 'Noto Serif SC', 'Songti SC', serif;
     --font-sans: 'Inter', 'Noto Sans SC', sans-serif;
 }
@@ -26,7 +26,7 @@ body {
     flex-direction: column;
     align-items: center;
     justify_content: center;
-    background: radial-gradient(circle at center, #fff 0%, var(--bg-color) 70%);
+    background: radial-gradient(circle at center, var(--totto-white) 0%, var(--bg-color) 70%);
     position: relative;
 }
 
@@ -74,7 +74,7 @@ h1 {
     transform: translateY(-50%);
     width: 4px;
     height: 60vh;
-    background: rgba(0, 0, 0, 0.1);
+    background: var(--totto-black-10);
     border-radius: 2px;
 }
 
@@ -116,7 +116,7 @@ h1 {
 
 /* Flashforward effect */
 .flashforward {
-    background-color: rgba(192, 57, 43, 0.1);
+    background-color: var(--totto-accent-10);
     padding: 0 4px;
     border-radius: 2px;
     cursor: help;
@@ -149,7 +149,7 @@ h1 {
     width: 200px;
     background: white;
     padding: 1rem;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px var(--totto-black-10);
     border-radius: 8px;
     display: none;
 }

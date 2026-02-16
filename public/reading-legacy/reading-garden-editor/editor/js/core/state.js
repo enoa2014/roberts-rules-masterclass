@@ -1,0 +1,85 @@
+const listeners = new Map();
+
+const state = {
+  mode: "checking",
+  projectHandle: null,
+  projectName: "",
+  structure: {
+    ok: false,
+    missing: [],
+  },
+  books: [],
+  bookHealth: [],
+  errors: [],
+  validationFeedback: null,
+  projectStructureFeedback: null,
+  currentView: "dashboard",
+  busy: false,
+  newBookFeedback: null,
+  packFeedback: null,
+  packDiagnostic: null,
+  packManualPlan: null,
+  aiSettings: null,
+  aiFeedback: null,
+  recoveryFeedback: null,
+  recoveryHistory: [],
+  recoveryHistoryMaxAgeDays: 30,
+  recoveryHistoryPolicyScope: "global",
+  recoveryPolicyImportIncludeDefaultOnMerge: false,
+  analysisFeedback: null,
+  analysisSuggestion: null,
+  previewBookId: "",
+  previewDevice: "desktop",
+  previewAutoRefresh: true,
+  previewAutoRefreshPolicyScope: "global",
+  previewRefreshToken: 0,
+  previewUrl: "",
+  bookshelfFocusBookId: "",
+  bookEditorBookId: "",
+  bookEditorDraft: null,
+  bookEditorFeedback: null,
+  dataEditorBookId: "",
+  dataEditorTarget: "books",
+  dataEditorFilePath: "",
+  dataEditorText: "",
+  dataEditorFeedback: null,
+};
+
+function emit(key) {
+  const set = listeners.get(key);
+  if (!set) return;
+  set.forEach((cb) => {
+    try {
+      cb(state[key], state);
+    } catch (err) {
+      console.error("state listener error", err);
+    }
+  });
+}
+
+export function getState() {
+  return state;
+}
+
+export function setState(patch) {
+  const changed = [];
+  Object.keys(patch).forEach((key) => {
+    if (!(key in state)) return;
+    if (state[key] === patch[key]) return;
+    state[key] = patch[key];
+    changed.push(key);
+  });
+
+  changed.forEach((key) => emit(key));
+  if (changed.length) emit("*");
+}
+
+export function subscribe(key, callback) {
+  if (!listeners.has(key)) listeners.set(key, new Set());
+  const set = listeners.get(key);
+  set.add(callback);
+  return () => {
+    set.delete(callback);
+    if (!set.size) listeners.delete(key);
+  };
+}

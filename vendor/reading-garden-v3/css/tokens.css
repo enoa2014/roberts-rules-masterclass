@@ -1,0 +1,122 @@
+:root {
+  color-scheme: light;
+
+  /* Backgrounds — aged parchment, warm linen */
+  --bg-primary: #f6f1ea;
+  --bg-secondary: #ede4d8;
+
+  /* Text — deep ink */
+  --text-primary: #1a1a1a;
+  --text-secondary: #6b6156;
+
+  /* Accents — botanical palette */
+  --accent-warm: #c8a45a;
+  --accent-sky: #5a8a7a;
+  --accent-sage: #7a9e7e;
+  --accent-coral: #c4735b;
+  --accent-forest: #2d4a3e;
+  --accent-ink: #1a1a1a;
+
+  /* Cards */
+  --card-bg: #faf7f2;
+  --card-shadow: rgba(26, 26, 26, 0.08);
+  --card-border: rgba(26, 26, 26, 0.08);
+
+  /* Typography — Playfair Display + Source Serif 4 */
+  --font-display: "Playfair Display", "Noto Serif SC", Georgia, serif;
+  --font-heading: "Playfair Display", "Noto Serif SC", Georgia, serif;
+  --font-body: "Source Serif 4", "Noto Serif SC", Georgia, serif;
+
+  /* Sizing */
+  --container: 1120px;
+
+  /* Spacing */
+  --space-1: 8px;
+  --space-2: 12px;
+  --space-3: 16px;
+  --space-4: 24px;
+  --space-5: 32px;
+  --space-6: 48px;
+
+  /* Radius */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+
+  /* Shadows — layered, organic */
+  --shadow-1: 0 2px 8px rgba(26, 26, 26, 0.04), 0 12px 40px rgba(26, 26, 26, 0.06);
+  --shadow-2: 0 4px 16px rgba(26, 26, 26, 0.06), 0 24px 64px rgba(26, 26, 26, 0.1);
+
+  /* Shared border/surface alphas (used in modules.css) */
+  --border-alpha: rgba(107, 97, 86, 0.22);
+  --border-alpha-light: rgba(107, 97, 86, 0.12);
+  --surface-alpha: rgba(250, 247, 242, 0.6);
+  --touch-target: 44px;
+
+  /* Motion */
+  --duration-fast: 120ms;
+  --duration-med: 280ms;
+  --duration-slow: 480ms;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+
+  /* Book theme defaults */
+  --book-primary: var(--accent-warm);
+  --book-secondary: var(--accent-forest);
+}
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+
+  --bg-primary: #181612;
+  --bg-secondary: #22201b;
+  --text-primary: #e8e0d4;
+  --text-secondary: #9e9488;
+  --card-bg: #252219;
+  --card-shadow: rgba(0, 0, 0, 0.35);
+  --card-border: rgba(232, 224, 212, 0.08);
+
+  --shadow-1: 0 2px 8px rgba(0, 0, 0, 0.15), 0 12px 40px rgba(0, 0, 0, 0.2);
+  --shadow-2: 0 4px 16px rgba(0, 0, 0, 0.2), 0 24px 64px rgba(0, 0, 0, 0.35);
+
+  --border-alpha: rgba(232, 224, 212, 0.12);
+  --border-alpha-light: rgba(232, 224, 212, 0.08);
+  --surface-alpha: rgba(232, 224, 212, 0.06);
+}
+
+/* Per-book theme colors */
+body[data-book="totto-chan"],
+[data-book="totto-chan"] {
+  --book-primary: #d4a843;
+  --book-secondary: #7a5c2e;
+}
+
+body[data-book="wave"],
+[data-book="wave"] {
+  --book-primary: #2a6f8a;
+  --book-secondary: #8a3a3a;
+}
+
+body[data-book="story-of-your-life"],
+[data-book="story-of-your-life"] {
+  --book-primary: #4a3a6e;
+  --book-secondary: #9e7e2e;
+}
+
+body[data-book="wonder"],
+[data-book="wonder"] {
+  --book-primary: #4a8eb0;
+  --book-secondary: #c4a032;
+}
+
+body[data-book="a-man-called-ove"],
+[data-book="a-man-called-ove"] {
+  --book-primary: #4e6a4a;
+  --book-secondary: #b06a3a;
+}
+
+body[data-book="lord-of-the-flies"],
+[data-book="lord-of-the-flies"] {
+  --book-primary: #2a4a1a;
+  --book-secondary: #b08020;
+}
