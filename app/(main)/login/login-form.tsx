@@ -56,7 +56,7 @@ export function LoginForm({ callbackUrl }: Props) {
             <h2 className="text-3xl font-extrabold mb-4 leading-tight">
               掌握公共议事规则<br />提升公民核心素养
             </h2>
-            <p className="text-blue-100 leading-relaxed">
+            <p className="text-white/90 leading-relaxed">
               从理论学习到模拟议事，全方位掌握罗伯特议事规则。加入我们，在实践中学会表达、倾听与决策。
             </p>
           </div>

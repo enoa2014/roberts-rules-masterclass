@@ -67,6 +67,11 @@
   font-family: 'JetBrains Mono', monospace;
 }
 
+[data-theme="festival-civic"] .gradient-primary {
+  background: var(--fc-gradient-primary);
+  color: var(--fc-text-inverse);
+}
+
 /* ===== 节庆动画系统 ===== */
 @keyframes festivalPulse {
   0%, 100% {

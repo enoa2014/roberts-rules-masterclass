@@ -66,6 +66,11 @@
   font-family: 'Consolas', monospace;
 }
 
+[data-theme="charcoal-grid"] .gradient-primary {
+  background: var(--cg-gradient-primary);
+  color: var(--cg-text-inverse);
+}
+
 /* ===== 炭黑动画系统 ===== */
 @keyframes charcoalGlow {
   0%, 100% {

@@ -66,6 +66,11 @@
   font-family: 'Consolas', monospace;
 }
 
+[data-theme="mint-campaign"] .gradient-primary {
+  background: var(--mc-gradient-primary);
+  color: var(--mc-text-inverse);
+}
+
 /* ===== 薄荷动画系统 ===== */
 @keyframes mintPulse {
   0%, 100% {

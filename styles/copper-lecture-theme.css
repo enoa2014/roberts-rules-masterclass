@@ -61,6 +61,11 @@
   font-family: "JetBrains Mono", "Consolas", monospace;
 }
 
+[data-theme="copper-lecture"] .gradient-primary {
+  background: var(--cl-gradient-main);
+  color: var(--cl-text-inverse);
+}
+
 /* ===== 动画 ===== */
 @keyframes copperFloat {
   0%, 100% {

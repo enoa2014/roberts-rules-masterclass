@@ -353,6 +353,11 @@
     background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 50%, var(--accent-dark) 100%);
   }
 
+  .gradient-primary {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 60%, var(--accent-dark) 100%);
+    color: var(--primary-foreground);
+  }
+
   .gradient-hero {
     background: linear-gradient(135deg,
       #fafbfc 0%,
