@@ -101,11 +101,33 @@ npm run test:e2e:realtime
 npm run test:e2e
 ```
 
+5. 执行核心回归套件（桌面 + 移动）：
+
+```bash
+npm run test:e2e:core
+```
+
+6. 直接对线上环境执行核心回归（默认 `https://tongxy.xyz`）：
+
+```bash
+npm run test:e2e:prod
+```
+
+如果需要对其他环境执行，使用：
+
+```bash
+E2E_BASE_URL=https://your-domain.com \
+  npx playwright test tests/e2e/platform-regression.spec.ts \
+  --project=chromium --project=mobile-chromium --reporter=line
+```
+
 说明：
 
 1. `auth-create.spec.ts` 是稳定回归用例，适合每次提交必跑。
 2. `interact-realtime.spec.ts` 涉及 SSE 实时链路，已加入回退逻辑（短超时失败后 reload 再校验），建议在 CI 保留重试。
-3. 测试前会自动执行 `smoke:seed` 保证账户与邀请码存在。
+3. `platform-regression.spec.ts` 覆盖登录、主题切换、移动端菜单滚动锁、阅读书籍运行时加载（全书）。
+4. 当指定 `E2E_BASE_URL` 时，Playwright 不会启动本地 `webServer`，且默认以单 worker 串行执行，避免线上登录限流干扰。
+5. 测试前会自动执行 `smoke:seed` 保证账户与邀请码存在（仅本地目标）。
 
 ---
 

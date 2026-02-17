@@ -1,7 +1,12 @@
 import { test, expect } from '@playwright/test';
 import { execSync } from 'child_process';
+import { isRemoteE2E } from './utils/e2e-env';
 
 test.beforeAll(async () => {
+    if (isRemoteE2E) {
+        return;
+    }
+
     try {
         execSync('npm run smoke:seed', { stdio: 'ignore' });
     } catch (e) {
