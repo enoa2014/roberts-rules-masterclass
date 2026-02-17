@@ -1,6 +1,10 @@
 services:
   app:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: runner
+    image: yiqidu-learning-platform:latest
     container_name: yiqidu-app
     restart: unless-stopped
     env_file:
@@ -8,10 +12,16 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - ./data:/app/data
-      - ./logs:/app/logs
+      - yiqidu_data:/app/data
+      - yiqidu_uploads:/app/uploads
+      - yiqidu_logs:/app/logs
     healthcheck:
       test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:3000/api/health || exit 1"]
       interval: 30s
       timeout: 5s
       retries: 5
+
+volumes:
+  yiqidu_data:
+  yiqidu_uploads:
+  yiqidu_logs:
