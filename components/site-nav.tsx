@@ -23,7 +23,6 @@ import {
   ShieldCheck,
   Crown,
   Sparkles,
-  ChevronDown,
 } from "lucide-react";
 import { ThemeSelector } from "./theme-selector";
 
@@ -79,10 +78,6 @@ export function SiteNav() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  useEffect(() => {
-    setIsOpen(false);
-  }, [pathname]);
 
   useEffect(() => {
     if (!isOpen) {

@@ -45,6 +45,19 @@ interface SessionViewProps {
     sessionId: string;
 }
 
+function isGlobalMuteEnabled(settingsRaw: string | null | undefined) {
+    if (!settingsRaw) {
+        return false;
+    }
+
+    try {
+        const parsed = JSON.parse(settingsRaw) as { globalMute?: boolean };
+        return parsed.globalMute === true;
+    } catch {
+        return false;
+    }
+}
+
 export function SessionView({ sessionId }: SessionViewProps) {
     const { data: sessionData } = useSession();
     const role = (sessionData?.user?.role as Role | undefined) ?? "student";
@@ -329,7 +342,7 @@ export function SessionView({ sessionId }: SessionViewProps) {
                                         <label className="text-sm text-gray-600 flex items-center gap-1 cursor-pointer">
                                             <input
                                                 type="checkbox"
-                                                checked={state.session.settings ? JSON.parse(state.session.settings).globalMute : false}
+                                                checked={isGlobalMuteEnabled(state.session.settings)}
                                                 onChange={async (e) => {
                                                     await fetch(`/api/interact/sessions/${sessionId}/mute`, {
                                                         method: "POST",

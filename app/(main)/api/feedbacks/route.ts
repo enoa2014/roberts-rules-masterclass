@@ -87,7 +87,13 @@ function escapeCsvCell(value: string | number | null) {
   if (value === null || value === undefined) {
     return "";
   }
-  const text = String(value);
+
+  let text = String(value);
+  // Prevent CSV/Spreadsheet formula injection when exported data is opened in Excel/Sheets.
+  if (/^[\t\r\n ]*[=+\-@]/.test(text)) {
+    text = `'${text}`;
+  }
+
   if (/[",\r\n]/.test(text)) {
     return `"${text.replace(/"/g, "\"\"")}"`;
   }

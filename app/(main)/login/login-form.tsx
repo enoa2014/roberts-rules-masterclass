@@ -16,6 +16,10 @@ export function LoginForm({ callbackUrl }: Props) {
   const [error, setError] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const safeCallbackUrl =
+    callbackUrl.startsWith("/") && !callbackUrl.startsWith("//")
+      ? callbackUrl
+      : "/invite";
 
   async function handleUsernameLogin(e: React.FormEvent) {
     e.preventDefault();
@@ -27,13 +31,13 @@ export function LoginForm({ callbackUrl }: Props) {
         username,
         password,
         redirect: false,
-        callbackUrl,
+        callbackUrl: safeCallbackUrl,
       });
 
       if (res?.error) {
         setError("用户名或密码错误");
       } else {
-        router.push(callbackUrl);
+        router.push(safeCallbackUrl);
       }
     } catch {
       setError("登录失败，请稍后重试");

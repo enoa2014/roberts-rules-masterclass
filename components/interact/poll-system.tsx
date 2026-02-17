@@ -19,12 +19,12 @@ type Props = {
 
 export function PollSystem({ poll, role, onVote }: Props) {
     const [submitting, setSubmitting] = useState(false);
-    const [hasVotedLocal, setHasVotedLocal] = useState(false);
+    const [votedPollId, setVotedPollId] = useState<number | null>(null);
 
     const handleVote = async (optionId: number) => {
         setSubmitting(true);
         await onVote(optionId);
-        setHasVotedLocal(true);
+        setVotedPollId(poll?.pollId ?? null);
         setSubmitting(false);
     };
 
@@ -36,7 +36,7 @@ export function PollSystem({ poll, role, onVote }: Props) {
         );
     }
 
-    const hasVoted = hasVotedLocal;
+    const hasVoted = poll ? votedPollId === poll.pollId : false;
 
     return (
         <div className="bg-white rounded-xl border shadow-sm p-6">

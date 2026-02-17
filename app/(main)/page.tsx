@@ -23,7 +23,6 @@ import {
   Crown,
   Target,
   TrendingUp,
-  CheckCircle,
   Sparkles,
   Globe,
   Shield,
@@ -899,6 +898,14 @@ type QuickEntry = {
   description?: string;
 };
 
+type HomeFeature = {
+  icon: LucideIcon;
+  title: string;
+  description: string;
+  color: string;
+  gradient: string;
+};
+
 const quickEntries: QuickEntry[] = [
   { title: "课程总览", href: "/course", icon: BookOpen, description: "浏览所有课程" },
   { title: "学习中心", href: "/rules", icon: Scale, description: "议事规则学习" },
@@ -973,7 +980,19 @@ function QuickEntryCard({ entry, index, isFestival, isCharcoal, isCopper }: { en
   );
 }
 
-function FeatureCard({ feature, index, isFestival, isCharcoal, isCopper }: { feature: any; index: number; isFestival: boolean; isCharcoal: boolean; isCopper: boolean }) {
+function FeatureCard({
+  feature,
+  index,
+  isFestival,
+  isCharcoal,
+  isCopper,
+}: {
+  feature: HomeFeature;
+  index: number;
+  isFestival: boolean;
+  isCharcoal: boolean;
+  isCopper: boolean;
+}) {
   const Icon = feature.icon;
 
   return (

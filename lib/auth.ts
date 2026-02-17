@@ -49,15 +49,16 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     async jwt({ token, user }) {
-      if (user?.role) {
-        token.role = user.role;
-      }
-
-      if (!token.role && token.sub) {
-        const dbUser = findUserById(Number(token.sub));
-        if (dbUser) {
-          token.role = dbUser.role;
+      if (token.sub) {
+        const userId = Number(token.sub);
+        if (Number.isInteger(userId) && userId > 0) {
+          const dbUser = findUserById(userId);
+          if (dbUser) {
+            token.role = dbUser.role;
+          }
         }
+      } else if (user?.role) {
+        token.role = user.role;
       }
 
       return token;

@@ -8,6 +8,13 @@ function normalizeIp(ip: string) {
 }
 
 export function resolveClientIp(headers: Headers) {
+  const trustProxyHeaders =
+    process.env.AUTH_RATE_LIMIT_TRUST_PROXY_HEADERS === "1" ||
+    process.env.NODE_ENV !== "production";
+  if (!trustProxyHeaders) {
+    return null;
+  }
+
   const forwardedFor = headers.get("x-forwarded-for");
   if (forwardedFor) {
     const first = forwardedFor.split(",")[0];

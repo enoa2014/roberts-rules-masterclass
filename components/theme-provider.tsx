@@ -13,22 +13,32 @@ interface ThemeContextType {
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
+function isTheme(value: string | null | undefined): value is Theme {
+  return (
+    value === 'default' ||
+    value === 'festival-civic' ||
+    value === 'mint-campaign' ||
+    value === 'charcoal-grid' ||
+    value === 'copper-lecture'
+  );
+}
+
 // 获取初始主题的函数，避免 SSR 不匹配
 function getInitialTheme(): Theme {
+  if (typeof document !== 'undefined') {
+    const domTheme = document.documentElement.getAttribute('data-theme');
+    if (isTheme(domTheme)) {
+      return domTheme;
+    }
+  }
+
   if (typeof window === 'undefined') {
     return 'default';
   }
 
   try {
-    const savedTheme = localStorage.getItem('theme') as Theme;
-    if (
-      savedTheme &&
-      (savedTheme === 'default' ||
-        savedTheme === 'festival-civic' ||
-        savedTheme === 'mint-campaign' ||
-        savedTheme === 'charcoal-grid' ||
-        savedTheme === 'copper-lecture')
-    ) {
+    const savedTheme = localStorage.getItem('theme');
+    if (isTheme(savedTheme)) {
       return savedTheme;
     }
   } catch (error) {
@@ -39,26 +49,22 @@ function getInitialTheme(): Theme {
 }
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>('default');
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [theme, setThemeState] = useState<Theme>(() => getInitialTheme());
 
-  // 在客户端初始化时立即设置主题
   useEffect(() => {
-    const initialTheme = getInitialTheme();
-    setThemeState(initialTheme);
-    document.documentElement.setAttribute('data-theme', initialTheme);
-    setIsLoaded(true);
-  }, []);
+    document.documentElement.setAttribute('data-theme', theme);
+
+    if (typeof window !== 'undefined') {
+      try {
+        localStorage.setItem('theme', theme);
+      } catch (error) {
+        console.warn('Failed to save theme to localStorage:', error);
+      }
+    }
+  }, [theme]);
 
   const setTheme = (newTheme: Theme) => {
     setThemeState(newTheme);
-    document.documentElement.setAttribute('data-theme', newTheme);
-
-    try {
-      localStorage.setItem('theme', newTheme);
-    } catch (error) {
-      console.warn('Failed to save theme to localStorage:', error);
-    }
   };
 
   const toggleTheme = () => {
@@ -69,7 +75,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <ThemeContext.Provider value={{ theme, setTheme, toggleTheme, isLoaded }}>
+    <ThemeContext.Provider value={{ theme, setTheme, toggleTheme, isLoaded: true }}>
       {children}
     </ThemeContext.Provider>
   );

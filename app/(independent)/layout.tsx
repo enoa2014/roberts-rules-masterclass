@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import "../globals.css";
 import { Providers } from "@/components/providers";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -16,7 +17,7 @@ export default function IndependentLayout({
     return (
         <html lang="zh-CN" suppressHydrationWarning>
             <head>
-                <script src="/theme-init.js" />
+                <Script src="/theme-init.js" strategy="beforeInteractive" />
             </head>
             <body className="font-serif">
                 <ThemeProvider>

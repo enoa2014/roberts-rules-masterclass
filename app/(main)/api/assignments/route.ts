@@ -7,21 +7,10 @@ import { z } from "zod";
 import { requireAuth, STUDENT_ROLES, TEACHER_ROLES } from "@/lib/authz";
 import { sqlite } from "@/lib/db";
 
-const createAssignmentSchema = z
-  .object({
-    lessonId: z.string().min(1).max(64),
-    content: z.string().max(5000).optional(),
-    hasFile: z.boolean().optional(),
-  })
-  .superRefine((value, ctx) => {
-    if (!value.content && !value.hasFile) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        path: ["content"],
-        message: "content 与 file 至少需要一个",
-      });
-    }
-  });
+const createAssignmentSchema = z.object({
+  lessonId: z.string().min(1).max(64),
+  content: z.string().max(5000).optional(),
+});
 
 const ALLOWED_FILE_EXTENSIONS = new Set(["pdf", "docx", "doc", "jpg", "png"]);
 const MAX_FILE_SIZE = 10 * 1024 * 1024;
@@ -153,15 +142,16 @@ export async function POST(request: Request) {
     return auth.response;
   }
 
+  let persistedFilePath: string | null = null;
+
   try {
     const contentType = request.headers.get("content-type") ?? "";
     const isMultipart = contentType.includes("multipart/form-data");
     let payload: {
       lessonId: string;
       content?: string;
-      hasFile?: boolean;
     };
-    let persistedFilePath: string | null = null;
+    let uploadFile: File | null = null;
 
     if (isMultipart) {
       const form = await request.formData();
@@ -175,12 +165,7 @@ export async function POST(request: Request) {
       };
 
       if (rawFile instanceof File && rawFile.size > 0) {
-        const saved = await persistAssignmentFile(rawFile, auth.ctx.userId);
-        if (!saved.ok) {
-          return toErrorResponse("INVALID_INPUT", saved.message, saved.status);
-        }
-        payload.hasFile = true;
-        persistedFilePath = saved.filePath;
+        uploadFile = rawFile;
       }
     } else {
       const jsonPayload = await request.json();
@@ -188,21 +173,33 @@ export async function POST(request: Request) {
         return toErrorResponse("INVALID_INPUT", "作业参数不合法", 400);
       }
 
+      if ("filePath" in jsonPayload || "hasFile" in jsonPayload) {
+        return toErrorResponse("INVALID_INPUT", "filePath/hasFile 不是可提交字段", 400);
+      }
+
       payload = jsonPayload as {
         lessonId: string;
         content?: string;
-        hasFile?: boolean;
       };
-      // JSON 提交不允许客户端直接指定文件路径。
-      if ("filePath" in payload) {
-        return toErrorResponse("INVALID_INPUT", "filePath 不是可提交字段", 400);
-      }
     }
 
     const parsed = createAssignmentSchema.safeParse(payload);
 
     if (!parsed.success) {
       return toErrorResponse("INVALID_INPUT", "作业参数不合法", 400);
+    }
+
+    if (uploadFile) {
+      const saved = await persistAssignmentFile(uploadFile, auth.ctx.userId);
+      if (!saved.ok) {
+        return toErrorResponse("INVALID_INPUT", saved.message, saved.status);
+      }
+      persistedFilePath = saved.filePath;
+    }
+
+    const normalizedContent = parsed.data.content?.trim() ?? "";
+    if (!normalizedContent && !persistedFilePath) {
+      return toErrorResponse("INVALID_INPUT", "content 与 file 至少需要一个", 400);
     }
 
     const result = sqlite
@@ -213,7 +210,7 @@ export async function POST(request: Request) {
       .run(
         auth.ctx.userId,
         parsed.data.lessonId,
-        parsed.data.content ?? null,
+        normalizedContent || null,
         persistedFilePath,
       );
 
@@ -242,6 +239,10 @@ export async function POST(request: Request) {
       { status: 201 },
     );
   } catch (error) {
+    if (persistedFilePath) {
+      const absolutePath = path.join(process.cwd(), persistedFilePath);
+      await fs.unlink(absolutePath).catch(() => {});
+    }
     console.error("create assignment error", error);
     return toErrorResponse("INTERNAL_ERROR", "服务异常", 500);
   }

@@ -1,6 +1,8 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 import {
   BookOpen,
   Leaf,
@@ -13,10 +15,7 @@ import {
   Sparkles,
   TreePine,
   Flower,
-  Sun,
-  Moon,
   Heart,
-  Bookmark,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { useTheme } from "@/components/theme-provider";
@@ -207,7 +206,36 @@ export default function ReadingGardenPage() {
 }
 
 // Featured Books Data
-const featuredBooks = [
+type FeaturedBook = {
+  id: string;
+  title: string;
+  author: string;
+  description: string;
+  cover: string;
+  readingTime: string;
+  difficulty: string;
+  modules: string[];
+  status: string;
+  color: "blue" | "red" | "purple" | "green" | "cyan" | "amber";
+};
+
+type LibraryBook = {
+  id: string;
+  title: string;
+  author: string;
+  color: "blue" | "red" | "purple" | "green" | "cyan" | "amber" | "gray";
+  cover?: string;
+};
+
+type ReadingFeature = {
+  icon: LucideIcon;
+  title: string;
+  description: string;
+  color: string;
+  gradient: string;
+};
+
+const featuredBooks: FeaturedBook[] = [
   {
     id: "a-man-called-ove",
     title: "一个叫欧维的男人决定去死",
@@ -283,7 +311,7 @@ const featuredBooks = [
 ];
 
 // All Books Data (simplified)
-const allBooks = [
+const allBooks: LibraryBook[] = [
   {
     id: "a-man-called-ove",
     title: "欧维",
@@ -331,7 +359,7 @@ const allBooks = [
 ];
 
 // Reading Features Data
-const readingFeatures = [
+const readingFeatures: ReadingFeature[] = [
   {
     icon: BookOpen,
     title: "互动阅读",
@@ -362,7 +390,9 @@ const readingFeatures = [
   },
 ];
 
-function BookCard({ book, index }: { book: any; index: number }) {
+function BookCard({ book, index }: { book: FeaturedBook; index: number }) {
+  const [coverLoadFailed, setCoverLoadFailed] = useState(false);
+
   const colorMap = {
     blue: { bg: "from-blue-500 to-blue-600", badge: "bg-blue-50 text-blue-700 border-blue-200" },
     red: { bg: "from-red-500 to-red-600", badge: "bg-red-50 text-red-700 border-red-200" },
@@ -377,20 +407,21 @@ function BookCard({ book, index }: { book: any; index: number }) {
   return (
     <div className={`card p-6 hover-lift group animate-fadeInUp delay-${(index % 3 + 1) * 100}`}>
       {/* Book Cover */}
-      <div className="w-full h-48 rounded-lg overflow-hidden mb-6 group-hover:shadow-xl transition-all duration-300">
-        <img
-          src={book.cover}
-          alt={`${book.title}封面`}
-          className="w-full h-full object-cover"
-          onError={(e) => {
-            // 如果图片加载失败，显示默认渐变背景
-            e.currentTarget.style.display = 'none';
-            e.currentTarget.nextElementSibling?.classList.remove('hidden');
-          }}
-        />
-        <div className={`hidden w-full h-full bg-gradient-to-br ${colors.bg} flex items-center justify-center`}>
-          <BookOpen className="h-12 w-12 text-white" />
-        </div>
+      <div className="relative w-full h-48 rounded-lg overflow-hidden mb-6 group-hover:shadow-xl transition-all duration-300">
+        {!coverLoadFailed ? (
+          <Image
+            src={book.cover}
+            alt={`${book.title}封面`}
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
+            className="object-cover"
+            onError={() => setCoverLoadFailed(true)}
+          />
+        ) : (
+          <div className={`w-full h-full bg-gradient-to-br ${colors.bg} flex items-center justify-center`}>
+            <BookOpen className="h-12 w-12 text-white" />
+          </div>
+        )}
       </div>
 
       {/* Book Info */}
@@ -436,7 +467,9 @@ function BookCard({ book, index }: { book: any; index: number }) {
   );
 }
 
-function LibraryBookCard({ book, index }: { book: any; index: number }) {
+function LibraryBookCard({ book, index }: { book: LibraryBook; index: number }) {
+  const [coverLoadFailed, setCoverLoadFailed] = useState(false);
+
   const colorMap = {
     blue: "from-blue-500 to-blue-600",
     red: "from-red-500 to-red-600",
@@ -448,28 +481,23 @@ function LibraryBookCard({ book, index }: { book: any; index: number }) {
   };
 
   const gradient = colorMap[book.color as keyof typeof colorMap] || colorMap.blue;
+  const showCover = Boolean(book.cover) && !coverLoadFailed;
 
   return (
     <Link
       href={book.color === 'gray' ? '#' : `/reading-legacy/book.html?book=${book.id}`}
       className={`group card p-4 hover-lift cursor-pointer animate-scaleIn delay-${(index % 6 + 1) * 50} ${book.color === 'gray' ? 'opacity-60' : ''}`}
     >
-      <div className="w-full h-32 rounded-lg overflow-hidden mb-3 group-hover:shadow-lg transition-all duration-300">
-        {book.cover ? (
-          <>
-            <img
-              src={book.cover}
-              alt={`${book.title}封面`}
-              className="w-full h-full object-cover"
-              onError={(e) => {
-                e.currentTarget.style.display = "none";
-                e.currentTarget.nextElementSibling?.classList.remove("hidden");
-              }}
-            />
-            <div className={`hidden w-full h-full bg-gradient-to-br ${gradient} items-center justify-center`}>
-              <BookOpen className="h-8 w-8 text-white" />
-            </div>
-          </>
+      <div className="relative w-full h-32 rounded-lg overflow-hidden mb-3 group-hover:shadow-lg transition-all duration-300">
+        {showCover && book.cover ? (
+          <Image
+            src={book.cover}
+            alt={`${book.title}封面`}
+            fill
+            sizes="(max-width: 768px) 50vw, (max-width: 1280px) 33vw, 16vw"
+            className="object-cover"
+            onError={() => setCoverLoadFailed(true)}
+          />
         ) : (
           <div className={`w-full h-full bg-gradient-to-br ${gradient} flex items-center justify-center`}>
             <BookOpen className="h-8 w-8 text-white" />
@@ -486,7 +514,7 @@ function LibraryBookCard({ book, index }: { book: any; index: number }) {
   );
 }
 
-function FeatureCard({ feature, index }: { feature: any; index: number }) {
+function FeatureCard({ feature, index }: { feature: ReadingFeature; index: number }) {
   const Icon = feature.icon;
 
   return (

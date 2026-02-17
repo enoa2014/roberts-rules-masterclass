@@ -10,7 +10,6 @@ import {
   CheckCircle,
   Lock,
   ArrowRight,
-  Filter,
   Search,
   Grid3X3,
   List,
@@ -19,6 +18,7 @@ import {
   Target,
   Zap,
 } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { useTheme } from "@/components/theme-provider";
 
 export default function CoursePage() {
@@ -443,7 +443,33 @@ export default function CoursePage() {
 }
 
 // Course data
-const courses = [
+type Course = {
+  id: number;
+  title: string;
+  description: string;
+  level: string;
+  duration: string;
+  students: number;
+  rating: number;
+  progress: number;
+  status: "in_progress" | "locked" | "completed";
+  instructor: string;
+  topics: string[];
+  color: "blue" | "purple" | "cyan" | "green" | "amber" | "red";
+};
+
+type LearningPath = {
+  id: number;
+  title: string;
+  description: string;
+  courses: number;
+  duration: string;
+  difficulty: string;
+  color: "blue" | "purple" | "amber";
+  icon: LucideIcon;
+};
+
+const courses: Course[] = [
   {
     id: 1,
     title: "议事规则基础",
@@ -530,7 +556,7 @@ const courses = [
   },
 ];
 
-const learningPaths = [
+const learningPaths: LearningPath[] = [
   {
     id: 1,
     title: "新手入门",
@@ -571,7 +597,7 @@ function CourseCard({
   isCharcoal,
   isCopper,
 }: {
-  course: any;
+  course: Course;
   index: number;
   isFestival: boolean;
   isMint: boolean;
@@ -773,7 +799,7 @@ function LearningPathCard({
   isCharcoal,
   isCopper,
 }: {
-  path: any;
+  path: LearningPath;
   index: number;
   isFestival: boolean;
   isMint: boolean;
