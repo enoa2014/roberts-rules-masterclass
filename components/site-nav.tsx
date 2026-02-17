@@ -217,7 +217,7 @@ export function SiteNav() {
             id="mobile-nav-menu"
             className="lg:hidden mt-3 transition-all duration-500 ease-out opacity-100 transform translate-y-0"
           >
-            <div className="glass-card p-6 animate-fadeInUp">
+            <div className="glass-card p-6 animate-fadeInUp max-h-[calc(100vh-8rem)] overflow-y-auto overscroll-contain">
             {/* Mobile Role Badge */}
             {isSignedIn && currentRole && (
               <div className={`flex items-center justify-center gap-2 mb-6 px-4 py-3 rounded-xl ${currentRole.bgColor} ${currentRole.color}`}>
@@ -227,6 +227,11 @@ export function SiteNav() {
                 </span>
               </div>
             )}
+
+            {/* Mobile Theme Selector */}
+            <div className="mb-6">
+              <ThemeSelector placement="up" />
+            </div>
 
             {/* Mobile Navigation Links */}
             <div className="grid gap-2 mb-6">
@@ -261,11 +266,6 @@ export function SiteNav() {
 
             {/* Mobile Auth Section */}
             <div className="border-t border-gray-200 pt-6">
-              {/* 移动端主题选择器 */}
-              <div className="mb-6">
-                <ThemeSelector placement="up" />
-              </div>
-
               {isSignedIn ? (
                 <div className="grid gap-2">
                   {isTeacherOrAdmin && (
