@@ -84,6 +84,24 @@ export function SiteNav() {
     setIsOpen(false);
   }, [pathname]);
 
+  useEffect(() => {
+    if (!isOpen) {
+      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
+      return;
+    }
+
+    const previousBodyOverflow = document.body.style.overflow;
+    const previousHtmlOverflow = document.documentElement.style.overflow;
+    document.body.style.overflow = "hidden";
+    document.documentElement.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = previousBodyOverflow;
+      document.documentElement.style.overflow = previousHtmlOverflow;
+    };
+  }, [isOpen]);
+
   const isActive = (path: string) => pathname === path || pathname.startsWith(`${path}/`);
 
   return (
@@ -217,7 +235,7 @@ export function SiteNav() {
             id="mobile-nav-menu"
             className="lg:hidden mt-3 transition-all duration-500 ease-out opacity-100 transform translate-y-0"
           >
-            <div className="glass-card p-6 animate-fadeInUp max-h-[calc(100vh-8rem)] overflow-y-auto overscroll-contain">
+            <div className="glass-card p-6 animate-fadeInUp max-h-[calc(100vh-8rem)] overflow-y-auto overscroll-contain touch-pan-y">
             {/* Mobile Role Badge */}
             {isSignedIn && currentRole && (
               <div className={`flex items-center justify-center gap-2 mb-6 px-4 py-3 rounded-xl ${currentRole.bgColor} ${currentRole.color}`}>
@@ -227,11 +245,6 @@ export function SiteNav() {
                 </span>
               </div>
             )}
-
-            {/* Mobile Theme Selector */}
-            <div className="mb-6">
-              <ThemeSelector placement="up" />
-            </div>
 
             {/* Mobile Navigation Links */}
             <div className="grid gap-2 mb-6">
@@ -330,6 +343,11 @@ export function SiteNav() {
                   </Link>
                 </div>
               )}
+
+              {/* 移动端主题选择器（保持在菜单底部） */}
+              <div className="mt-6 pt-6 border-t border-gray-200">
+                <ThemeSelector placement="up" />
+              </div>
             </div>
             </div>
           </div>
