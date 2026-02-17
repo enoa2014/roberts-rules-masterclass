@@ -18,9 +18,12 @@ TEST_ACCOUNTS.local.md
 .claude/
 node_modules/
 .next/
-data/
+/data/
 /logs/
-uploads/
+/uploads/
+!public/reading-legacy/data/
+!public/reading-legacy/data/**
+vendor/reading-garden-v3/data/
 
 # session planning files
 findings.md

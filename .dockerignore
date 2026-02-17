@@ -11,3 +11,21 @@ res
 findings.md
 progress.md
 task_plan.md
+.claude
+.github
+coverage
+playwright-report
+test-results
+tests
+/data
+/logs
+/uploads
+vendor
+!public/reading-legacy/data/**
+
+# Local docs and notes
+README.md
+TEST_ACCOUNTS.local.md
+theme-showcase.html
+*.md
+!*.example

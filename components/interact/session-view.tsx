@@ -163,6 +163,46 @@ export function SessionView({ sessionId }: SessionViewProps) {
         });
     };
 
+    const updateSessionStatus = async (nextStatus: "active" | "ended") => {
+        const response = await fetch(`/api/interact/sessions/${sessionId}/status`, {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ status: nextStatus }),
+        });
+
+        if (!response.ok) {
+            return;
+        }
+
+        const payload = (await response.json()) as { session?: { status?: string } };
+        if (payload.session?.status) {
+            setState((prev) =>
+                prev
+                    ? {
+                        ...prev,
+                        session: {
+                            ...prev.session,
+                            status: payload.session?.status ?? nextStatus,
+                        },
+                    }
+                    : prev,
+            );
+            return;
+        }
+
+        setState((prev) =>
+            prev
+                ? {
+                    ...prev,
+                    session: {
+                        ...prev.session,
+                        status: nextStatus,
+                    },
+                }
+                : prev,
+        );
+    };
+
     if (!state) {
         return (
             <div className="flex items-center justify-center min-h-screen pt-20 bg-gray-50">
@@ -205,11 +245,7 @@ export function SessionView({ sessionId }: SessionViewProps) {
                         {state.session.status === 'pending' && (
                             <button
                                 onClick={async () => {
-                                    await fetch(`/api/interact/sessions/${sessionId}/status`, {
-                                        method: "PATCH",
-                                        headers: { "Content-Type": "application/json" },
-                                        body: JSON.stringify({ status: "active" }),
-                                    });
+                                    await updateSessionStatus("active");
                                 }}
                                 className="button bg-green-600 text-white hover:bg-green-700"
                                 data-testid="start-session-button"
@@ -236,11 +272,7 @@ export function SessionView({ sessionId }: SessionViewProps) {
                                 <button
                                     onClick={async () => {
                                         if (!confirm("确定要结束课堂吗？")) return;
-                                        await fetch(`/api/interact/sessions/${sessionId}/status`, {
-                                            method: "PATCH",
-                                            headers: { "Content-Type": "application/json" },
-                                            body: JSON.stringify({ status: "ended" }),
-                                        });
+                                        await updateSessionStatus("ended");
                                     }}
                                     className="button bg-white text-red-600 border-red-200 hover:bg-red-50"
                                 >

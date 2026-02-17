@@ -14,7 +14,7 @@ function matchesRoute(pathname: string, routes: string[]) {
 }
 
 export async function proxy(request: NextRequest) {
-    const { pathname } = request.nextUrl;
+    const { pathname, search } = request.nextUrl;
     const isProtectedStatic = protectedStaticPrefixes.some(
         (prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`),
     );
@@ -38,7 +38,7 @@ export async function proxy(request: NextRequest) {
 
     if (!token) {
         const loginUrl = new URL("/login", request.url);
-        loginUrl.searchParams.set("callbackUrl", pathname);
+        loginUrl.searchParams.set("callbackUrl", `${pathname}${search}`);
         return NextResponse.redirect(loginUrl);
     }
 
