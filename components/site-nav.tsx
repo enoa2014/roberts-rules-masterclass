@@ -80,6 +80,10 @@ export function SiteNav() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    setIsOpen(false);
+  }, [pathname]);
+
   const isActive = (path: string) => pathname === path || pathname.startsWith(`${path}/`);
 
   return (
@@ -192,8 +196,12 @@ export function SiteNav() {
 
             {/* Mobile Menu Button */}
             <button
+              type="button"
               className="lg:hidden p-2 text-gray-500 hover:text-blue-600 hover:bg-blue-50 rounded-xl transition-all duration-200 cursor-pointer"
               onClick={() => setIsOpen(!isOpen)}
+              aria-expanded={isOpen}
+              aria-controls="mobile-nav-menu"
+              aria-label={isOpen ? "关闭导航菜单" : "打开导航菜单"}
             >
               <div className="relative w-6 h-6">
                 <Menu className={`absolute inset-0 h-6 w-6 transition-all duration-300 ${isOpen ? 'opacity-0 rotate-180' : 'opacity-100 rotate-0'}`} />
@@ -204,12 +212,12 @@ export function SiteNav() {
         </div>
 
         {/* Enhanced Mobile Menu */}
-        <div className={`lg:hidden mt-3 transition-all duration-500 ease-out ${
-          isOpen
-            ? 'opacity-100 transform translate-y-0'
-            : 'opacity-0 transform -translate-y-4 pointer-events-none'
-        }`}>
-          <div className="glass-card p-6 animate-fadeInUp">
+        {isOpen && (
+          <div
+            id="mobile-nav-menu"
+            className="lg:hidden mt-3 transition-all duration-500 ease-out opacity-100 transform translate-y-0"
+          >
+            <div className="glass-card p-6 animate-fadeInUp">
             {/* Mobile Role Badge */}
             {isSignedIn && currentRole && (
               <div className={`flex items-center justify-center gap-2 mb-6 px-4 py-3 rounded-xl ${currentRole.bgColor} ${currentRole.color}`}>
@@ -323,8 +331,9 @@ export function SiteNav() {
                 </div>
               )}
             </div>
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </nav>
   );
