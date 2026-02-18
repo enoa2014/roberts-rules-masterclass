@@ -21,7 +21,8 @@
     "smoke:seed": "node scripts/seed-smoke-users.mjs",
     "smoke:api": "node scripts/smoke-api.mjs",
     "smoke:rate-limit": "node scripts/smoke-auth-rate-limit.mjs",
-    "smoke:all": "npm run smoke:seed && npm run smoke:api && npm run smoke:rate-limit"
+    "smoke:all": "npm run smoke:seed && npm run smoke:api && npm run smoke:rate-limit",
+    "verify:release": "bash scripts/release-verify.sh"
   },
   "dependencies": {
     "@tailwindcss/postcss": "^4.1.18",

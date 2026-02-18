@@ -94,6 +94,12 @@ NEXTAUTH_SECRET=dev-smoke-secret NEXTAUTH_URL=http://127.0.0.1:3000 npm run dev
 npm run smoke:all
 ```
 
+4. 发布后最小回归（健康检查 + 冒烟链路）：
+
+```bash
+npm run verify:release
+```
+
 说明：
 
 - `smoke:seed` 会创建/重置冒烟账号与邀请码。

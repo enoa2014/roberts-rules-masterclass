@@ -30,6 +30,14 @@ NEXTAUTH_SECRET=dev-smoke-secret NEXTAUTH_URL=http://127.0.0.1:3000 npm run dev
 npm run smoke:all
 ```
 
+发布后最小回归可直接执行：
+
+```bash
+npm run verify:release
+```
+
+默认目标为 `http://127.0.0.1:38080`，可通过 `RELEASE_VERIFY_BASE_URL` 覆盖。
+
 默认会执行：
 
 1. `npm run smoke:seed`
