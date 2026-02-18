@@ -6,7 +6,7 @@ import {
 } from "./shared.mjs";
 
 const baseUrl = process.env.SMOKE_BASE_URL || "http://127.0.0.1:3000";
-const inviteCode = process.env.SMOKE_INVITE_CODE || "SMOKE2026";
+const fixedInviteCode = process.env.SMOKE_INVITE_CODE || "";
 
 const users = {
   teacher: {
@@ -146,6 +146,30 @@ function ensureStatus(resp, expectedStatus, stepName) {
   }
 }
 
+async function resetRegisteredUserRole(adminClient, username) {
+  const adminUsers = await adminClient.request("/api/admin/users", {
+    method: "GET",
+  });
+  const adminUsersData = ensureOk(adminUsers, [200], "管理员查询用户（重置待升级用户）");
+  if (!Array.isArray(adminUsersData.users)) {
+    throw new Error("管理员查询用户失败: users 字段不是数组");
+  }
+
+  const targetUser = adminUsersData.users.find((user) => user.username === username);
+  if (!targetUser?.id) {
+    throw new Error(`重置待升级用户失败: 未找到用户 ${username}`);
+  }
+
+  const resetRoleResp = await adminClient.request(`/api/admin/users/${targetUser.id}/role`, {
+    method: "PATCH",
+    headers: {
+      "content-type": "application/json",
+    },
+    body: JSON.stringify({ role: "registered" }),
+  });
+  ensureOk(resetRoleResp, [200], "重置待升级用户角色");
+}
+
 async function openStreamAndReadOnce(client, sessionId) {
   const controller = new AbortController();
 
@@ -196,7 +220,33 @@ async function main() {
   const admin = await adminClient.login(users.admin.username, users.admin.password);
   console.log("[smoke:api] admin login ok", admin);
 
-  await registeredClient.login(users.registered.username, users.registered.password);
+  await resetRegisteredUserRole(adminClient, users.registered.username);
+
+  let inviteCode = fixedInviteCode;
+  let upgradeInviteId = null;
+  if (!inviteCode) {
+    const createUpgradeInvite = await adminClient.request("/api/admin/invites", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({ targetRole: "student", maxUses: 1 }),
+    });
+    const createUpgradeInviteData = ensureOk(createUpgradeInvite, [201], "创建升级邀请码");
+    if (!createUpgradeInviteData.invite?.code || !createUpgradeInviteData.invite?.id) {
+      throw new Error("创建升级邀请码失败: 缺少 code/id");
+    }
+    inviteCode = createUpgradeInviteData.invite.code;
+    upgradeInviteId = createUpgradeInviteData.invite.id;
+  }
+
+  const registered = await registeredClient.login(
+    users.registered.username,
+    users.registered.password,
+  );
+  if (registered.role !== "registered") {
+    throw new Error(`待升级用户角色异常，期望 registered，实际=${registered.role}`);
+  }
   const inviteResp = await registeredClient.request("/api/invite/verify", {
     method: "POST",
     headers: {
@@ -206,6 +256,13 @@ async function main() {
   });
   ensureOk(inviteResp, [200], "邀请码升级");
   console.log("[smoke:api] invite verify ok");
+
+  if (upgradeInviteId) {
+    const revokeUpgradeInvite = await adminClient.request(`/api/admin/invites/${upgradeInviteId}`, {
+      method: "DELETE",
+    });
+    ensureOk(revokeUpgradeInvite, [200], "回收升级邀请码");
+  }
 
   const student = await studentClient.login(users.student.username, users.student.password);
   console.log("[smoke:api] student login ok", student);
