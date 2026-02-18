@@ -496,6 +496,36 @@ async function main() {
   }
   const createdInviteId = createInviteData.invite.id;
 
+  const expiredIso = new Date(Date.now() - 3_600_000).toISOString();
+  const createExpiredInvite = await adminClient.request("/api/admin/invites", {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+    },
+    body: JSON.stringify({
+      targetRole: "student",
+      maxUses: 1,
+      expiresAt: expiredIso,
+    }),
+  });
+  const createExpiredInviteData = ensureOk(
+    createExpiredInvite,
+    [201],
+    "管理员创建已过期邀请码（回归用例）",
+  );
+  const expiredInviteId = createExpiredInviteData.invite.id;
+
+  const expiredInvites = await adminClient.request("/api/admin/invites?status=expired", {
+    method: "GET",
+  });
+  const expiredInvitesData = ensureOk(expiredInvites, [200], "查询过期邀请码列表");
+  if (
+    !Array.isArray(expiredInvitesData.invites)
+    || !expiredInvitesData.invites.some((invite) => invite.id === expiredInviteId)
+  ) {
+    throw new Error("过期邀请码状态判断异常：未在 status=expired 列表中找到新建过期邀请码");
+  }
+
   const revokeInvite = await adminClient.request(`/api/admin/invites/${createdInviteId}`, {
     method: "DELETE",
   });

@@ -50,6 +50,20 @@ function columnExists(sqliteClient: Database.Database, tableName: string, column
   return rows.some((row) => row.name === columnName);
 }
 
+function indexExists(sqliteClient: Database.Database, indexName: string) {
+  const row = sqliteClient
+    .prepare(
+      `SELECT 1 AS exists_flag
+       FROM sqlite_master
+       WHERE type = 'index'
+         AND name = ?
+       LIMIT 1`,
+    )
+    .get(indexName) as { exists_flag: number } | undefined;
+
+  return Boolean(row?.exists_flag);
+}
+
 function migrationLooksApplied(sqliteClient: Database.Database, tag: string) {
   switch (tag) {
     case "0000_outstanding_aaron_stack":
@@ -86,6 +100,21 @@ function migrationLooksApplied(sqliteClient: Database.Database, tag: string) {
       return tableExists(sqliteClient, "system_settings");
     case "0006_kind_martin_li":
       return columnExists(sqliteClient, "invite_codes", "target_role");
+    case "0007_late_bloodscream":
+      return (
+        indexExists(sqliteClient, "idx_assignments_user_id")
+        && indexExists(sqliteClient, "idx_assignments_status_id")
+        && indexExists(sqliteClient, "idx_class_sessions_status_id")
+        && indexExists(sqliteClient, "idx_class_sessions_creator_id")
+        && indexExists(sqliteClient, "idx_discussion_comments_post_status_id")
+        && indexExists(sqliteClient, "idx_discussion_posts_status_id")
+        && indexExists(sqliteClient, "idx_feedbacks_session_id")
+        && indexExists(sqliteClient, "idx_hand_raises_session_status_raised")
+        && indexExists(sqliteClient, "idx_hand_raises_session_user_status")
+        && indexExists(sqliteClient, "idx_moderation_logs_target_action_id")
+        && indexExists(sqliteClient, "idx_polls_session_status_id")
+        && indexExists(sqliteClient, "idx_speech_timers_session_ended_id")
+      );
     default:
       return false;
   }

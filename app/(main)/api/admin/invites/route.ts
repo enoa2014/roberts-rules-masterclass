@@ -46,7 +46,7 @@ function generateInviteCode() {
 
 function resolveStatusExpression() {
   return `CASE
-    WHEN expires_at IS NOT NULL AND expires_at <= datetime('now') THEN 'expired'
+    WHEN expires_at IS NOT NULL AND datetime(expires_at) <= datetime('now') THEN 'expired'
     WHEN max_uses > 0 AND used_count >= max_uses THEN 'exhausted'
     ELSE 'active'
   END`;

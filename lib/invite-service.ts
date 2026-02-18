@@ -76,7 +76,8 @@ export function verifyInviteCodeForUser(
     }
 
     if (invite.expires_at) {
-      const expired = Date.parse(invite.expires_at) <= Date.now();
+      const parsedExpireAt = Date.parse(invite.expires_at);
+      const expired = !Number.isFinite(parsedExpireAt) || parsedExpireAt <= Date.now();
       if (expired) {
         return {
           ok: false,
@@ -101,7 +102,7 @@ export function verifyInviteCodeForUser(
           SET used_count = used_count + 1
           WHERE id = ?
             AND (max_uses = 0 OR used_count < max_uses)
-            AND (expires_at IS NULL OR expires_at > datetime('now'))
+            AND (expires_at IS NULL OR datetime(expires_at) > datetime('now'))
         `,
       )
       .run(invite.id);

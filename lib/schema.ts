@@ -100,6 +100,10 @@ export const classSessions = sqliteTable(
     endedAt: text("ended_at"),
     settings: text("settings", { mode: "json" }), // JSON: { globalMute: boolean }
   },
+  (table) => ({
+    statusIdIdx: index("idx_class_sessions_status_id").on(table.status, table.id),
+    creatorIdIdx: index("idx_class_sessions_creator_id").on(table.createdBy, table.id),
+  }),
 );
 
 export const sessionBans = sqliteTable(
@@ -135,31 +139,63 @@ export const handRaises = sqliteTable(
     speakingAt: text("speaking_at"),
     endedAt: text("ended_at"),
   },
+  (table) => ({
+    sessionStatusRaisedIdx: index("idx_hand_raises_session_status_raised").on(
+      table.classSessionId,
+      table.status,
+      table.raisedAt,
+    ),
+    sessionUserStatusIdx: index("idx_hand_raises_session_user_status").on(
+      table.classSessionId,
+      table.userId,
+      table.status,
+    ),
+  }),
 );
 
-export const speechTimers = sqliteTable("speech_timers", {
-  id: integer("id").primaryKey({ autoIncrement: true }),
-  classSessionId: integer("class_session_id")
-    .notNull()
-    .references(() => classSessions.id),
-  userId: integer("user_id").notNull().references(() => users.id),
-  durationSec: integer("duration_sec").notNull(),
-  startedAt: text("started_at").notNull(),
-  endedAt: text("ended_at"),
-});
+export const speechTimers = sqliteTable(
+  "speech_timers",
+  {
+    id: integer("id").primaryKey({ autoIncrement: true }),
+    classSessionId: integer("class_session_id")
+      .notNull()
+      .references(() => classSessions.id),
+    userId: integer("user_id").notNull().references(() => users.id),
+    durationSec: integer("duration_sec").notNull(),
+    startedAt: text("started_at").notNull(),
+    endedAt: text("ended_at"),
+  },
+  (table) => ({
+    sessionEndedIdIdx: index("idx_speech_timers_session_ended_id").on(
+      table.classSessionId,
+      table.endedAt,
+      table.id,
+    ),
+  }),
+);
 
-export const polls = sqliteTable("polls", {
-  id: integer("id").primaryKey({ autoIncrement: true }),
-  classSessionId: integer("class_session_id")
-    .notNull()
-    .references(() => classSessions.id),
-  question: text("question").notNull(),
-  type: text("type").notNull(),
-  anonymous: integer("anonymous").notNull().default(0),
-  status: text("status").notNull().default("open"),
-  createdBy: integer("created_by").notNull().references(() => users.id),
-  createdAt: text("created_at").notNull().default(sql`(datetime('now'))`),
-});
+export const polls = sqliteTable(
+  "polls",
+  {
+    id: integer("id").primaryKey({ autoIncrement: true }),
+    classSessionId: integer("class_session_id")
+      .notNull()
+      .references(() => classSessions.id),
+    question: text("question").notNull(),
+    type: text("type").notNull(),
+    anonymous: integer("anonymous").notNull().default(0),
+    status: text("status").notNull().default("open"),
+    createdBy: integer("created_by").notNull().references(() => users.id),
+    createdAt: text("created_at").notNull().default(sql`(datetime('now'))`),
+  },
+  (table) => ({
+    sessionStatusIdIdx: index("idx_polls_session_status_id").on(
+      table.classSessionId,
+      table.status,
+      table.id,
+    ),
+  }),
+);
 
 export const pollOptions = sqliteTable(
   "poll_options",
@@ -198,51 +234,90 @@ export const pollVotes = sqliteTable(
   }),
 );
 
-export const assignments = sqliteTable("assignments", {
-  id: integer("id").primaryKey({ autoIncrement: true }),
-  userId: integer("user_id").notNull().references(() => users.id),
-  lessonId: text("lesson_id").notNull(),
-  content: text("content"),
-  filePath: text("file_path"),
-  status: text("status").notNull().default("submitted"),
-  reviewedBy: integer("reviewed_by").references(() => users.id),
-  createdAt: text("created_at").notNull().default(sql`(datetime('now'))`),
-  updatedAt: text("updated_at").notNull().default(sql`(datetime('now'))`),
-});
+export const assignments = sqliteTable(
+  "assignments",
+  {
+    id: integer("id").primaryKey({ autoIncrement: true }),
+    userId: integer("user_id").notNull().references(() => users.id),
+    lessonId: text("lesson_id").notNull(),
+    content: text("content"),
+    filePath: text("file_path"),
+    status: text("status").notNull().default("submitted"),
+    reviewedBy: integer("reviewed_by").references(() => users.id),
+    createdAt: text("created_at").notNull().default(sql`(datetime('now'))`),
+    updatedAt: text("updated_at").notNull().default(sql`(datetime('now'))`),
+  },
+  (table) => ({
+    userIdIdx: index("idx_assignments_user_id").on(table.userId, table.id),
+    statusIdIdx: index("idx_assignments_status_id").on(table.status, table.id),
+  }),
+);
 
-export const feedbacks = sqliteTable("feedbacks", {
-  id: integer("id").primaryKey({ autoIncrement: true }),
-  userId: integer("user_id").notNull().references(() => users.id),
-  classSessionId: integer("class_session_id").references(() => classSessions.id),
-  rating: integer("rating"),
-  content: text("content"),
-  createdAt: text("created_at").notNull().default(sql`(datetime('now'))`),
-});
+export const feedbacks = sqliteTable(
+  "feedbacks",
+  {
+    id: integer("id").primaryKey({ autoIncrement: true }),
+    userId: integer("user_id").notNull().references(() => users.id),
+    classSessionId: integer("class_session_id").references(() => classSessions.id),
+    rating: integer("rating"),
+    content: text("content"),
+    createdAt: text("created_at").notNull().default(sql`(datetime('now'))`),
+  },
+  (table) => ({
+    sessionIdIdx: index("idx_feedbacks_session_id").on(table.classSessionId, table.id),
+  }),
+);
 
-export const discussionPosts = sqliteTable("discussion_posts", {
-  id: integer("id").primaryKey({ autoIncrement: true }),
-  userId: integer("user_id").notNull().references(() => users.id),
-  title: text("title"),
-  content: text("content").notNull(),
-  status: text("status").notNull().default("visible"),
-  createdAt: text("created_at").notNull().default(sql`(datetime('now'))`),
-});
+export const discussionPosts = sqliteTable(
+  "discussion_posts",
+  {
+    id: integer("id").primaryKey({ autoIncrement: true }),
+    userId: integer("user_id").notNull().references(() => users.id),
+    title: text("title"),
+    content: text("content").notNull(),
+    status: text("status").notNull().default("visible"),
+    createdAt: text("created_at").notNull().default(sql`(datetime('now'))`),
+  },
+  (table) => ({
+    statusIdIdx: index("idx_discussion_posts_status_id").on(table.status, table.id),
+  }),
+);
 
-export const discussionComments = sqliteTable("discussion_comments", {
-  id: integer("id").primaryKey({ autoIncrement: true }),
-  postId: integer("post_id").notNull().references(() => discussionPosts.id),
-  userId: integer("user_id").notNull().references(() => users.id),
-  content: text("content").notNull(),
-  status: text("status").notNull().default("visible"),
-  createdAt: text("created_at").notNull().default(sql`(datetime('now'))`),
-});
+export const discussionComments = sqliteTable(
+  "discussion_comments",
+  {
+    id: integer("id").primaryKey({ autoIncrement: true }),
+    postId: integer("post_id").notNull().references(() => discussionPosts.id),
+    userId: integer("user_id").notNull().references(() => users.id),
+    content: text("content").notNull(),
+    status: text("status").notNull().default("visible"),
+    createdAt: text("created_at").notNull().default(sql`(datetime('now'))`),
+  },
+  (table) => ({
+    postStatusIdIdx: index("idx_discussion_comments_post_status_id").on(
+      table.postId,
+      table.status,
+      table.id,
+    ),
+  }),
+);
 
-export const moderationLogs = sqliteTable("moderation_logs", {
-  id: integer("id").primaryKey({ autoIncrement: true }),
-  operatorId: integer("operator_id").notNull().references(() => users.id),
-  targetType: text("target_type").notNull(),
-  targetId: integer("target_id").notNull(),
-  action: text("action").notNull(),
-  reason: text("reason"),
-  createdAt: text("created_at").notNull().default(sql`(datetime('now'))`),
-});
+export const moderationLogs = sqliteTable(
+  "moderation_logs",
+  {
+    id: integer("id").primaryKey({ autoIncrement: true }),
+    operatorId: integer("operator_id").notNull().references(() => users.id),
+    targetType: text("target_type").notNull(),
+    targetId: integer("target_id").notNull(),
+    action: text("action").notNull(),
+    reason: text("reason"),
+    createdAt: text("created_at").notNull().default(sql`(datetime('now'))`),
+  },
+  (table) => ({
+    targetActionIdIdx: index("idx_moderation_logs_target_action_id").on(
+      table.targetType,
+      table.action,
+      table.id,
+    ),
+  }),
+);
