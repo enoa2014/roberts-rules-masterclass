@@ -55,11 +55,14 @@ SKIP_DB_MIGRATIONS=1
 NEXTAUTH_URL=https://your-domain.com
 NEXTAUTH_SECRET=your-long-random-secret
 DATABASE_URL=file:/app/data/course.db
+AUTH_RATE_LIMIT_TRUST_PROXY_HEADERS=1
 ADMIN_USERNAME=admin
 ADMIN_PASSWORD=your-strong-password
 NODE_ENV=production
 PORT=3000
 ```
+
+`AUTH_RATE_LIMIT_TRUST_PROXY_HEADERS=1` 仅建议在服务运行于受控反向代理（Nginx/SLB/Ingress）之后时开启，用于让登录限流按真实客户端 IP 生效。
 
 可选短信变量（如需）：
 
