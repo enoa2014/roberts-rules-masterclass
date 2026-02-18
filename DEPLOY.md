@@ -124,13 +124,15 @@ docker pull <your-registry>/yiqidu/yiqidu-learning-platform:latest
 docker run -d \
   --name yiqidu-app \
   --restart unless-stopped \
-  -p 3000:3000 \
+  -p 127.0.0.1:3000:3000 \
   --env-file /opt/yiqidu/.env.production \
   -v yiqidu_data:/app/data \
   -v yiqidu_uploads:/app/uploads \
   -v yiqidu_logs:/app/logs \
   <your-registry>/yiqidu/yiqidu-learning-platform:latest
 ```
+
+推荐在生产环境将容器端口仅绑定到宿主机回环地址（`127.0.0.1`），由 Nginx/SLB 统一对外暴露，避免应用容器被公网直连时伪造代理头。
 
 ## 5. 运行期注意事项
 
