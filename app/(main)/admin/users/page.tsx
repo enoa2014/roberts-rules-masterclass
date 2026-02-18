@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import { PageShell } from "@/components/page-shell";
 
@@ -20,22 +20,21 @@ const roleOptions: UserRecord["role"][] = [
   "admin",
   "blocked",
 ];
+type RoleFilter = "all" | UserRecord["role"];
 
 export default function AdminUsersPage() {
   const [users, setUsers] = useState<UserRecord[]>([]);
   const [loading, setLoading] = useState(true);
   const [savingUserId, setSavingUserId] = useState<number | null>(null);
   const [error, setError] = useState("");
+  const [roleFilter, setRoleFilter] = useState<RoleFilter>("all");
 
-  useEffect(() => {
-    void fetchUsers();
-  }, []);
-
-  async function fetchUsers() {
+  const fetchUsers = useCallback(async (filter: RoleFilter) => {
     setLoading(true);
     setError("");
     try {
-      const res = await fetch("/api/admin/users");
+      const query = filter === "all" ? "" : `?role=${encodeURIComponent(filter)}`;
+      const res = await fetch(`/api/admin/users${query}`);
       const data = await res.json();
       if (!res.ok || !data.success) {
         throw new Error(data?.error?.message ?? "加载用户失败");
@@ -46,7 +45,11 @@ export default function AdminUsersPage() {
     } finally {
       setLoading(false);
     }
-  }
+  }, []);
+
+  useEffect(() => {
+    void fetchUsers(roleFilter);
+  }, [fetchUsers, roleFilter]);
 
   async function updateRole(userId: number, role: UserRecord["role"]) {
     setSavingUserId(userId);
@@ -63,9 +66,12 @@ export default function AdminUsersPage() {
       if (!res.ok || !data.success) {
         throw new Error(data?.error?.message ?? "更新角色失败");
       }
-      setUsers((prev) =>
-        prev.map((item) => (item.id === userId ? { ...item, role: data.user.role } : item)),
-      );
+      setUsers((prev) => {
+        if (roleFilter !== "all" && data.user.role !== roleFilter) {
+          return prev.filter((item) => item.id !== userId);
+        }
+        return prev.map((item) => (item.id === userId ? { ...item, role: data.user.role } : item));
+      });
     } catch (err) {
       setError(err instanceof Error ? err.message : "更新角色失败");
     } finally {
@@ -78,13 +84,32 @@ export default function AdminUsersPage() {
       <div className="bg-white rounded-lg border shadow-sm mt-6 overflow-hidden">
         <div className="p-4 border-b bg-gray-50/50 flex items-center justify-between">
           <h3 className="font-semibold text-gray-900">用户列表</h3>
-          <button
-            type="button"
-            onClick={() => void fetchUsers()}
-            className="button h-8 text-xs bg-white text-gray-700 border hover:bg-gray-50"
-          >
-            刷新
-          </button>
+          <div className="flex items-center gap-2">
+            <label htmlFor="admin-users-role-filter" className="text-xs text-gray-600">
+              角色筛选
+            </label>
+            <select
+              id="admin-users-role-filter"
+              data-testid="admin-users-role-filter"
+              value={roleFilter}
+              onChange={(event) => setRoleFilter(event.target.value as RoleFilter)}
+              className="h-8 rounded-md border border-gray-300 bg-white px-2 text-xs text-gray-700"
+            >
+              <option value="all">全部</option>
+              {roleOptions.map((role) => (
+                <option key={role} value={role}>
+                  {role}
+                </option>
+              ))}
+            </select>
+            <button
+              type="button"
+              onClick={() => void fetchUsers(roleFilter)}
+              className="button h-8 text-xs bg-white text-gray-700 border hover:bg-gray-50"
+            >
+              刷新
+            </button>
+          </div>
         </div>
 
         {error && (

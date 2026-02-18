@@ -57,6 +57,12 @@ jobs:
     - name: Run E2E Auth Tests
       run: npm run test:e2e:auth
 
+    - name: Run E2E Realtime Tests
+      run: npm run test:e2e:realtime
+
+    - name: Run E2E Platform Regression Tests
+      run: npm run test:e2e:core
+
     - name: Upload Playwright Report
       if: failure()
       uses: actions/upload-artifact@v4

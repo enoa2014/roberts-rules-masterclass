@@ -32,5 +32,13 @@ export default defineConfig({
         reuseExistingServer: !process.env.CI,
         stdout: "ignore",
         stderr: "pipe",
+        env: {
+          ...process.env,
+          DATABASE_URL: process.env.DATABASE_URL || "file:./data/course.db",
+          NEXTAUTH_URL: process.env.NEXTAUTH_URL || "http://127.0.0.1:3000",
+          NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET || "playwright-local-secret",
+          AUTH_RATE_LIMIT_TRUST_PROXY_HEADERS:
+            process.env.AUTH_RATE_LIMIT_TRUST_PROXY_HEADERS || "1",
+        },
       },
 });

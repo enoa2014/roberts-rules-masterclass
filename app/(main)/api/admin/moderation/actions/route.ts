@@ -37,6 +37,10 @@ export async function POST(request: Request) {
       return toErrorResponse("INVALID_INPUT", "治理参数不合法", 400);
     }
 
+    if (parsed.data.targetType === "user" && auth.ctx.role !== "admin") {
+      return toErrorResponse("FORBIDDEN", "仅管理员可执行用户治理操作", 403);
+    }
+
     const tx = sqlite.transaction(() => {
       if (parsed.data.targetType === "post") {
         if (!["hide", "delete"].includes(parsed.data.action)) {

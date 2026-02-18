@@ -6,7 +6,7 @@ type Role = "registered" | "student" | "teacher" | "admin" | "blocked";
 const publicRoutes = ["/", "/course", "/about", "/faq", "/login", "/register"];
 const registeredRoutes = ["/invite", "/profile"];
 const adminRoutes = ["/admin"];
-const adminOnlyRoutes = ["/admin/users", "/admin/invites"];
+const adminOnlyRoutes = ["/admin/users", "/admin/invites", "/admin/settings"];
 const protectedStaticPrefixes = ["/reading-legacy"];
 
 function matchesRoute(pathname: string, routes: string[]) {

@@ -13,6 +13,99 @@ const ALL_BOOK_IDS = [
 test.describe("Platform Regression - Auth, Theme, Reading", () => {
   test.describe.configure({ mode: "serial" });
 
+  test("teacher cannot access admin-only pages or perform user moderation", async ({ page }, testInfo) => {
+    test.skip(testInfo.project.name !== "chromium", "Desktop-only coverage.");
+
+    await loginAs(page, "teacher", "/admin");
+    await expect(page).toHaveURL("/admin");
+    await expect(page.getByRole("link", { name: "系统设置" })).toHaveCount(0);
+
+    await page.goto("/admin/settings");
+    await expect(page).toHaveURL("/");
+
+    await page.goto("/admin/users");
+    await expect(page).toHaveURL("/");
+
+    const result = await page.evaluate(async () => {
+      const response = await fetch("/api/admin/moderation/actions", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({
+          targetType: "user",
+          targetId: 999999,
+          action: "block",
+          reason: "platform-regression",
+        }),
+      });
+      const body = await response.json().catch(() => null);
+      return { status: response.status, body };
+    });
+
+    expect(result.status).toBe(403);
+    expect(result.body?.error?.code).toBe("FORBIDDEN");
+  });
+
+  test("admin dashboard cards keep stable role-based visibility", async ({ page }, testInfo) => {
+    test.skip(testInfo.project.name !== "chromium", "Desktop-only coverage.");
+
+    await loginAs(page, "admin", "/admin");
+    await expect(page.getByTestId("admin-card-users")).toBeVisible();
+    await expect(page.getByTestId("admin-card-invites")).toBeVisible();
+    await expect(page.getByTestId("admin-card-settings")).toBeVisible();
+    await expect(page.getByTestId("admin-card-assignments")).toBeVisible();
+
+    await loginAs(page, "teacher", "/admin");
+    await expect(page.getByTestId("admin-card-users")).toHaveCount(0);
+    await expect(page.getByTestId("admin-card-invites")).toHaveCount(0);
+    await expect(page.getByTestId("admin-card-settings")).toHaveCount(0);
+    await expect(page.getByTestId("admin-card-assignments")).toBeVisible();
+  });
+
+  test("admin dashboard user stat is derived from live users data", async ({ page }, testInfo) => {
+    test.skip(testInfo.project.name !== "chromium", "Desktop-only coverage.");
+
+    await loginAs(page, "admin", "/admin");
+
+    const userCount = await page.evaluate(async () => {
+      const response = await fetch("/api/admin/users");
+      const body = await response.json();
+      return Array.isArray(body?.users) ? body.users.length : -1;
+    });
+
+    expect(userCount).toBeGreaterThan(0);
+    await expect(page.getByTestId("admin-card-users-stat")).toContainText(String(userCount));
+  });
+
+  test("admin users page can filter by role", async ({ page }, testInfo) => {
+    test.skip(testInfo.project.name !== "chromium", "Desktop-only coverage.");
+
+    await loginAs(page, "admin", "/admin/users");
+
+    const roleFilter = page.getByTestId("admin-users-role-filter");
+    await expect(roleFilter).toBeVisible();
+
+    const teacherResponse = page.waitForResponse(
+      (response) =>
+        response.url().includes("/api/admin/users?role=teacher") &&
+        response.request().method() === "GET",
+    );
+
+    await roleFilter.selectOption("teacher");
+    const response = await teacherResponse;
+    expect(response.ok()).toBeTruthy();
+
+    await expect.poll(async () => {
+      const roleValues = await page
+        .locator("tbody tr select")
+        .evaluateAll((nodes) =>
+          nodes.map((node) => (node as HTMLSelectElement).value),
+        );
+      return roleValues.length > 0 && roleValues.every((value) => value === "teacher");
+    }).toBe(true);
+  });
+
   test("admin can switch theme on desktop and persist across pages", async ({ page }, testInfo) => {
     test.skip(testInfo.project.name !== "chromium", "Desktop-only coverage.");
 
