@@ -169,7 +169,7 @@ test.describe("Platform Regression - Auth, Theme, Reading", () => {
     const mobileThemeButton = page.locator('#mobile-nav-menu button[aria-label="选择主题"]').first();
     await expect(mobileThemeButton).toBeVisible();
     await mobileThemeButton.click();
-    await page.getByRole("button", { name: /薄荷行动/ }).click();
+    await page.getByRole("button", { name: /薄荷实践/ }).click();
 
     await expect.poll(async () =>
       page.evaluate(() => document.documentElement.getAttribute("data-theme")),
