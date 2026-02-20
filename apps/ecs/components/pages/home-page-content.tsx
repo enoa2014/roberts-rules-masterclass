@@ -59,7 +59,7 @@ export default function HomePage() {
               : 'gradient-hero'
         }
       `}>
-        {/* 节庆背景元素 */}
+        {/* 活力背景元素 */}
         {isFestival && (
           <>
             <div className="absolute top-10 left-10 w-32 h-32 bg-gradient-to-r from-rose-600/20 to-rose-500/10 rounded-full blur-3xl fc-animate-float" />
@@ -108,11 +108,11 @@ export default function HomePage() {
         )}
 
         <div className="container max-w-6xl text-center relative z-10">
-          {/* 节庆徽章 */}
+          {/* 活力徽章 */}
           {isFestival && (
             <div className="fc-badge fc-animate-slide mb-8">
               <Flag className="h-4 w-4" />
-              <span>公民节庆 · 议事盛典</span>
+              <span>活力课堂 · 规则研修</span>
               <Sparkles className="h-4 w-4" />
             </div>
           )}
@@ -121,7 +121,7 @@ export default function HomePage() {
           {isCharcoal && (
             <div className="cg-badge cg-animate-slide mb-8">
               <Grid3X3 className="h-4 w-4" />
-              <span>炭黑栅格 · 结构议事</span>
+              <span>炭黑栅格 · 结构研修</span>
               <Crown className="h-4 w-4" />
             </div>
           )}
@@ -129,7 +129,7 @@ export default function HomePage() {
           {isCopper && (
             <div className="cl-badge cl-animate-slide mb-8">
               <BookOpen className="h-4 w-4" />
-              <span>铜色讲堂 · 深度议事</span>
+              <span>铜色讲堂 · 深度研修</span>
               <Sparkles className="h-4 w-4" />
             </div>
           )}
@@ -152,15 +152,15 @@ export default function HomePage() {
               <>
                 掌握议事规则<br />
                 <span className="relative">
-                  成为行动公民
+                  提升课堂沟通力
                   <div className="absolute -bottom-2 left-0 right-0 h-2 bg-gradient-to-r from-rose-600 via-blue-600 to-rose-600 rounded-full opacity-40 fc-animate-glow"></div>
                 </span>
               </>
             ) : isMint ? (
               <>
-                清新议事行动<br />
+                清新实践训练<br />
                 <span className="relative">
-                  激活公民力量
+                  激发协作意识
                   <div className="absolute -bottom-2 left-0 right-0 h-2 bg-gradient-to-r from-teal-600 via-orange-500 to-teal-600 rounded-full opacity-40 mc-animate-glow"></div>
                 </span>
               </>
@@ -168,7 +168,7 @@ export default function HomePage() {
               <>
                 结构化议事<br />
                 <span className="relative">
-                  精准公民参与
+                  提升协作效率
                   <div className="absolute -bottom-2 left-0 right-0 h-2 bg-gradient-to-r from-gray-700 via-emerald-500 to-gray-700 opacity-60"></div>
                 </span>
               </>
@@ -176,15 +176,15 @@ export default function HomePage() {
               <>
                 铜色讲堂议事<br />
                 <span className="relative">
-                  沉淀公民表达力
+                  沉淀表达能力
                   <div className="absolute -bottom-2 left-0 right-0 h-2 bg-gradient-to-r from-orange-900 via-amber-700 to-blue-700 rounded-full opacity-50 cl-animate-glow"></div>
                 </span>
               </>
             ) : (
               <>
-                掌握公共议事规则 <br className="hidden sm:block" />
+                掌握议事规则 <br className="hidden sm:block" />
                 <span className="text-gradient-political relative">
-                  提升公民核心素养
+                  提升课堂沟通素养
                   <div className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-blue-600 via-purple-600 to-amber-500 rounded-full opacity-30"></div>
                 </span>
               </>
@@ -207,33 +207,33 @@ export default function HomePage() {
           `}>
             {isFestival ? (
               <>
-                加入这场公民议事的盛大节庆！从理论到实践，在充满活力的学习氛围中
+                加入面向教师与家长的活力课堂培训！在轻松的学习氛围中
                 <br className="hidden md:block" />
-                掌握罗伯特议事规则，成为积极参与的行动公民。
+                掌握罗伯特议事规则，提升课堂讨论的组织与协作能力。
               </>
             ) : isMint ? (
               <>
-                启动清新的议事行动！在薄荷般清爽的学习环境中，从基础到进阶
+                开启清新的实践训练！在清爽的学习节奏中，从基础到进阶
                 <br className="hidden md:block" />
-                系统掌握议事技能，激发你的公民参与热情。
+                系统掌握议事技能，强化课堂表达与协作热情。
               </>
             ) : isCharcoal ? (
               <>
                 构建结构化的议事框架！在清晰明确的学习体系中，从基础理论到实战应用
                 <br className="hidden md:block" />
-                精准掌握议事规则，成为高效的公民参与者。
+                精准掌握议事规则，提升课堂协作效率。
               </>
             ) : isCopper ? (
               <>
                 走进铜色讲堂的深度学习场域！在层层递进的课程与案例中，从概念到表达
                 <br className="hidden md:block" />
-                系统训练规则思维、会议发言与共识构建能力。
+                系统训练规则思维、课堂发言与共识构建能力。
               </>
             ) : (
               <>
-                从理论学习到模拟议事，全方位掌握罗伯特议事规则。
+                从理论学习到模拟演练，全方位掌握罗伯特议事规则。
                 <br className="hidden md:block" />
-                加入我们，在实践中学会表达、倾听与决策，成为合格的公民参与者。
+                面向教师与家长的系统培训，支持更清晰的表达与协作。
               </>
             )}
           </p>
@@ -266,7 +266,7 @@ export default function HomePage() {
               }
             `}>
               {isFestival ? <Flame className="h-5 w-5" /> : isMint ? <Sparkles className="h-5 w-5" /> : isCharcoal ? <Grid3X3 className="h-5 w-5" /> : isCopper ? <BookOpen className="h-5 w-5" /> : <BookOpen className="h-5 w-5" />}
-              <span>{isFestival ? '立即参与' : isMint ? '开始行动' : isCharcoal ? '开始构建' : isCopper ? '进入讲堂' : '开始学习'}</span>
+              <span>{isFestival ? '立即参与' : isMint ? '开始实践' : isCharcoal ? '开始构建' : isCopper ? '进入讲堂' : '开始学习'}</span>
               <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
             </Link>
             <Link href="/about" className={`
@@ -283,7 +283,7 @@ export default function HomePage() {
               }
             `}>
               {isFestival ? <Heart className="h-5 w-5" /> : isMint ? <Flag className="h-5 w-5" /> : isCharcoal ? <Crown className="h-5 w-5" /> : isCopper ? <Info className="h-5 w-5" /> : <Info className="h-5 w-5" />}
-              <span>{isFestival ? '了解节庆' : isMint ? '了解行动' : isCharcoal ? '了解结构' : isCopper ? '了解讲堂' : '了解更多'}</span>
+              <span>{isFestival ? '了解活力课堂' : isMint ? '了解实践' : isCharcoal ? '了解结构' : isCopper ? '了解讲堂' : '了解更多'}</span>
             </Link>
           </div>
 
@@ -305,25 +305,25 @@ export default function HomePage() {
               {
                 icon: Users,
                 value: "500+",
-                label: isFestival ? "节庆参与者" : isMint ? "行动参与者" : isCharcoal ? "结构参与者" : isCopper ? "讲堂学员" : "活跃学员",
+                label: isFestival ? "活力学员" : isMint ? "实践学员" : isCharcoal ? "结构学员" : isCopper ? "讲堂学员" : "活跃学员",
                 color: isFestival ? "text-rose-600" : isMint ? "text-teal-600" : isCharcoal ? "text-gray-700" : isCopper ? "text-orange-700" : "text-blue-600"
               },
               {
                 icon: BookOpen,
                 value: "12+",
-                label: isFestival ? "节庆课程" : isMint ? "行动课程" : isCharcoal ? "结构课程" : isCopper ? "讲堂课程" : "精品课程",
+                label: isFestival ? "活力课程" : isMint ? "实践课程" : isCharcoal ? "结构课程" : isCopper ? "讲堂课程" : "精品课程",
                 color: isFestival ? "text-blue-600" : isMint ? "text-orange-600" : isCharcoal ? "text-emerald-600" : isCopper ? "text-blue-700" : "text-purple-600"
               },
               {
                 icon: Vote,
                 value: "50+",
-                label: isFestival ? "议事庆典" : isMint ? "行动会议" : isCharcoal ? "结构会议" : isCopper ? "讲堂研讨" : "模拟会议",
+                label: isFestival ? "课堂演练" : isMint ? "实践演练" : isCharcoal ? "结构演练" : isCopper ? "讲堂研讨" : "模拟会议",
                 color: isFestival ? "text-rose-500" : isMint ? "text-teal-500" : isCharcoal ? "text-gray-600" : isCopper ? "text-amber-700" : "text-amber-600"
               },
               {
                 icon: Award,
                 value: "98%",
-                label: isFestival ? "节庆好评" : isMint ? "行动好评" : isCharcoal ? "结构好评" : isCopper ? "讲堂好评" : "好评率",
+                label: isFestival ? "学员好评" : isMint ? "实践好评" : isCharcoal ? "结构好评" : isCopper ? "讲堂好评" : "好评率",
                 color: "text-green-600"
               },
             ].map((stat, i) => (
@@ -396,7 +396,7 @@ export default function HomePage() {
             `}>
               <Sparkles className="h-4 w-4" />
               <span className="uppercase tracking-wide">
-                {isFestival ? '节庆亮点' : isCharcoal ? '结构亮点' : isCopper ? '讲堂亮点' : '核心优势'}
+                {isFestival ? '活力亮点' : isMint ? '实践亮点' : isCharcoal ? '结构亮点' : isCopper ? '讲堂亮点' : '核心优势'}
               </span>
             </div>
             <h2 className={`
@@ -410,7 +410,7 @@ export default function HomePage() {
                 : 'text-display text-gray-900 animate-fadeInUp delay-100'
               }
             `}>
-              {isFestival ? '为什么加入这场节庆？' : isCharcoal ? '为什么选择炭黑栅格？' : isCopper ? '为什么选择铜色讲堂？' : '为什么选择议起读？'}
+              {isFestival ? '为什么选择活力课堂？' : isMint ? '为什么选择薄荷实践？' : isCharcoal ? '为什么选择炭黑栅格？' : isCopper ? '为什么选择铜色讲堂？' : '为什么选择议起读？'}
             </h2>
             <p className={`
               max-w-2xl mx-auto
@@ -424,12 +424,14 @@ export default function HomePage() {
               }
             `}>
               {isFestival
-                ? '在充满活力的节庆氛围中，体验前所未有的议事规则学习之旅'
+                ? '在活力课堂氛围中，体验规则化沟通与协作训练'
+                : isMint
+                  ? '在清新实践节奏中，建立可执行的课堂沟通方法'
                 : isCopper
                   ? '在讲堂化的知识脉络中，系统建立可表达、可协作、可复盘的议事能力'
                 : isCharcoal
                   ? '在结构化栅格框架中，建立清晰、可执行的议事规则学习路径'
-                : '理论与实践相结合的系统化学习方案，让每个人都能成为合格的公民参与者'
+                : '理论与实践相结合的系统化学习方案，帮助教师与家长形成可落地的课堂沟通方法'
               }
             </p>
           </div>
@@ -438,53 +440,61 @@ export default function HomePage() {
             {[
               {
                 icon: Scale,
-                title: isFestival ? "节庆课程体系" : isCopper ? "讲堂课程体系" : "系统课程",
+                title: isFestival ? "活力课程体系" : isMint ? "实践课程体系" : isCopper ? "讲堂课程体系" : "系统课程",
                 description: isFestival
-                  ? "在节庆般的学习氛围中，从基础到高阶全面掌握议事规则，让学习成为一场盛大的知识庆典。"
+                  ? "在活力课堂氛围中，从基础到高阶系统掌握议事规则，让学习更有节奏与目标。"
+                  : isMint
+                    ? "围绕实践任务与案例演练推进学习，让规则理解逐步转化为课堂应用。"
                   : isCopper
-                    ? "围绕规则原理、案例拆解与表达训练构建讲堂体系，让学习者在内容层次中稳步建立议事框架。"
+                    ? "围绕规则原理、案例拆解与表达训练构建讲堂体系，让学习者稳步建立课堂表达框架。"
                   : isCharcoal
-                    ? "模块化课程体系，从规则拆解到场景应用分层推进，帮助你形成可复用的议事框架。"
-                    : "由浅入深的课程体系，从基础概念到高阶应用全覆盖，建立完整的议事规则知识框架。",
+                    ? "模块化课程体系，从规则拆解到场景应用分层推进，帮助你形成可复用的课堂讨论框架。"
+                    : "由浅入深的课程体系，从基础概念到高阶应用全覆盖，建立完整的课堂规则框架。",
                 color: "blue",
                 gradient: isFestival ? "from-rose-500 to-rose-600" : isCharcoal ? "from-gray-700 to-gray-800" : isCopper ? "from-orange-800 to-amber-700" : "from-blue-500 to-blue-600"
               },
               {
                 icon: Zap,
-                title: isFestival ? "互动庆典" : isCopper ? "讲堂研讨" : "互动课堂",
+                title: isFestival ? "互动课堂" : isMint ? "实践互动" : isCopper ? "讲堂研讨" : "互动课堂",
                 description: isFestival
-                  ? "实时投票、激情发言，在节庆般的互动中体验真实议事场景，让每次参与都充满仪式感。"
+                  ? "实时投票、举手发言，在课堂互动中体验规则化讨论，让每次参与更有秩序。"
+                  : isMint
+                    ? "以任务驱动的课堂互动，强化表达、倾听与反馈的闭环。"
                   : isCopper
                     ? "从讲解到提问再到观点陈述，形成节奏清晰的课堂互动，让每次发言都更有依据与逻辑。"
                   : isCharcoal
-                    ? "流程化互动、规则化发言，还原真实议事会议中的节奏与边界，在实践中提升表达质量。"
-                    : "实时投票、举手发言，还原真实的议事会议场景，在实践中掌握规则精髓。",
+                    ? "流程化互动、规则化发言，还原课堂讨论的节奏与边界，在实践中提升表达质量。"
+                    : "实时投票、举手发言，还原课堂讨论场景，在实践中掌握规则精髓。",
                 color: "amber",
                 gradient: isFestival ? "from-blue-500 to-blue-600" : isCharcoal ? "from-emerald-600 to-emerald-500" : isCopper ? "from-blue-700 to-blue-600" : "from-amber-500 to-orange-500"
               },
               {
                 icon: Users,
-                title: isFestival ? "公民节庆社群" : isCopper ? "讲堂共学社群" : "社群共学",
+                title: isFestival ? "共学社群" : isMint ? "实践共学" : isCopper ? "讲堂共学社群" : "社群共学",
                 description: isFestival
-                  ? "与志同道合的节庆参与者一起庆祝学习，在充满活力的社群中共同成长为行动公民。"
+                  ? "与同行教师与家长一起共学，在讨论与复盘中提升表达与协作能力。"
+                  : isMint
+                    ? "在实践任务与案例讨论中协同练习，形成稳定的课堂协作方法。"
                   : isCopper
                     ? "与同伴在阅读、讨论与复盘中共同打磨表达能力，形成兼具深度与温度的讲堂学习共同体。"
                   : isCharcoal
                     ? "与伙伴在统一结构下协同练习，在复盘中持续优化规则运用，形成高质量学习共同体。"
-                    : "与志同道合的伙伴一起练习，在讨论中共同进步，形成学习共同体。",
+                    : "与同行教师与家长一起练习，在讨论中共同进步，形成学习共同体。",
                 color: "emerald",
                 gradient: isFestival ? "from-rose-400 to-rose-500" : isCharcoal ? "from-gray-600 to-gray-700" : isCopper ? "from-orange-700 to-blue-700" : "from-emerald-500 to-green-500"
               },
               {
                 icon: Crown,
-                title: isFestival ? "节庆荣誉认证" : isCopper ? "讲堂能力认证" : "能力认证",
+                title: isFestival ? "课程认证" : isMint ? "实践认证" : isCopper ? "讲堂能力认证" : "能力认证",
                 description: isFestival
-                ? "完成节庆挑战，获得专属的公民议事荣誉徽章，证明你在这场知识盛典中的卓越表现。"
+                ? "完成课程与实践挑战，获得学习档案与能力认证，展示课堂协作与表达进阶成果。"
+                  : isMint
+                    ? "完成实践任务与展示，获得学习档案与能力认证，沉淀可复用的课堂方法。"
                   : isCopper
-                    ? "完成讲堂任务与专题答辩，获得学习档案与能力认证，清晰展示你的议事表达进阶成果。"
+                    ? "完成讲堂任务与专题答辩，获得学习档案与能力认证，清晰展示你的课堂表达进阶成果。"
                   : isCharcoal
-                    ? "完成结构化挑战，获得能力认证与过程证据，清晰展示你的议事能力水平。"
-                    : "完成课程与挑战，获得官方认证的结业证书，证明你的议事能力水平。",
+                    ? "完成结构化挑战，获得能力认证与过程证据，清晰展示你的课堂协作能力水平。"
+                    : "完成课程与挑战，获得官方认证的结业证书，证明你的课堂沟通能力水平。",
                 color: "violet",
                 gradient: isFestival ? "from-blue-400 to-blue-500" : isCharcoal ? "from-emerald-500 to-emerald-600" : isCopper ? "from-amber-700 to-orange-800" : "from-violet-500 to-purple-500"
               },
@@ -525,7 +535,7 @@ export default function HomePage() {
             `}>
               <Target className="h-4 w-4" />
               <span className="uppercase tracking-wide">
-                {isFestival ? '节庆导航' : isCharcoal ? '结构导航' : isCopper ? '讲堂导航' : '快速导航'}
+                {isFestival ? '活力导航' : isMint ? '实践导航' : isCharcoal ? '结构导航' : isCopper ? '讲堂导航' : '快速导航'}
               </span>
             </div>
             <h2 className={`
@@ -539,7 +549,7 @@ export default function HomePage() {
                 : 'text-display text-gray-900 animate-fadeInUp delay-100'
               }
             `}>
-              {isFestival ? '节庆入口' : isCharcoal ? '结构入口' : isCopper ? '讲堂入口' : '快速入口'}
+              {isFestival ? '活力入口' : isMint ? '实践入口' : isCharcoal ? '结构入口' : isCopper ? '讲堂入口' : '快速入口'}
             </h2>
             <p className={`
               ${isFestival
@@ -552,7 +562,9 @@ export default function HomePage() {
               }
             `}>
               {isFestival
-                ? '从这里开始你的公民议事节庆之旅'
+                ? '从这里开启你的课堂协作训练之旅'
+                : isMint
+                  ? '从这里进入实践训练与课堂协作页面'
                 : isCharcoal
                   ? '从这里进入结构化学习、互动与管理页面'
                   : isCopper
@@ -588,7 +600,7 @@ export default function HomePage() {
             `}>
               <TrendingUp className="h-4 w-4" />
               <span className="uppercase tracking-wide">
-                {isFestival ? '节庆路径' : isCharcoal ? '结构路径' : isCopper ? '讲堂路径' : '学习路径'}
+                {isFestival ? '活力路径' : isMint ? '实践路径' : isCharcoal ? '结构路径' : isCopper ? '讲堂路径' : '学习路径'}
               </span>
             </div>
             <h2 className={`
@@ -602,7 +614,7 @@ export default function HomePage() {
                 : 'text-display text-gray-900 animate-fadeInUp delay-100'
               }
             `}>
-              {isFestival ? '你的节庆之旅' : isCharcoal ? '你的结构之旅' : isCopper ? '你的讲堂之旅' : '你的学习路径'}
+              {isFestival ? '你的活力之旅' : isMint ? '你的实践之旅' : isCharcoal ? '你的结构之旅' : isCopper ? '你的讲堂之旅' : '你的学习路径'}
        </h2>
             <p className={`
               max-w-2xl mx-auto
@@ -616,12 +628,14 @@ export default function HomePage() {
               }
             `}>
               {isFestival
-                ? '三步开启公民议事节庆，从新手到行动公民的激情成长之路'
-                : isCharcoal
-                  ? '三步开启结构化议事学习，从新手到高效参与者的清晰成长路径'
-                  : isCopper
-                    ? '三步开启讲堂式议事学习，从入门理解到表达实践的沉浸成长路径'
-                : '三步开启议事规则学习之旅，从新手到专家的完整成长路径'
+                ? '三步开启课堂协作训练，从入门到熟练的清晰成长路径'
+                : isMint
+                  ? '三步开启实践训练，从新手到熟练的稳步成长路径'
+                  : isCharcoal
+                    ? '三步开启结构化议事学习，从新手到高效协作者的清晰成长路径'
+                    : isCopper
+                      ? '三步开启讲堂式议事学习，从入门理解到表达实践的沉浸成长路径'
+                : '三步开启议事规则学习之旅，从新手到熟练的完整成长路径'
               }
             </p>
           </div>
@@ -635,11 +649,13 @@ export default function HomePage() {
             {[
               {
                 step: "01",
-                title: isFestival ? "加入节庆" : isCopper ? "进入讲堂" : "注册加入",
+                title: isFestival ? "加入课程" : isMint ? "开始实践" : isCopper ? "进入讲堂" : "注册加入",
                 desc: isFestival
-                  ? "创建账号并输入邀请码，立即加入这场盛大的公民议事节庆，开启你的行动公民之旅。"
+                  ? "创建账号并输入邀请码，立即进入活力课堂学习，开启你的课堂沟通与协作之旅。"
+                  : isMint
+                    ? "创建账号并输入邀请码，立即进入实践训练空间，开启你的课堂表达与协作之旅。"
                   : isCopper
-                    ? "创建账号并输入邀请码，立即进入讲堂学习空间，开启你的规则表达与公共协作训练。"
+                    ? "创建账号并输入邀请码，立即进入讲堂学习空间，开启你的规则表达与课堂协作训练。"
                   : isCharcoal
                     ? "创建账号并输入邀请码，立即进入结构化学习体系，开启你的清晰成长路径。"
                     : "创建账号并输入邀请码，立即解锁全部课程内容，开始你的学习之旅。",
@@ -648,9 +664,11 @@ export default function HomePage() {
               },
               {
                 step: "02",
-                title: isFestival ? "节庆学习" : isCopper ? "讲堂学习" : "系统学习",
+                title: isFestival ? "课程学习" : isMint ? "实践学习" : isCopper ? "讲堂学习" : "系统学习",
                 desc: isFestival
-                  ? "在充满活力的节庆氛围中系统学习，从基础原则到高阶应用，在庆典中建立完整知识体系。"
+                  ? "在活力课堂节奏中系统学习，从基础原则到高阶应用，建立可执行的课堂规则体系。"
+                  : isMint
+                    ? "在实践节奏中完成规则学习与案例拆解，强化课堂应用能力。"
                   : isCopper
                     ? "在讲堂节奏中完成规则学习与案例拆解，从基础原则到高阶应用稳步建立知识体系。"
                   : isCharcoal
@@ -661,9 +679,11 @@ export default function HomePage() {
               },
               {
                 step: "03",
-                title: isFestival ? "议事庆典" : isCopper ? "讲堂实战" : "模拟实战",
+                title: isFestival ? "课堂演练" : isMint ? "实践演练" : isCopper ? "讲堂实战" : "模拟实战",
                 desc: isFestival
-                  ? "参与激动人心的议事庆典，在节庆般的模拟会议中真实演练，成为充满激情的行动公民。"
+                  ? "参与模拟课堂与讨论演练，在规则化流程中真实练习，提升协作与表达能力。"
+                  : isMint
+                    ? "参与实践任务与模拟会议，在观点表达和规则运用中持续复盘，形成稳定实践能力。"
                   : isCopper
                     ? "参与讲堂研讨与模拟会议，在观点表达和规则运用中持续复盘，形成稳定实践能力。"
                   : isCharcoal
@@ -750,7 +770,7 @@ export default function HomePage() {
           <div className="absolute inset-0 parliament-pattern opacity-10"></div>
         )}
 
-        {/* 节庆浮动元素 */}
+        {/* 活力浮动元素 */}
         {isFestival && (
           <>
             <div className="absolute top-20 left-20 w-32 h-32 bg-white/10 rounded-full blur-2xl fc-animate-float" />
@@ -774,7 +794,7 @@ export default function HomePage() {
             `}>
               <Star className={`h-4 w-4 ${isFestival ? 'text-yellow-300' : isCopper ? 'text-orange-200' : 'text-amber-300'}`} />
               <span className="uppercase tracking-wide">
-                {isFestival ? '加入节庆' : isCharcoal ? '加入结构行动' : isCopper ? '加入讲堂' : '立即开始'}
+                {isFestival ? '加入课程' : isMint ? '加入实践' : isCharcoal ? '加入结构训练' : isCopper ? '加入讲堂' : '立即开始'}
               </span>
             </div>
 
@@ -789,7 +809,7 @@ export default function HomePage() {
                 : 'text-display animate-fadeInUp delay-100'
               }
             `}>
-              {isFestival ? '准备好参加这场盛典了吗？' : isCharcoal ? '准备好构建你的议事框架了吗？' : isCopper ? '准备好进入铜色讲堂了吗？' : '准备好开始了吗？'}
+              {isFestival ? '准备好开始培训了吗？' : isMint ? '准备好开始实践了吗？' : isCharcoal ? '准备好构建课堂框架了吗？' : isCopper ? '准备好进入铜色讲堂了吗？' : '准备好开始了吗？'}
             </h2>
 
             <p className={`
@@ -805,15 +825,15 @@ export default function HomePage() {
             `}>
               {isFestival ? (
                 <>
-                  注册账号并输入邀请码，即可加入这场盛大的公民议事节庆。
+                  注册账号并输入邀请码，即可加入教师与家长培训课程。
                   <br className="hidden md:block" />
-                  与数百名节庆参与者一同庆祝学习，成为充满激情的行动公民。
+                  与更多教师与家长一同学习，形成可落地的课堂协作方法。
                 </>
               ) : (
                 <>
-                  {isCharcoal ? '注册账号并输入邀请码，即可进入结构化课程与互动训练体系。' : isCopper ? '注册账号并输入邀请码，即可进入讲堂课程与专题研讨体系。' : '注册账号并输入邀请码，即可解锁全部课程内容与互动功能。'}
+                  {isCharcoal ? '注册账号并输入邀请码，即可进入结构化课程与互动训练体系。' : isCopper ? '注册账号并输入邀请码，即可进入讲堂课程与专题研讨体系。' : isMint ? '注册账号并输入邀请码，即可进入实践课程与训练体系。' : '注册账号并输入邀请码，即可解锁全部课程内容与互动功能。'}
                   <br className="hidden md:block" />
-                  {isCharcoal ? '加入议起读，在清晰规则和流程中与同伴协作成长。' : isCopper ? '加入议起读，在讲解、练习与复盘中与同伴协作成长。' : '加入议起读，与数百名同学一同成长，成为合格的公民参与者。'}
+                  {isCharcoal ? '加入议起读，在清晰规则和流程中与同伴协作成长。' : isCopper ? '加入议起读，在讲解、练习与复盘中与同伴协作成长。' : isMint ? '加入议起读，在实践训练与复盘中与同伴协作成长。' : '加入议起读，与更多教师与家长共同成长，形成可落地的课堂协作方法。'}
                 </>
               )}
             </p>
@@ -841,7 +861,7 @@ export default function HomePage() {
                 }
               `}>
                 <UserPlus className="h-5 w-5 transition-transform group-hover:scale-110" />
-                <span>{isFestival ? '立即加入节庆' : isCharcoal ? '立即加入结构行动' : isCopper ? '立即加入讲堂' : '立即注册'}</span>
+                <span>{isFestival ? '立即加入课程' : isMint ? '立即加入实践' : isCharcoal ? '立即加入结构训练' : isCopper ? '立即加入讲堂' : '立即注册'}</span>
                 <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
               </Link>
               <Link href="/course" className={`
@@ -856,7 +876,7 @@ export default function HomePage() {
                 }
               `}>
                 <Globe className="h-5 w-5 transition-transform group-hover:scale-110" />
-                <span>{isFestival ? '浏览节庆课程' : isCharcoal ? '浏览结构课程' : isCopper ? '浏览讲堂课程' : '浏览课程'}</span>
+                <span>{isFestival ? '浏览活力课程' : isMint ? '浏览实践课程' : isCharcoal ? '浏览结构课程' : isCopper ? '浏览讲堂课程' : '浏览课程'}</span>
               </Link>
             </div>
 
@@ -873,14 +893,14 @@ export default function HomePage() {
               }
             `}>
               <p className="font-mono text-sm text-blue-200 mb-4 uppercase tracking-wide">
-                {isFestival ? '已有 500+ 公民加入节庆' : isCharcoal ? '已有 500+ 学员加入结构体系' : isCopper ? '已有 500+ 学员加入讲堂体系' : '已有 500+ 学员加入我们'}
+                {isFestival ? '已有 500+ 学员加入课程' : isMint ? '已有 500+ 学员加入实践体系' : isCharcoal ? '已有 500+ 学员加入结构体系' : isCopper ? '已有 500+ 学员加入讲堂体系' : '已有 500+ 学员加入我们'}
               </p>
               <div className="flex justify-center items-center gap-2">
                 {[...Array(5)].map((_, i) => (
                   <Star key={i} className={`h-5 w-5 fill-current ${isFestival ? 'text-yellow-300' : isCopper ? 'text-orange-200' : 'text-amber-300'}`} />
                 ))}
                 <span className={`ml-2 font-semibold ${isFestival ? 'text-rose-100' : isCharcoal ? 'text-emerald-100' : isCopper ? 'text-orange-100' : 'text-blue-100'}`}>
-                  4.9/5.0 {isFestival ? '节庆评分' : isCharcoal ? '结构评分' : isCopper ? '讲堂评分' : '学员评分'}
+                  4.9/5.0 {isFestival ? '学员评分' : isMint ? '实践评分' : isCharcoal ? '结构评分' : isCopper ? '讲堂评分' : '学员评分'}
                 </span>
               </div>
             </div>
