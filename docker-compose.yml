@@ -10,7 +10,7 @@ services:
     env_file:
       - .env.production
     ports:
-      - "127.0.0.1:3000:3000"
+      - "127.0.0.1:38080:3000"
     volumes:
       - yiqidu_data:/app/data
       - yiqidu_uploads:/app/uploads

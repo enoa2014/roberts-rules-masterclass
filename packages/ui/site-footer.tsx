@@ -57,7 +57,7 @@ export function SiteFooter() {
             </p>
 
             {/* Mission Statement */}
-            <div className="glass-card p-4 bg-white/5 backdrop-blur-sm border border-white/10">
+            <div className="footer-glass p-4">
               <div className="flex items-center gap-2 mb-2">
                 <Scale className="h-4 w-4 text-amber-300" />
                 <span className="font-mono text-xs text-amber-200 uppercase tracking-wide">
