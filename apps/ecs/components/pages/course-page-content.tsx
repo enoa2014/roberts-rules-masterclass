@@ -48,7 +48,7 @@ export default function CoursePage() {
           ${isFestival || isMint || isCharcoal || isCopper ? '' : 'parliament-pattern'}
         `}></div>
 
-        {/* 节庆背景元素 */}
+        {/* 活力背景元素 */}
         {isFestival && (
           <>
             <div className="absolute top-10 left-10 w-32 h-32 bg-gradient-to-r from-rose-600/20 to-rose-500/10 rounded-full blur-3xl fc-animate-float" />
@@ -114,7 +114,7 @@ export default function CoursePage() {
               `}>
                 <BookOpen className="h-4 w-4" />
                 <span className="uppercase tracking-wide">
-                  {isFestival ? '节庆课程' : isMint ? '行动课程' : isCharcoal ? '结构课程' : isCopper ? '讲堂课程' : '学习路径'}
+                  {isFestival ? '活力课程' : isMint ? '实践课程' : isCharcoal ? '结构课程' : isCopper ? '讲堂课程' : '学习路径'}
                 </span>
               </div>
               <h1 className={`
@@ -130,7 +130,7 @@ export default function CoursePage() {
                     : 'text-hero text-gray-900'
                 }
               `}>
-                {isFestival ? '节庆课程总览' : isMint ? '行动课程总览' : isCharcoal ? '结构课程总览' : isCopper ? '讲堂课程总览' : '课程总览'}
+                {isFestival ? '活力课程总览' : isMint ? '实践课程总览' : isCharcoal ? '结构课程总览' : isCopper ? '讲堂课程总览' : '课程总览'}
               </h1>
               <p className={`
                 max-w-2xl
@@ -147,33 +147,33 @@ export default function CoursePage() {
               `}>
                 {isFestival ? (
                   <>
-                    在充满活力的节庆氛围中系统学习议事规则，从基础理论到实战应用，
+                    在活力课堂氛围中系统学习议事规则，从基础理论到实战应用，
                     <br className="hidden md:block" />
-                    与数百名节庆参与者一同成长为行动公民。
+                    与更多教师与家长一同成长为课堂协作引导者。
                   </>
                 ) : isMint ? (
                   <>
-                    在清新活力的行动氛围中掌握议事技能，从基础理论到实战应用，
+                    在清新实践的学习氛围中掌握议事技能，从基础理论到实战应用，
                     <br className="hidden md:block" />
-                    与志同道合的伙伴一起激发公民参与热情。
+                    与同行伙伴一起强化课堂表达与协作热情。
                   </>
                 ) : isCharcoal ? (
                   <>
                     在边界清晰的结构化学习中掌握议事技能，从基础理论到实战应用，
                     <br className="hidden md:block" />
-                    通过标准化训练流程，持续提升公民参与效率。
+                    通过标准化训练流程，持续提升课堂协作效率。
                   </>
                 ) : isCopper ? (
                   <>
                     在讲堂式的深度学习中掌握议事技能，从规则原理到案例研判，
                     <br className="hidden md:block" />
-                    通过“讲解+演练+复盘”稳步提升公共表达与协作能力。
+                    通过“讲解+演练+复盘”稳步提升课堂表达与协作能力。
                   </>
                 ) : (
                   <>
                     系统化的议事规则学习体系，从基础理论到实战应用，
                     <br className="hidden md:block" />
-                    帮助你成为合格的公民参与者。
+                    帮助你成为课堂协作的有效引导者。
                   </>
                 )}
               </p>
@@ -194,10 +194,10 @@ export default function CoursePage() {
               }
             `}>
               {[
-                { icon: BookOpen, value: "12", label: isFestival ? "节庆课程" : isMint ? "行动课程" : isCharcoal ? "结构课程" : isCopper ? "讲堂课程" : "门课程", color: isFestival ? "text-rose-600" : isMint ? "text-teal-600" : isCharcoal ? "text-gray-700" : isCopper ? "text-orange-700" : "text-blue-600" },
-                { icon: Users, value: "500+", label: isFestival ? "节庆参与者" : isMint ? "行动参与者" : isCharcoal ? "结构学员" : isCopper ? "讲堂学员" : "学员", color: isFestival ? "text-blue-600" : isMint ? "text-orange-600" : isCharcoal ? "text-emerald-600" : isCopper ? "text-blue-700" : "text-purple-600" },
+                { icon: BookOpen, value: "12", label: isFestival ? "活力课程" : isMint ? "实践课程" : isCharcoal ? "结构课程" : isCopper ? "讲堂课程" : "门课程", color: isFestival ? "text-rose-600" : isMint ? "text-teal-600" : isCharcoal ? "text-gray-700" : isCopper ? "text-orange-700" : "text-blue-600" },
+                { icon: Users, value: "500+", label: isFestival ? "活力学员" : isMint ? "实践学员" : isCharcoal ? "结构学员" : isCopper ? "讲堂学员" : "学员", color: isFestival ? "text-blue-600" : isMint ? "text-orange-600" : isCharcoal ? "text-emerald-600" : isCopper ? "text-blue-700" : "text-purple-600" },
                 { icon: Clock, value: "40+", label: "小时", color: "text-amber-600" },
-                { icon: Award, value: "98%", label: isFestival ? "节庆好评" : isMint ? "行动好评" : isCharcoal ? "结构好评" : isCopper ? "讲堂好评" : "完成率", color: "text-green-600" },
+                { icon: Award, value: "98%", label: isFestival ? "学员好评" : isMint ? "实践好评" : isCharcoal ? "结构好评" : isCopper ? "讲堂好评" : "完成率", color: "text-green-600" },
               ].map((stat, i) => (
                 <div key={stat.label} className={`
                   p-4 text-center transition-all duration-300
@@ -259,7 +259,7 @@ export default function CoursePage() {
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
                 <input
                   type="text"
-                  placeholder={isFestival ? "搜索节庆课程..." : isMint ? "搜索行动课程..." : isCharcoal ? "搜索结构课程..." : isCopper ? "搜索讲堂课程..." : "搜索课程..."}
+                  placeholder={isFestival ? "搜索活力课程..." : isMint ? "搜索实践课程..." : isCharcoal ? "搜索结构课程..." : isCopper ? "搜索讲堂课程..." : "搜索课程..."}
                   className={`
                     input pl-10 pr-4
                     ${isFestival
@@ -361,7 +361,7 @@ export default function CoursePage() {
                   : 'btn btn-ghost'
               }
             `}>
-              <span>{isFestival ? '加载更多节庆课程' : isMint ? '加载更多行动课程' : isCharcoal ? '加载更多结构课程' : isCopper ? '加载更多讲堂课程' : '加载更多课程'}</span>
+              <span>{isFestival ? '加载更多活力课程' : isMint ? '加载更多实践课程' : isCharcoal ? '加载更多结构课程' : isCopper ? '加载更多讲堂课程' : '加载更多课程'}</span>
               <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
             </button>
           </div>
@@ -387,7 +387,7 @@ export default function CoursePage() {
             `}>
               <TrendingUp className="h-4 w-4" />
               <span className="uppercase tracking-wide">
-                {isFestival ? '节庆路径' : isMint ? '行动路径' : isCharcoal ? '结构路径' : isCopper ? '讲堂路径' : '推荐路径'}
+                {isFestival ? '活力路径' : isMint ? '实践路径' : isCharcoal ? '结构路径' : isCopper ? '讲堂路径' : '推荐路径'}
               </span>
             </div>
             <h2 className={`
@@ -403,7 +403,7 @@ export default function CoursePage() {
                   : 'text-display text-gray-900'
               }
             `}>
-              {isFestival ? '节庆学习路径' : isMint ? '行动学习路径' : isCharcoal ? '结构化学习路径' : isCopper ? '讲堂学习路径' : '个性化学习路径'}
+              {isFestival ? '活力学习路径' : isMint ? '实践学习路径' : isCharcoal ? '结构化学习路径' : isCopper ? '讲堂学习路径' : '个性化学习路径'}
             </h2>
             <p className={`
               max-w-2xl mx-auto
@@ -419,9 +419,9 @@ export default function CoursePage() {
               }
             `}>
               {isFestival
-                ? '根据你的基础和目标，我们为你推荐最适合的节庆学习路径'
+                ? '根据你的基础和目标，我们为你推荐最适合的活力学习路径'
                 : isMint
-                  ? '根据你的基础和目标，我们为你推荐最适合的行动学习路径'
+                  ? '根据你的基础和目标，我们为你推荐最适合的实践学习路径'
                   : isCharcoal
                     ? '根据你的基础与目标，我们为你推荐最适合的结构化学习路径'
                     : isCopper
@@ -528,8 +528,8 @@ const courses: Course[] = [
   },
   {
     id: 5,
-    title: "公民参与实践",
-    description: "了解公民参与的途径和方法，提升参与能力",
+    title: "课堂协作实践",
+    description: "了解课堂协作的途径和方法，提升沟通能力",
     level: "实战",
     duration: "8小时",
     students: 134,
@@ -537,7 +537,7 @@ const courses: Course[] = [
     progress: 45,
     status: "in_progress",
     instructor: "陈老师",
-    topics: ["参与途径", "权利义务", "实践案例"],
+    topics: ["协作途径", "课堂规则", "实践案例"],
     color: "amber",
   },
   {
@@ -931,7 +931,7 @@ function LearningPathCard({
         }
       `}>
         <Zap className="h-4 w-4 transition-transform group-hover:scale-110" />
-        <span>{isFestival ? '开始节庆学习' : isMint ? '开始行动学习' : isCharcoal ? '开始结构学习' : isCopper ? '开始讲堂学习' : '开始学习'}</span>
+        <span>{isFestival ? '开始活力学习' : isMint ? '开始实践学习' : isCharcoal ? '开始结构学习' : isCopper ? '开始讲堂学习' : '开始学习'}</span>
         <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
       </button>
     </div>
