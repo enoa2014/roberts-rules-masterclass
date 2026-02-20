@@ -115,7 +115,7 @@ test.describe("Platform Regression - Auth, Theme, Reading", () => {
     await expect(themeTrigger).toBeVisible();
     await themeTrigger.click();
 
-    await page.getByRole("button", { name: /节庆公民/ }).click();
+    await page.getByRole("button", { name: /活力课堂/ }).click();
 
     await expect.poll(async () =>
       page.evaluate(() => document.documentElement.getAttribute("data-theme")),

@@ -58,10 +58,10 @@ export function LoginForm({ callbackUrl }: Props) {
               <GraduationCap className="h-8 w-8 text-white" />
             </div>
             <h2 className="text-3xl font-extrabold mb-4 leading-tight">
-              掌握公共议事规则<br />提升公民核心素养
+              掌握议事规则<br />提升课堂沟通与协作素养
             </h2>
             <p className="text-white/90 leading-relaxed">
-              从理论学习到模拟议事，全方位掌握罗伯特议事规则。加入我们，在实践中学会表达、倾听与决策。
+              从理论学习到课堂演练，全方位掌握罗伯特议事规则。加入我们，在实践中提升表达、倾听与协作能力。
             </p>
           </div>
         </div>

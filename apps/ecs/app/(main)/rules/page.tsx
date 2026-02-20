@@ -13,8 +13,8 @@ export default function RulesPage() {
 
   return (
     <PageShell
-      title={isFestival ? "节庆议事规则详解" : isMint ? "行动议事规则详解" : "议事规则详解"}
-      description={isFestival ? "从基础原理到高阶应用，在节庆式学习中掌握罗伯特议事规则。" : isMint ? "从基础原理到高阶应用，在行动式学习中掌握罗伯特议事规则。" : "从基础原理到高阶应用，系统掌握罗伯特议事规则。"}
+      title={isFestival ? "活力课堂议事规则详解" : isMint ? "薄荷实践议事规则详解" : "议事规则详解"}
+      description={isFestival ? "从基础原理到高阶应用，在活力课堂训练中掌握罗伯特议事规则。" : isMint ? "从基础原理到高阶应用，在薄荷实践训练中掌握罗伯特议事规则。" : "从基础原理到高阶应用，面向课堂沟通与协作，系统掌握罗伯特议事规则。"}
     >
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         <RuleCard

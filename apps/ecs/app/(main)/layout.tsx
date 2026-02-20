@@ -5,7 +5,7 @@ import { SiteNavEcs, SiteFooter, ProvidersEcs, ThemeProvider } from "@yiqidu/ui"
 
 export const metadata: Metadata = {
   title: "议起读 — 课程学习与互动平台",
-  description: "掌握公共议事规则，提升公民核心素养。课程学习、课堂互动、课后复盘一体化平台。",
+  description: "掌握议事规则，提升课堂沟通与协作素养。课程学习、课堂互动、课后复盘一体化平台。",
 };
 
 export default function RootLayout({

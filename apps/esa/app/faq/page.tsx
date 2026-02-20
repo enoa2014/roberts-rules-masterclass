@@ -32,8 +32,8 @@ export default function FAQPage() {
 
   return (
     <PageShell
-      title={isFestival ? "节庆常见问题" : isMint ? "行动常见问题" : isCharcoal ? "栅格常见问题" : isCopper ? "讲堂常见问题" : "常见问题"}
-      description={isFestival ? "这里有节庆学习中最常见的问题解答" : isMint ? "这里有行动学习中最常见的问题解答" : isCharcoal ? "这里有结构化学习中最常见的问题解答" : isCopper ? "这里有讲堂学习中最常见的问题解答" : "这里有您可能关心的问题解答"}
+      title={isFestival ? "活力课堂常见问题" : isMint ? "薄荷实践常见问题" : isCharcoal ? "栅格常见问题" : isCopper ? "讲堂常见问题" : "常见问题"}
+      description={isFestival ? "这里有活力课堂学习中常见的问题解答" : isMint ? "这里有薄荷实践学习中常见的问题解答" : isCharcoal ? "这里有结构化学习中常见的问题解答" : isCopper ? "这里有讲堂学习中常见的问题解答" : "这里有您可能关心的问题解答"}
     >
       <div className="max-w-3xl mx-auto space-y-4">
         {faqs.map((item, index) => (

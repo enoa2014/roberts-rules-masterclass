@@ -39,9 +39,9 @@ type Preset = {
 const PRESETS: Preset[] = [
   {
     id: "civic-glass",
-    name: "公民玻璃态",
-    subtitle: "Civic Glass",
-    description: "玻璃导航 + 中央英雄区，强调现代公共讨论氛围。",
+    name: "课堂玻璃态",
+    subtitle: "Classroom Glass",
+    description: "玻璃导航 + 中央英雄区，强调现代课堂讨论氛围。",
     palette: {
       primary: "#1d4ed8",
       secondary: "#2563eb",
@@ -89,7 +89,7 @@ const PRESETS: Preset[] = [
   },
   {
     id: "neo-bento",
-    name: "新公民 Bento",
+    name: "新课堂 Bento",
     subtitle: "Neo Bento",
     description: "模块化卡片编排，适合首页快速导流。",
     palette: {
@@ -314,8 +314,8 @@ const PRESETS: Preset[] = [
   },
   {
     id: "festival-civic",
-    name: "节庆公民",
-    subtitle: "Festival Civic",
+    name: "活力课堂",
+    subtitle: "Vibrant Classroom",
     description: "高饱和点缀 + 海报式主视觉，适合活动期。",
     palette: {
       primary: "#be123c",
@@ -929,9 +929,9 @@ function DemoHero({ preset, cardStyle }: { preset: Preset; cardStyle: CSSPropert
       <section className="grid gap-4 md:grid-cols-2">
         <div className={`rounded-3xl bg-[var(--demo-surface)] p-7 ${motionClass}`} style={cardStyle}>
           <h2 className="text-3xl font-black md:text-5xl" style={headingStyle}>
-            掌握公共议事规则
+            掌握议事规则
             <br />
-            提升公民核心素养
+            提升课堂沟通与协作素养
           </h2>
           <p className="mt-4 text-sm leading-7 text-slate-600">
             当前方案重点变化：左右分栏、标题层级、按钮反馈与信息卡结构。
@@ -1087,9 +1087,9 @@ function DemoHero({ preset, cardStyle }: { preset: Preset; cardStyle: CSSPropert
     >
       <div className="mx-auto max-w-3xl text-center">
         <h2 className="text-4xl font-black md:text-6xl" style={headingStyle}>
-          掌握公共议事规则
+          掌握议事规则
           <br />
-          提升公民核心素养
+          提升课堂沟通与协作素养
         </h2>
         <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-slate-600">
           中心英雄区方案：强化主标题、保留核心 CTA，适配最广泛的用户入口场景。
