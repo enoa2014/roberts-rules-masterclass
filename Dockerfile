@@ -32,6 +32,7 @@ COPY --from=builder --chown=nextjs:nodejs /app/apps/ecs/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/apps/ecs/.next/static ./apps/ecs/.next/static
 COPY --from=builder --chown=nextjs:nodejs /app/apps/ecs/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/apps/ecs/drizzle ./drizzle
+COPY --from=builder --chown=nextjs:nodejs /app/apps/ecs/scripts ./apps/ecs/scripts
 COPY --from=builder --chown=nextjs:nodejs /app/apps/ecs/.next/static ./.next/static
 
 # Remove non-runtime assets that can be pulled in by conservative file tracing.
@@ -69,4 +70,4 @@ RUN rm -rf \
 
 USER nextjs
 EXPOSE 3000
-CMD ["node", "apps/ecs/server.js"]
+CMD ["node", "apps/ecs/scripts/docker-entrypoint.mjs"]
