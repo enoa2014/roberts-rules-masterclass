@@ -52,8 +52,8 @@ export function SiteFooter() {
             </div>
 
             <p className="text-blue-100 leading-relaxed max-w-md">
-              致力于推广罗伯特议事规则，帮助青少年提升公共议事能力与公民素养。
-              从理论学习到模拟议事，全方位掌握议事规则，成为合格的公民参与者。
+              面向教师与家长的课堂沟通与协作培训，帮助建立清晰的讨论规则与表达框架。
+              通过课程学习与模拟演练，让课堂讨论更有序、反馈更可执行。
             </p>
 
             {/* Mission Statement */}
@@ -65,7 +65,7 @@ export function SiteFooter() {
                 </span>
               </div>
               <p className="text-sm text-blue-100 leading-relaxed">
-                培养具备议事能力的公民，推动民主参与文化的发展
+                支持教师与家长建立清晰沟通规则，提升课堂协作与家校配合效果。
               </p>
             </div>
           </div>
@@ -192,7 +192,7 @@ export function SiteFooter() {
             <div className="flex items-center gap-2 text-blue-200">
               <span className="font-mono text-xs">Made with</span>
               <Heart className="h-3 w-3 text-red-400 fill-current animate-pulse" />
-              <span className="font-mono text-xs">for democracy</span>
+              <span className="font-mono text-xs">for learning</span>
             </div>
           </div>
 

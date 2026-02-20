@@ -53,24 +53,24 @@ export function ThemeSelector({ placement = 'down' }: ThemeSelectorProps) {
   const themes = [
     {
       id: 'default' as const,
-      name: '经典政务',
-      description: '稳重专业的政务风格',
+      name: '经典课堂',
+      description: '稳重专业的课堂风格',
       icon: Crown,
       colors: ['#1e3a8a', '#c27c2f', '#f8fafc'],
       preview: 'bg-gradient-to-r from-blue-800 via-amber-600 to-slate-50'
     },
     {
       id: 'festival-civic' as const,
-      name: '节庆公民',
-      description: '充满活力的节庆风格',
+      name: '活力课堂',
+      description: '活力鲜明的课堂风格',
       icon: Sparkles,
       colors: ['#be123c', '#e11d48', '#2563eb'],
       preview: 'bg-gradient-to-r from-rose-700 via-rose-500 to-blue-600'
     },
     {
       id: 'mint-campaign' as const,
-      name: '薄荷行动',
-      description: '清新活力的行动风格',
+      name: '薄荷实践',
+      description: '清新活力的实践风格',
       icon: Zap,
       colors: ['#0f766e', '#14b8a6', '#f97316'],
       preview: 'bg-gradient-to-r from-teal-700 via-teal-500 to-orange-500'
@@ -262,9 +262,9 @@ export function ThemeSelector({ placement = 'down' }: ThemeSelectorProps) {
             {/* 提示信息 */}
             <div className="mt-4 p-3 bg-gray-50 rounded-xl">
               <p className="text-xs text-gray-600 leading-relaxed">
-                <strong>经典政务</strong> 保持稳重专业风格。
-                <strong>节庆公民</strong> 采用高饱和与戏剧性动画。
-                <strong>薄荷行动</strong> 强调清新活力与行动感。
+                <strong>经典课堂</strong> 保持稳重专业风格。
+                <strong>活力课堂</strong> 采用高饱和与戏剧性动画。
+                <strong>薄荷实践</strong> 强调清新活力与实践感。
                 <strong>炭黑栅格</strong> 结构化深灰风格，信息边界明确。
                 <strong>铜色讲堂</strong> 强调讲座质感与内容层次。
               </p>
