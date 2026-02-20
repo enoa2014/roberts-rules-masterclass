@@ -187,11 +187,25 @@ function applyMigrations(sqliteClient, migrationsDir) {
   }
 }
 
-function ensureMigrations(sqliteClient) {
-  const migrationsDir = path.resolve(__dirname, "..", "drizzle");
-  if (!fs.existsSync(migrationsDir)) {
-    throw new Error(`[auto-seed] migrations folder not found: ${migrationsDir}`);
+function resolveMigrationsDir() {
+  const candidates = [
+    path.resolve(__dirname, "..", "drizzle"),
+    path.resolve(__dirname, "..", "..", "..", "drizzle"),
+  ];
+
+  for (const candidate of candidates) {
+    if (fs.existsSync(candidate)) {
+      return candidate;
+    }
   }
+
+  throw new Error(
+    `[auto-seed] migrations folder not found. tried: ${candidates.join(", ")}`,
+  );
+}
+
+function ensureMigrations(sqliteClient) {
+  const migrationsDir = resolveMigrationsDir();
 
   if (!tableExists(sqliteClient, "users")) {
     applyMigrations(sqliteClient, migrationsDir);
