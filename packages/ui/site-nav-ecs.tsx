@@ -65,8 +65,9 @@ export function SiteNavEcs() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const { data: session } = useSession();
-  const role = session?.user?.role;
-  const isSignedIn = Boolean(session?.user?.id);
+  const user = session?.user as { id?: string; role?: string } | undefined;
+  const role = user?.role;
+  const isSignedIn = Boolean(user?.id);
   const isTeacherOrAdmin = role === "teacher" || role === "admin";
   const isRegistered = role === "registered";
   const shouldShowLearningLinks = role === "student" || role === "teacher" || role === "admin";
