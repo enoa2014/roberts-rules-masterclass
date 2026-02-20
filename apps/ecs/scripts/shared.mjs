@@ -1,3 +1,4 @@
+import fs from "node:fs";
 import path from "node:path";
 
 export const DEFAULT_DATABASE_URL = "file:./data/course.db";
@@ -5,10 +6,31 @@ export const DEFAULT_SMOKE_PASSWORD = "SmokePass123!";
 export const DEFAULT_SMOKE_TIMER_DURATION_SEC = 60;
 
 const LOOPBACK_HOSTS = new Set(["127.0.0.1", "localhost", "::1"]);
+const DISABLED_ENV_VALUES = new Set(["0", "false", "no", "off"]);
 
 export function resolveDbPath(rawDatabaseUrl = process.env.DATABASE_URL || DEFAULT_DATABASE_URL) {
   const filePath = rawDatabaseUrl.startsWith("file:") ? rawDatabaseUrl.slice(5) : rawDatabaseUrl;
   return path.isAbsolute(filePath) ? filePath : path.join(process.cwd(), filePath);
+}
+
+export function isEnvDisabled(value) {
+  if (value === undefined || value === null) {
+    return false;
+  }
+  return DISABLED_ENV_VALUES.has(String(value).trim().toLowerCase());
+}
+
+export function isDockerRuntime() {
+  if (fs.existsSync("/.dockerenv")) {
+    return true;
+  }
+
+  try {
+    const cgroup = fs.readFileSync("/proc/1/cgroup", "utf8");
+    return cgroup.includes("docker") || cgroup.includes("containerd");
+  } catch {
+    return false;
+  }
 }
 
 export function parseJsonOrText(text, context = "unknown") {
