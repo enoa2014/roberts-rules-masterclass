@@ -1,4 +1,4 @@
-(globalThis.TURBOPACK||(globalThis.TURBOPACK=[])).push(["object"==typeof document?document.currentScript:void 0,38955,e=>{"use strict";var t=e.i(81123),a=e.i(58262);function r({title:e,description:r,children:c}){let{theme:n}=(0,a.useTheme)(),l="festival-civic"===n,i="mint-campaign"===n,s="charcoal-grid"===n,x="copper-lecture"===n;return(0,t.jsxs)(t.Fragment,{children:[(0,t.jsx)("section",{className:`
+(globalThis.TURBOPACK||(globalThis.TURBOPACK=[])).push(["object"==typeof document?document.currentScript:void 0,51424,e=>{"use strict";var t=e.i(15288),a=e.i(88620);function r({title:e,description:r,children:c}){let{theme:n}=(0,a.useTheme)(),l="festival-civic"===n,i="mint-campaign"===n,s="charcoal-grid"===n,x="copper-lecture"===n;return(0,t.jsxs)(t.Fragment,{children:[(0,t.jsx)("section",{className:`
         page-hero pt-28 md:pt-32 pb-6 md:pb-8
         ${l?"fc-page-hero fc-pattern":i?"mc-page-hero mc-pattern":s?"cg-page-hero cg-pattern":x?"cl-page-hero cl-pattern":""}
       `,children:(0,t.jsxs)("div",{className:"container max-w-6xl",children:[(0,t.jsx)("h1",{className:`
