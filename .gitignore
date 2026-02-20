@@ -19,6 +19,7 @@ TEST_ACCOUNTS.local.md
 node_modules/
 .next/
 /data/
+/apps/ecs/data/
 /logs/
 /uploads/
 !public/reading-legacy/data/
