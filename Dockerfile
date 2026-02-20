@@ -4,12 +4,16 @@ ENV NEXT_TELEMETRY_DISABLED=1
 
 FROM base AS deps
 COPY package.json package-lock.json ./
+COPY apps/ecs/package.json ./apps/ecs/package.json
+COPY apps/esa/package.json ./apps/esa/package.json
+COPY packages/ui/package.json ./packages/ui/package.json
+COPY packages/content/package.json ./packages/content/package.json
 RUN npm ci
 
 FROM base AS builder
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-RUN npm run build
+RUN npm --workspace apps/ecs run build
 
 FROM node:22-alpine AS runner
 WORKDIR /app
@@ -24,10 +28,11 @@ RUN addgroup -S nodejs \
     && mkdir -p /app/data /app/uploads /app/logs \
     && chown -R nextjs:nodejs /app
 
-COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
-COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
-COPY --from=builder --chown=nextjs:nodejs /app/public ./public
-COPY --from=builder --chown=nextjs:nodejs /app/drizzle ./drizzle
+COPY --from=builder --chown=nextjs:nodejs /app/apps/ecs/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/apps/ecs/.next/static ./apps/ecs/.next/static
+COPY --from=builder --chown=nextjs:nodejs /app/apps/ecs/public ./public
+COPY --from=builder --chown=nextjs:nodejs /app/apps/ecs/drizzle ./drizzle
+COPY --from=builder --chown=nextjs:nodejs /app/apps/ecs/.next/static ./.next/static
 
 # Remove non-runtime assets that can be pulled in by conservative file tracing.
 RUN rm -rf \
@@ -64,4 +69,4 @@ RUN rm -rf \
 
 USER nextjs
 EXPOSE 3000
-CMD ["node", "server.js"]
+CMD ["node", "apps/ecs/server.js"]

@@ -1,0 +1,596 @@
+:root {
+  color-scheme: light;
+
+  /* Modern backgrounds — clean and bright */
+  --bg-primary: #fafbfc;
+  --bg-secondary: #f8fafc;
+
+  /* Text — modern contrast */
+  --text-primary: #0f172a;
+  --text-secondary: #64748b;
+
+  /* Political palette — matching homepage */
+  --accent-primary: #1e3a8a;
+  --accent-primary-light: #3b82f6;
+  --accent-primary-dark: #1e40af;
+  --accent-secondary: #c27c2f;
+  --accent-warm: #f59e0b;
+  --accent-success: #059669;
+  --accent-danger: #dc2626;
+
+  /* Cards */
+  --card-bg: rgba(255, 255, 255, 0.9);
+  --card-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --card-border: rgba(226, 232, 240, 0.8);
+
+  /* Typography — Modern serif stack */
+  --font-display: 'Crimson Text', 'Noto Serif CJK SC', 'Source Han Serif SC', serif;
+  --font-heading: 'Crimson Text', 'Noto Serif CJK SC', 'Source Han Serif SC', serif;
+  --font-body: 'Crimson Text', 'Noto Serif CJK SC', 'Source Han Serif SC', serif;
+  --font-mono: 'JetBrains Mono', 'SF Mono', 'Monaco', monospace;
+
+  /* Sizing */
+  --container: 1120px;
+
+  /* Spacing */
+  --space-1: 8px;
+  --space-2: 12px;
+  --space-3: 16px;
+  --space-4: 24px;
+  --space-5: 32px;
+  --space-6: 48px;
+
+  /* Radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+
+  /* Shadows — modern layered */
+  --shadow-1: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --shadow-2: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-primary: 0 4px 14px 0 rgba(30, 58, 138, 0.3);
+  --shadow-primary-hover: 0 8px 25px 0 rgba(30, 58, 138, 0.4);
+
+  /* Alpha overlays */
+  --alpha-primary-10: rgba(30, 58, 138, 0.1);
+  --alpha-primary-20: rgba(30, 58, 138, 0.2);
+  --alpha-primary-border: rgba(30, 58, 138, 0.2);
+  --alpha-primary-light-05: rgba(59, 130, 246, 0.05);
+  --alpha-primary-light-10: rgba(59, 130, 246, 0.1);
+  --modal-backdrop: rgba(15, 23, 42, 0.6);
+  --shadow-bottom: 0 -1px 3px 0 rgb(0 0 0 / 0.1);
+  --white: #ffffff;
+  --ripple-overlay: rgba(255, 255, 255, 0.2);
+  --progress-inset-shadow: rgba(0, 0, 0, 0.1);
+
+  /* Module system colors — light mode borders (neutral brown family) */
+  --module-border-xs: rgba(125, 107, 93, 0.12);
+  --module-border-sm: rgba(125, 107, 93, 0.16);
+  --module-border-base: rgba(125, 107, 93, 0.18);
+  --module-border-md: rgba(125, 107, 93, 0.2);
+  --module-border-lg: rgba(125, 107, 93, 0.22);
+  --module-border-xl: rgba(125, 107, 93, 0.24);
+  --module-border-2xl: rgba(125, 107, 93, 0.25);
+  --module-border-3xl: rgba(125, 107, 93, 0.26);
+
+  /* Module system colors — light mode surfaces (white overlay family) */
+  --module-surface-white-40: rgba(255, 255, 255, 0.4);
+  --module-surface-white-50: rgba(255, 255, 255, 0.5);
+  --module-surface-white-55: rgba(255, 255, 255, 0.55);
+  --module-surface-white-60: rgba(255, 255, 255, 0.6);
+  --module-surface-white-65: rgba(255, 255, 255, 0.65);
+  --module-surface-white-70: rgba(255, 255, 255, 0.7);
+  --module-surface-white-75: rgba(255, 255, 255, 0.75);
+  --module-surface-white-78: rgba(255, 255, 255, 0.78);
+
+  /* Module system colors — dark mode surfaces (warm beige family) */
+  --module-dark-bg-04: rgba(245, 237, 230, 0.04);
+  --module-dark-bg-05: rgba(245, 237, 230, 0.05);
+  --module-dark-bg-06: rgba(245, 237, 230, 0.06);
+  --module-dark-border: rgba(245, 237, 230, 0.12);
+
+  /* Module system colors — shadows (dark brown family) */
+  --module-shadow-xs: rgba(74, 55, 40, 0.08);
+  --module-shadow-sm: rgba(74, 55, 40, 0.1);
+  --module-shadow-base: rgba(74, 55, 40, 0.12);
+  --module-shadow-md: rgba(74, 55, 40, 0.16);
+
+  /* Module system colors — dark overlays */
+  --module-overlay-light: rgba(45, 42, 38, 0.26);
+  --module-overlay-md: rgba(45, 42, 38, 0.35);
+  --module-overlay-base: rgba(45, 42, 38, 0.42);
+  --module-overlay-dark: rgba(45, 42, 38, 0.72);
+  --module-overlay-heavy: rgba(20, 18, 16, 0.55);
+
+  /* Module system colors — accent overlays */
+  --module-accent-yellow: rgba(255, 217, 61, 0.08);
+  --module-accent-green: rgba(143, 188, 143, 0.08);
+  --module-text-dark: #2b1d12;
+
+  /* Home page specific */
+  --home-surface-62: rgba(255, 255, 255, 0.62);
+  --home-surface-68: rgba(255, 255, 255, 0.68);
+  --home-surface-45: rgba(255, 255, 255, 0.45);
+  --home-surface-42: rgba(255, 255, 255, 0.42);
+  --home-surface-72: rgba(255, 255, 255, 0.72);
+  --home-surface-80: rgba(255, 255, 255, 0.8);
+  --home-warm-55: rgba(255, 248, 232, 0.55);
+  --home-accent-yellow-85: rgba(255, 217, 61, 0.85);
+  --home-accent-coral-40: rgba(240, 128, 128, 0.4);
+  --home-border-sm: rgba(125, 107, 93, 0.14);
+  --home-shadow-sm: rgba(74, 55, 40, 0.14);
+  --home-dark-border: rgba(245, 237, 230, 0.08);
+  --home-dark-text-border: rgba(61, 56, 48, 0.2);
+
+  /* Bookshelf page colors */
+  --shelf-ink-04: rgba(26, 26, 26, 0.04);
+  --shelf-ink-06: rgba(26, 26, 26, 0.06);
+  --shelf-ink-08: rgba(26, 26, 26, 0.08);
+  --shelf-ink-12: rgba(26, 26, 26, 0.12);
+  --shelf-forest-04: rgba(45, 74, 62, 0.04);
+  --shelf-forest-05: rgba(45, 74, 62, 0.05);
+  --shelf-forest-06: rgba(45, 74, 62, 0.06);
+  --shelf-forest-08: rgba(45, 74, 62, 0.08);
+  --shelf-forest-12: rgba(45, 74, 62, 0.12);
+  --shelf-forest-20: rgba(45, 74, 62, 0.2);
+  --shelf-forest-25: rgba(45, 74, 62, 0.25);
+  --shelf-gold-05: rgba(200, 164, 90, 0.05);
+  --shelf-gold-10: rgba(200, 164, 90, 0.1);
+  --shelf-black-06: rgba(0, 0, 0, 0.06);
+  --shelf-black-08: rgba(0, 0, 0, 0.08);
+  --shelf-white-15: rgba(255, 255, 255, 0.15);
+  --shelf-parchment-88: rgba(246, 241, 234, 0.88);
+  --shelf-parchment-92: rgba(246, 241, 234, 0.92);
+  --shelf-forest-dark: #244038;
+  --shelf-parchment: #f6f1ea;
+  --shelf-linen: #ede4d8;
+  --shelf-ink: #1a1a1a;
+  --shelf-ink-light: #6b6156;
+  --shelf-amber: #c8a45a;
+  --shelf-amber-deep: #a07830;
+  --shelf-forest: #2d4a3e;
+  --shelf-sage: #5a8a7a;
+  --shelf-surface: #faf7f2;
+  --shelf-ink-10: rgba(26, 26, 26, 0.1);
+  --shelf-ink-14: rgba(26, 26, 26, 0.14);
+  --shelf-forest-28: rgba(45, 74, 62, 0.28);
+  --shelf-forest-02: rgba(45, 74, 62, 0.02);
+
+  /* Theme shared colors */
+  --theme-black-02: rgba(0, 0, 0, 0.02);
+  --theme-black-05: rgba(0, 0, 0, 0.05);
+  --theme-black-10: rgba(0, 0, 0, 0.1);
+  --theme-white-28: rgba(255, 255, 255, 0.28);
+  --theme-white-50: rgba(255, 255, 255, 0.5);
+  --theme-eee: #eeeeee;
+
+  /* Wonder theme specific */
+  --wonder-sky: #3AB8EB;
+  --wonder-sky-dark: #2a9ccb;
+  --wonder-sky-light: #e0f4fc;
+  --wonder-sky-15: rgba(58, 184, 235, 0.15);
+  --wonder-sky-16: rgba(58, 184, 235, 0.16);
+  --wonder-sky-25: rgba(58, 184, 235, 0.25);
+  --wonder-sky-40: rgba(58, 184, 235, 0.4);
+  --wonder-sky-mid: #85d8f7;
+  --wonder-orange: #F97316;
+  --wonder-orange-light: #ffedd5;
+  --wonder-green: #10B981;
+  --wonder-bg: #FDFBF7;
+  --wonder-slate: #1E293B;
+  --wonder-slate-light: #f8fafc;
+  --wonder-slate-60: rgba(30, 41, 59, 0.6);
+  --wonder-black-20: rgba(0, 0, 0, 0.2);
+  --wonder-black-50: rgba(0, 0, 0, 0.5);
+  --wonder-white-90: rgba(255, 255, 255, 0.9);
+  --wonder-white-10: rgba(255, 255, 255, 0.1);
+  --wonder-postcard-bg: #fdfbf7;
+  --wonder-postcard-line: #cbd5e1;
+  --wonder-postcard-dot: #e5e7eb;
+  --wonder-postcard-addr: #64748b;
+  --wonder-postcard-rule: #e2e8f0;
+  --wonder-orange-dark: #ea580c;
+  --wonder-orange-glow: rgba(249, 115, 22, 0.4);
+  --wonder-result-bg: #eff6ff;
+  --wonder-result-text: #1e3a8a;
+  --wonder-discuss-bg: #fffbeb;
+  --wonder-discuss-border: #f59e0b;
+  --wonder-discuss-title: #b45309;
+  --wonder-discuss-text: #92400e;
+  --wonder-tag-bg: #f1f5f9;
+  --wonder-tag-text: #64748b;
+  --wonder-tip-bg: #fff;
+  --wonder-black-15: rgba(0, 0, 0, 0.15);
+  --wonder-black-02: rgba(0, 0, 0, 0.2);
+
+  /* LOTF theme specific */
+  --lotf-navy: #1E3A5F;
+  --lotf-navy-mid: #2C5282;
+  --lotf-navy-dark: #0F2A47;
+  --lotf-red: #E53E3E;
+  --lotf-red-light: #FC8181;
+  --lotf-red-dark: #9B2C2C;
+  --lotf-red-mid: #C53030;
+  --lotf-gold: #D69E2E;
+  --lotf-gold-light: #F6E05E;
+  --lotf-green: #276749;
+  --lotf-green-light: #EDF2D7;
+  --lotf-blue: #3182CE;
+  --lotf-blue-light: #4299E1;
+  --lotf-bg: #F7FAFC;
+  --lotf-bg-alt: #EDF2F7;
+  --lotf-text: #1A202C;
+  --lotf-text-mid: #4A5568;
+  --lotf-text-light: #718096;
+  --lotf-text-muted: #A0AEC0;
+  --lotf-border: #E2E8F0;
+  --lotf-dark-bg: #0D1B2A;
+  --lotf-dark-bg-alt: #1B2838;
+  --lotf-dark-bg-deep: #101820;
+  --lotf-navy-05: rgba(30, 58, 95, 0.05);
+  --lotf-navy-30: rgba(30, 58, 95, 0.3);
+  --lotf-gold-10: rgba(214, 158, 46, 0.1);
+
+  /* Ove theme specific */
+  --ove-dark-bg: #0A0A0F;
+  --ove-panel-bg: rgba(20, 20, 30, 0.6);
+  --ove-card-bg: rgba(30, 30, 45, 0.4);
+  --ove-gold-val: #D4AF37;
+  --ove-gold-dim-val: #A68A2E;
+  --ove-blue-steel-val: #475569;
+  --ove-warm-orange-val: #EA580C;
+  --ove-text-main-val: #F8FAFC;
+  --ove-text-muted-val: #94A3B8;
+  --ove-gold-10: rgba(212, 175, 55, 0.1);
+  --ove-gold-20: rgba(212, 175, 55, 0.2);
+  --ove-gold-30: rgba(212, 175, 55, 0.3);
+  --ove-gold-50: rgba(212, 175, 55, 0.5);
+  --ove-orange-05: rgba(234, 88, 12, 0.05);
+  --ove-orange-08: rgba(194, 65, 12, 0.08);
+  --ove-steel-05: rgba(71, 85, 105, 0.05);
+  --ove-steel-08: rgba(71, 85, 105, 0.08);
+  --ove-header-bg: rgba(10, 10, 15, 0.8);
+  --ove-header-border: rgba(255, 255, 255, 0.05);
+  --ove-white-03: rgba(255, 255, 255, 0.03);
+  --ove-white-05: rgba(255, 255, 255, 0.05);
+  --ove-white-10: rgba(255, 255, 255, 0.1);
+  --ove-white-20: rgba(255, 255, 255, 0.2);
+  --ove-black-28: rgba(0, 0, 0, 0.28);
+  --ove-black-40: rgba(0, 0, 0, 0.4);
+  --ove-black-50: rgba(0, 0, 0, 0.5);
+  --ove-card-hover-from: rgba(30, 30, 45, 0.6);
+  --ove-card-hover-to: rgba(20, 20, 30, 0.8);
+  --ove-tab-bg: rgba(10, 10, 15, 0.85);
+  --ove-paper: #EAE8E3;
+  --ove-ink: #1F1F1F;
+  --ove-black: #000;
+  --ove-gold-hover: #F0CF5A;
+  --ove-light-bg: #F5F1E8;
+  --ove-light-panel: rgba(255, 255, 255, 0.84);
+  --ove-light-card: rgba(255, 255, 255, 0.92);
+  --ove-light-gold: #8C6A25;
+  --ove-light-gold-dim: #6B521F;
+  --ove-light-steel: #64748B;
+  --ove-light-orange: #C2410C;
+  --ove-light-text: #1F2937;
+  --ove-light-muted: #475569;
+  --ove-light-header: rgba(245, 241, 232, 0.9);
+  --ove-light-border: rgba(15, 23, 42, 0.1);
+  --ove-light-ink: #0F172A;
+  --ove-light-card-08: rgba(15, 23, 42, 0.08);
+  --ove-light-card-hover-a: rgba(255, 255, 255, 0.95);
+  --ove-light-card-hover-b: rgba(241, 245, 249, 0.95);
+  --ove-light-shadow-a: rgba(15, 23, 42, 0.14);
+  --ove-light-shadow-b: rgba(140, 106, 37, 0.18);
+  --ove-light-border-12: rgba(15, 23, 42, 0.12);
+  --ove-light-bg-04: rgba(15, 23, 42, 0.04);
+  --ove-light-bg-09: rgba(15, 23, 42, 0.09);
+  --ove-light-paper: #FFFCF5;
+  --ove-light-paper-text: #111827;
+  --ove-light-shadow-16: rgba(15, 23, 42, 0.16);
+  --ove-light-tab: rgba(245, 241, 232, 0.94);
+  --ove-light-shadow-12: rgba(15, 23, 42, 0.12);
+
+  /* Wave theme specific */
+  --wave-primary: #1a237e;
+  --wave-primary-light: #3949ab;
+  --wave-primary-dark: #0d1442;
+  --wave-accent: #c62828;
+  --wave-accent-light: #ef5350;
+  --wave-warning: #ffc107;
+  --wave-dark-bg: #0a0a14;
+  --wave-dark-card: #12121f;
+  --wave-dark-text: #e0e0e0;
+  --wave-dark-text-sec: #9e9e9e;
+  --wave-dark-border: #2a2a3d;
+  --wave-white: #fff;
+  --wave-white-10: rgba(255, 255, 255, 0.1);
+  --wave-white-03: rgba(255, 255, 255, 0.03);
+  --wave-primary-30: rgba(26, 35, 126, 0.3);
+  --wave-primary-10: rgba(26, 35, 126, 0.1);
+  --wave-primary-08: rgba(26, 35, 126, 0.08);
+  --wave-primary-05: rgba(26, 35, 126, 0.05);
+  --wave-accent-15: rgba(198, 40, 40, 0.15);
+  --wave-accent-08: rgba(198, 40, 40, 0.08);
+  --wave-accent-05: rgba(198, 40, 40, 0.05);
+  --wave-accent-30: rgba(198, 40, 40, 0.3);
+  --wave-accent-00: rgba(198, 40, 40, 0);
+  --wave-black-40: rgba(0, 0, 0, 0.4);
+  --wave-black-80: rgba(0, 0, 0, 0.8);
+  --wave-warning-05: rgba(255, 193, 7, 0.05);
+  --wave-warning-10: rgba(255, 193, 7, 0.1);
+  --wave-warning-20: rgba(255, 193, 7, 0.2);
+  --wave-char-blue: #42a5f5;
+  --wave-char-grey: #78909c;
+  --wave-char-green: #66bb6a;
+  --wave-char-orange: #ffa726;
+  --wave-char-purple: #ab47bc;
+  --wave-badge-blue: #2196f3;
+  --wave-badge-purple: #9c27b0;
+  --wave-badge-green: #4caf50;
+  --wave-badge-orange: #ff9800;
+  --wave-light-bg: #f5f5f8;
+  --wave-light-card: #ffffff;
+  --wave-light-text: #1a1a2e;
+  --wave-light-text-sec: #5a5a6e;
+  --wave-light-border: #d0d0e0;
+  --wave-light-indigo-bg: #e8eaf6;
+  --wave-light-indigo-border: #c5cae9;
+  --wave-light-tab-text: #5c5c70;
+  --wave-light-active-bg: #c5cae9;
+  --wave-light-mid-text: #444;
+  --wave-light-dark-text: #333;
+  --wave-light-muted-text: #555;
+  --wave-light-active-bg-alt: #dfe4fb;
+  --wave-light-gradient-end: #5c6bc0;
+
+  /* Story theme specific */
+  --story-primary: #2C3E50;
+  --story-secondary: #3498DB;
+  --story-accent: #C0392B;
+  --story-arrival: #27AE60;
+  --story-bg: #F5F5F0;
+  --story-bg-alt: #ECEEE8;
+  --story-card: rgba(255, 255, 255, 0.85);
+  --story-text: #1E293B;
+  --story-text-muted: #64748B;
+  --story-text-light: #94A3B8;
+  --story-border-light: rgba(255, 255, 255, 0.2);
+  --story-elev-3: 0 10px 20px rgba(0, 0, 0, 0.12);
+  --story-elev-4: 0 20px 40px rgba(0, 0, 0, 0.15);
+  --story-glass-bg: rgba(255, 255, 255, 0.75);
+  --story-glass-border: rgba(255, 255, 255, 0.3);
+  --story-primary-08: rgba(44, 62, 80, 0.08);
+  --story-primary-10: rgba(44, 62, 80, 0.1);
+  --story-primary-12: rgba(44, 62, 80, 0.12);
+  --story-primary-15: rgba(44, 62, 80, 0.15);
+  --story-primary-25: rgba(44, 62, 80, 0.25);
+  --story-secondary-08: rgba(52, 152, 219, 0.08);
+  --story-secondary-10: rgba(52, 152, 219, 0.1);
+  --story-secondary-12: rgba(52, 152, 219, 0.12);
+  --story-secondary-15: rgba(52, 152, 219, 0.15);
+  --story-secondary-20: rgba(52, 152, 219, 0.2);
+  --story-secondary-30: rgba(52, 152, 219, 0.3);
+  --story-arrival-10: rgba(39, 174, 96, 0.1);
+  --story-arrival-15: rgba(39, 174, 96, 0.15);
+  --story-arrival-18: rgba(39, 174, 96, 0.18);
+  --story-arrival-08: rgba(39, 174, 96, 0.08);
+  --story-arrival-30: rgba(39, 174, 96, 0.3);
+  --story-arrival-50: rgba(39, 174, 96, 0.5);
+  --story-arrival-85: rgba(39, 174, 96, 0.85);
+  --story-accent-15: rgba(192, 57, 43, 0.15);
+  --story-black-60: rgba(0, 0, 0, 0.6);
+  --story-black-70: rgba(0, 0, 0, 0.7);
+  --story-black-85: rgba(0, 0, 0, 0.85);
+  --story-black-20: rgba(0, 0, 0, 0.2);
+  --story-white-98: rgba(255, 255, 255, 0.98);
+  --story-white-92: rgba(255, 255, 255, 0.92);
+  --story-white-88: rgba(255, 255, 255, 0.88);
+  --story-white-78: rgba(255, 255, 255, 0.78);
+  --story-white-10: rgba(255, 255, 255, 0.1);
+
+  /* Story dark mode */
+  --story-dark-bg: #0F172A;
+  --story-dark-bg-alt: #1E293B;
+  --story-dark-card: rgba(30, 41, 59, 0.9);
+  --story-dark-glass: rgba(15, 23, 42, 0.85);
+  --story-dark-text: #E2E8F0;
+  --story-dark-text-muted: #94A3B8;
+  --story-dark-text-light: #64748B;
+  --story-dark-border: rgba(255, 255, 255, 0.1);
+  --story-dark-primary: #60A5FA;
+  --story-dark-elev-1: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --story-dark-elev-2: 0 4px 6px rgba(0, 0, 0, 0.4);
+  --story-dark-elev-3: 0 10px 20px rgba(0, 0, 0, 0.5);
+  --story-dark-elev-4: 0 20px 40px rgba(0, 0, 0, 0.6);
+  --story-dark-primary-15: rgba(96, 165, 250, 0.15);
+  --story-dark-primary-18: rgba(37, 99, 235, 0.18);
+  --story-dark-primary-20: rgba(16, 185, 129, 0.2);
+
+  /* Story light/dark shared hex */
+  --story-slate-f8: #F8FAFC;
+  --story-slate-0f: #0F172A;
+  --story-slate-1e: #1E293B;
+  --story-slate-33: #334155;
+  --story-slate-47: #475569;
+  --story-slate-cb: #CBD5E1;
+  --story-slate-e2: #E2E8F0;
+  --story-slate-f1: #F1F5F9;
+  --story-slate-11: #111827;
+  --story-slate-1f: #1F2937;
+  --story-slate-24: #243447;
+  --story-blue-25: #2563EB;
+  --story-blue-93: #93C5FD;
+  --story-green-34: #34D399;
+  --story-green-1f: #1f9d72;
+  --story-border-d1: #D1D5DB;
+  --story-bg-f0: #F0F9FF;
+  --story-bg-ec: #ECFDF5;
+  --story-bg-ee: #EEF2F7;
+  --story-bg-e8: #E8EAE6;
+  --story-bg-f0f2: #F0F2EE;
+  --story-bg-f8f9: #F8F9FA;
+  --story-bg-e9ec: #E9ECEF;
+  --story-dark-95: rgba(30, 41, 59, 0.95);
+  --story-dark-80: rgba(30, 41, 59, 0.8);
+  --story-dark-50: rgba(15, 23, 42, 0.5);
+  --story-dark-12: rgba(15, 23, 42, 0.12);
+  --story-dark-08: rgba(15, 23, 42, 0.08);
+  --story-white-ff: #FFFFFF;
+  --story-f2f6: #f2f6fb;
+  --story-slate-20: rgba(30, 41, 59, 0.2);
+  --story-f5f8-90: rgba(245, 248, 252, 0.9);
+  --story-e9f1-92: rgba(233, 241, 250, 0.92);
+  --story-f3f7-78: rgba(243, 247, 252, 0.78);
+  --story-bg-eef2: #EEF2FF;
+
+  /* Cards module colors */
+  --cards-error-10: rgba(244, 67, 54, 0.1);
+  --cards-error-30: rgba(244, 67, 54, 0.3);
+  --cards-success-10: rgba(76, 175, 80, 0.1);
+  --cards-success-30: rgba(76, 175, 80, 0.3);
+
+  /* Map module colors */
+  --map-brown: #4A3728;
+  --map-green-from: #90EE90;
+  --map-green-to: #66CDAA;
+
+  /* Quiz module colors */
+  --quiz-success-10: rgba(76, 175, 80, 0.1);
+  --quiz-warning-10: rgba(255, 152, 0, 0.1);
+  --quiz-error-10: rgba(244, 67, 54, 0.1);
+
+  /* Story (totto-chan) module colors */
+  --totto-bg: #F5F5F0;
+  --totto-ink: #2C3E50;
+  --totto-accent: #C0392B;
+  --totto-text: #333;
+  --totto-text-fade: #666;
+  --totto-white: #fff;
+  --totto-black-10: rgba(0, 0, 0, 0.1);
+  --totto-accent-10: rgba(192, 57, 43, 0.1);
+
+  /* Story-linguistics terminal colors */
+  --term-bg-val: #0f172a;
+  --term-bg-soft-val: #1e293b;
+  --term-primary-val: #0891b2;
+  --term-accent-val: #f97316;
+  --term-text-val: #e2e8f0;
+  --term-text-dim-val: #94a3b8;
+  --term-border-val: rgba(8, 145, 178, 0.3);
+  --term-primary-10: rgba(8, 145, 178, 0.1);
+  --term-primary-15: rgba(8, 145, 178, 0.15);
+  --term-primary-20: rgba(8, 145, 178, 0.2);
+  --term-primary-40: rgba(8, 145, 178, 0.4);
+  --term-primary-60: rgba(8, 145, 178, 0.6);
+  --term-primary-05: rgba(8, 145, 178, 0.05);
+  --term-slate-60: rgba(30, 41, 59, 0.6);
+  --term-white-20: rgba(255, 255, 255, 0.2);
+  --term-black: #000;
+  --term-black-30: rgba(0, 0, 0, 0.3);
+
+  /* Style.css (legacy warm theme) */
+  --warm-bg: #FFFBF5;
+  --warm-bg-sec: #FFF8E8;
+  --warm-bg-ter: #FFF3D6;
+  --warm-text: #4A3728;
+  --warm-text-sec: #7D6B5D;
+  --warm-text-muted: #A89888;
+  --warm-accent: #FFD93D;
+  --warm-accent-hover: #FFC800;
+  --warm-accent-sec: #87CEEB;
+  --warm-accent-ter: #90EE90;
+  --warm-border: #E8DDD0;
+  --warm-shadow: rgba(74, 55, 40, 0.1);
+  --warm-shadow-strong: rgba(74, 55, 40, 0.2);
+  --warm-success: #4CAF50;
+  --warm-warning: #FF9800;
+  --warm-error: #F44336;
+  --warm-dark-bg: #2D2A26;
+  --warm-dark-bg-sec: #3D3830;
+  --warm-dark-bg-ter: #4D4840;
+  --warm-dark-text: #F5EDE6;
+  --warm-dark-text-sec: #BDB0A3;
+  --warm-dark-text-muted: #8D8070;
+  --warm-dark-accent: #F0C040;
+  --warm-dark-accent-hover: #FFD050;
+  --warm-dark-accent-sec: #5DADE2;
+  --warm-dark-accent-ter: #58D68D;
+  --warm-dark-border: #5D5850;
+  --warm-dark-shadow: rgba(0, 0, 0, 0.3);
+  --warm-dark-shadow-strong: rgba(0, 0, 0, 0.5);
+  --warm-black-60: rgba(0, 0, 0, 0.6);
+
+  /* Shared border/surface alphas */
+  --border-alpha: rgba(226, 232, 240, 0.8);
+  --border-alpha-light: rgba(226, 232, 240, 0.6);
+  --surface-alpha: rgba(255, 255, 255, 0.9);
+  --touch-target: 48px;
+
+  /* Motion */
+  --duration-fast: 150ms;
+  --duration-med: 300ms;
+  --duration-slow: 500ms;
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+
+  /* Book theme defaults */
+  --book-primary: var(--accent-primary);
+  --book-secondary: var(--accent-secondary);
+}
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --card-bg: rgba(30, 41, 59, 0.9);
+  --card-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.3), 0 4px 6px -4px rgb(0 0 0 / 0.3);
+  --card-border: rgba(51, 65, 85, 0.8);
+
+  --shadow-1: 0 1px 3px 0 rgb(0 0 0 / 0.3), 0 1px 2px -1px rgb(0 0 0 / 0.3);
+  --shadow-2: 0 10px 15px -3px rgb(0 0 0 / 0.3), 0 4px 6px -4px rgb(0 0 0 / 0.3);
+
+  --border-alpha: rgba(51, 65, 85, 0.8);
+  --border-alpha-light: rgba(51, 65, 85, 0.6);
+  --surface-alpha: rgba(30, 41, 59, 0.9);
+}
+
+/* Per-book theme colors — modernized */
+body[data-book="totto-chan"],
+[data-book="totto-chan"] {
+  --book-primary: #059669;
+  --book-secondary: #065f46;
+}
+
+body[data-book="wave"],
+[data-book="wave"] {
+  --book-primary: #0284c7;
+  --book-secondary: #0369a1;
+}
+
+body[data-book="story-of-your-life"],
+[data-book="story-of-your-life"] {
+  --book-primary: #7c3aed;
+  --book-secondary: #5b21b6;
+}
+
+body[data-book="wonder"],
+[data-book="wonder"] {
+  --book-primary: #f59e0b;
+  --book-secondary: #d97706;
+}
+
+body[data-book="a-man-called-ove"],
+[data-book="a-man-called-ove"] {
+  --book-primary: #1e3a8a;
+  --book-secondary: #1e40af;
+}
+
+body[data-book="lord-of-the-flies"],
+[data-book="lord-of-the-flies"] {
+  --book-primary: #dc2626;
+  --book-secondary: #b91c1c;
+}

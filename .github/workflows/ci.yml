@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     
     env:
-      DATABASE_URL: "file:./data/course.db"
+      DATABASE_URL: "file:../data/course.db"
       NEXTAUTH_SECRET: "ci-secret-1234567890"
       NEXTAUTH_URL: "http://127.0.0.1:3000"
 
@@ -28,19 +28,19 @@ jobs:
       run: npm ci
 
     - name: Lint
-      run: npm run lint
+      run: npm --workspace apps/ecs run lint
 
     - name: Build
-      run: npm run build
+      run: npm --workspace apps/ecs run build
 
     - name: Initialize Database
       run: |
-        npm run db:generate
-        npm run db:push
+        npm --workspace apps/ecs run db:generate
+        npm --workspace apps/ecs run db:push
 
     - name: Run API Smoke Tests
       run: |
-        npm run start &
+        npm --workspace apps/ecs run start &
         SERVER_PID=$!
         trap "kill $SERVER_PID" EXIT
         for i in $(seq 1 30); do
@@ -49,19 +49,19 @@ jobs:
           fi
           sleep 1
         done
-        npm run smoke:all
+        npm --workspace apps/ecs run smoke:all
 
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps chromium
 
     - name: Run E2E Auth Tests
-      run: npm run test:e2e:auth
+      run: npm --workspace apps/ecs run test:e2e:auth
 
     - name: Run E2E Realtime Tests
-      run: npm run test:e2e:realtime
+      run: npm --workspace apps/ecs run test:e2e:realtime
 
     - name: Run E2E Platform Regression Tests
-      run: npm run test:e2e:core
+      run: npm --workspace apps/ecs run test:e2e:core
 
     - name: Upload Playwright Report
       if: failure()

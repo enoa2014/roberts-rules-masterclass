@@ -76,29 +76,37 @@ tttt/
 
 ## 本地运行与冒烟
 
-1. 推迁移：
+1. 推迁移（ECS）：
 
 ```bash
-npm run db:push
+npm --workspace apps/ecs run db:push
 ```
 
-2. 启动服务：
+2. 启动服务（ECS）：
 
 ```bash
-NEXTAUTH_SECRET=dev-smoke-secret NEXTAUTH_URL=http://127.0.0.1:3000 npm run dev
+NEXTAUTH_SECRET=dev-smoke-secret NEXTAUTH_URL=http://127.0.0.1:3000 npm run dev:ecs
 ```
 
-3. 新开终端执行冒烟：
+3. 新开终端执行冒烟（ECS）：
 
 ```bash
-npm run smoke:all
+npm --workspace apps/ecs run smoke:all
 ```
 
-4. 发布后最小回归（健康检查 + 冒烟链路）：
+4. 发布后最小回归（健康检查 + 冒烟链路，ECS）：
 
 ```bash
-npm run verify:release
+npm --workspace apps/ecs run verify:release
 ```
+
+## ESA 静态构建
+
+```bash
+npm run build:esa
+```
+
+产物目录：`apps/esa/out`
 
 说明：
 
