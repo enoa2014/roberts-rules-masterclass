@@ -3,6 +3,7 @@ WORKDIR /app
 ENV NEXT_TELEMETRY_DISABLED=1
 
 FROM base AS deps
+RUN apk add --no-cache python3 make g++
 COPY package.json package-lock.json ./
 COPY apps/ecs/package.json ./apps/ecs/package.json
 COPY apps/esa/package.json ./apps/esa/package.json
