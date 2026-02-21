@@ -1,14 +1,15 @@
 "use client";
 
 import { useState, useRef, useEffect } from 'react';
-import { useTheme } from './theme-provider';
 import { Palette, Sparkles, Crown, Zap, Grid3X3, ScrollText } from 'lucide-react';
+import { useTheme } from './theme-provider';
+import { ThemeType } from './theme-types';
 
 type ThemeSelectorProps = {
   placement?: 'down' | 'up';
 };
 
-export function ThemeSelector({ placement = 'down' }: ThemeSelectorProps) {
+export function ThemeSelector({ placement = 'down', onThemeChange }: ThemeSelectorProps & { onThemeChange?: (theme: ThemeType) => void }) {
   const { theme, setTheme, isLoaded } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -52,7 +53,7 @@ export function ThemeSelector({ placement = 'down' }: ThemeSelectorProps) {
 
   const themes = [
     {
-      id: 'default' as const,
+      id: 'classic' as const,
       name: '经典课堂',
       description: '稳重专业的课堂风格',
       icon: Crown,
@@ -107,15 +108,15 @@ export function ThemeSelector({ placement = 'down' }: ThemeSelectorProps) {
           className={`
             flex items-center gap-2 px-4 py-3 rounded-2xl border-2 transition-all duration-300
             focus:outline-none focus:ring-2 focus:ring-offset-2
-            ${theme === 'default'
+            ${theme === 'classic'
               ? 'bg-white border-blue-200 text-blue-800 shadow-lg hover:shadow-xl focus:ring-blue-500'
               : theme === 'festival-civic'
-                ? 'bg-white border-rose-200 text-rose-800 shadow-lg hover:shadow-xl fc-animate-glow focus:ring-rose-500'
-              : theme === 'mint-campaign'
-                  ? 'bg-white border-teal-200 text-teal-800 shadow-lg hover:shadow-xl mc-animate-glow focus:ring-teal-500'
+                ? 'bg-white border-rose-200 text-rose-800 shadow-lg hover:shadow-xl focus:ring-rose-500'
+                : theme === 'mint-campaign'
+                  ? 'bg-white border-teal-200 text-teal-800 shadow-lg hover:shadow-xl focus:ring-teal-500'
                   : theme === 'copper-lecture'
-                    ? 'bg-white border-amber-700 text-amber-900 shadow-lg hover:shadow-xl cl-animate-glow focus:ring-amber-700'
-                    : 'bg-white border-gray-700 text-gray-800 shadow-lg hover:shadow-xl cg-animate-glow focus:ring-gray-500'
+                    ? 'bg-white border-amber-700 text-amber-900 shadow-lg hover:shadow-xl focus:ring-amber-700'
+                    : 'bg-white border-gray-700 text-gray-800 shadow-lg hover:shadow-xl focus:ring-gray-500'
             }
           `}
           aria-expanded={isOpen}
@@ -137,15 +138,15 @@ export function ThemeSelector({ placement = 'down' }: ThemeSelectorProps) {
             ? 'opacity-100 visible translate-y-0'
             : 'opacity-0 invisible translate-y-2 pointer-events-none'
           }
-          ${theme === 'default'
+          ${theme === 'classic'
             ? 'border-blue-200'
             : theme === 'festival-civic'
               ? 'border-rose-200'
-            : theme === 'mint-campaign'
+              : theme === 'mint-campaign'
                 ? 'border-teal-200'
                 : theme === 'copper-lecture'
                   ? 'border-amber-700'
-                : 'border-gray-700'
+                  : 'border-gray-700'
           }
         `}>
           <div className="p-6">
@@ -163,13 +164,21 @@ export function ThemeSelector({ placement = 'down' }: ThemeSelectorProps) {
                   <button
                     key={themeOption.id}
                     onClick={() => {
-                      setTheme(themeOption.id);
+                      if (theme !== themeOption.id) {
+                        setTheme(themeOption.id);
+                        if (onThemeChange) {
+                          onThemeChange(themeOption.id);
+                        }
+                      }
                       setIsOpen(false);
                     }}
                     onKeyDown={(e) => {
                       if (e.key === 'Enter' || e.key === ' ') {
                         e.preventDefault();
-                        setTheme(themeOption.id);
+                        if (theme !== themeOption.id) {
+                          setTheme(themeOption.id);
+                          if (onThemeChange) onThemeChange(themeOption.id);
+                        }
                         setIsOpen(false);
                       }
                     }}
@@ -177,15 +186,15 @@ export function ThemeSelector({ placement = 'down' }: ThemeSelectorProps) {
                       w-full p-4 rounded-2xl border-2 text-left transition-all duration-300
                       focus:outline-none focus:ring-2 focus:ring-offset-2
                       ${isActive
-                        ? themeOption.id === 'default'
+                        ? themeOption.id === 'classic'
                           ? 'border-blue-500 bg-blue-50 shadow-lg focus:ring-blue-500'
                           : themeOption.id === 'festival-civic'
-                            ? 'border-rose-500 bg-rose-50 shadow-lg fc-animate-pulse focus:ring-rose-500'
+                            ? 'border-rose-500 bg-rose-50 shadow-lg focus:ring-rose-500'
                             : themeOption.id === 'mint-campaign'
-                              ? 'border-teal-500 bg-teal-50 shadow-lg mc-animate-pulse focus:ring-teal-500'
+                              ? 'border-teal-500 bg-teal-50 shadow-lg focus:ring-teal-500'
                               : themeOption.id === 'copper-lecture'
-                                ? 'border-amber-700 bg-amber-50 shadow-lg cl-animate-pulse focus:ring-amber-700'
-                              : 'border-gray-700 bg-gray-50 shadow-lg cg-animate-glow focus:ring-gray-500'
+                                ? 'border-amber-700 bg-amber-50 shadow-lg focus:ring-amber-700'
+                                : 'border-gray-700 bg-gray-50 shadow-lg focus:ring-gray-500'
                         : 'border-gray-200 hover:border-gray-300 hover:shadow-md focus:ring-gray-400'
                       }
                     `}
@@ -195,7 +204,7 @@ export function ThemeSelector({ placement = 'down' }: ThemeSelectorProps) {
                       {/* 主题图标 */}
                       <div className={`
                         p-2 rounded-xl
-                        ${themeOption.id === 'default'
+                        ${themeOption.id === 'classic'
                           ? 'bg-gradient-to-br from-blue-500 to-blue-600'
                           : themeOption.id === 'festival-civic'
                             ? 'bg-gradient-to-br from-rose-500 to-rose-600'
@@ -203,7 +212,7 @@ export function ThemeSelector({ placement = 'down' }: ThemeSelectorProps) {
                               ? 'bg-gradient-to-br from-teal-500 to-teal-600'
                               : themeOption.id === 'copper-lecture'
                                 ? 'bg-gradient-to-br from-amber-800 to-orange-700'
-                              : 'bg-gradient-to-br from-gray-700 to-gray-800'
+                                : 'bg-gradient-to-br from-gray-700 to-gray-800'
                         }
                       `}>
                         <Icon className="h-5 w-5 text-white" />
@@ -216,7 +225,7 @@ export function ThemeSelector({ placement = 'down' }: ThemeSelectorProps) {
                           {isActive && (
                             <div className={`
                               px-2 py-1 rounded-full text-xs font-mono font-semibold uppercase
-                              ${themeOption.id === 'default'
+                              ${themeOption.id === 'classic'
                                 ? 'bg-blue-100 text-blue-700'
                                 : themeOption.id === 'festival-civic'
                                   ? 'bg-rose-100 text-rose-700'
@@ -224,7 +233,7 @@ export function ThemeSelector({ placement = 'down' }: ThemeSelectorProps) {
                                     ? 'bg-teal-100 text-teal-700'
                                     : themeOption.id === 'copper-lecture'
                                       ? 'bg-amber-100 text-amber-800'
-                                    : 'bg-gray-100 text-gray-700'
+                                      : 'bg-gray-100 text-gray-700'
                               }
                             `}>
                               当前

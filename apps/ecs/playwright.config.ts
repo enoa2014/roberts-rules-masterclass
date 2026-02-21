@@ -2,7 +2,7 @@ import path from "node:path";
 
 import { defineConfig, devices } from "@playwright/test";
 
-const baseURL = process.env.E2E_BASE_URL || "http://127.0.0.1:3000";
+const baseURL = process.env.E2E_BASE_URL || "http://localhost:3000";
 const useRemoteTarget = Boolean(process.env.E2E_BASE_URL);
 const localDbPath = path.resolve(__dirname, "data", "course.db");
 const databaseUrl = process.env.DATABASE_URL || `file:${localDbPath}`;
@@ -33,18 +33,18 @@ export default defineConfig({
   webServer: useRemoteTarget
     ? undefined
     : {
-        command: "npm run start",
-        url: "http://127.0.0.1:3000",
-        reuseExistingServer: !process.env.CI,
-        stdout: "ignore",
-        stderr: "pipe",
-        env: {
-          ...process.env,
-          DATABASE_URL: databaseUrl,
-          NEXTAUTH_URL: process.env.NEXTAUTH_URL || "http://127.0.0.1:3000",
-          NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET || "playwright-local-secret",
-          AUTH_RATE_LIMIT_TRUST_PROXY_HEADERS:
-            process.env.AUTH_RATE_LIMIT_TRUST_PROXY_HEADERS || "1",
-        },
+      command: "npm run start",
+      url: "http://localhost:3000",
+      reuseExistingServer: !process.env.CI,
+      stdout: "ignore",
+      stderr: "pipe",
+      env: {
+        ...process.env,
+        DATABASE_URL: databaseUrl,
+        NEXTAUTH_URL: process.env.NEXTAUTH_URL || "http://localhost:3000",
+        NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET || "playwright-local-secret",
+        AUTH_RATE_LIMIT_TRUST_PROXY_HEADERS:
+          process.env.AUTH_RATE_LIMIT_TRUST_PROXY_HEADERS || "1",
       },
+    },
 });

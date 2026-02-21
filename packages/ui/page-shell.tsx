@@ -2,6 +2,7 @@
 
 import type { ReactNode } from "react";
 import { useTheme } from "./theme-provider";
+import styles from "./page-shell.module.css";
 
 type Props = {
   title: string;
@@ -20,8 +21,8 @@ export function PageShell({ title, description, children }: Props) {
     <>
       <section
         className={`
-        page-hero pt-28 md:pt-32 pb-6 md:pb-8
-        ${isFestival ? "fc-page-hero fc-pattern" : isMint ? "mc-page-hero mc-pattern" : isCharcoal ? "cg-page-hero cg-pattern" : isCopper ? "cl-page-hero cl-pattern" : ""}
+        ${styles.page_hero} pt-28 md:pt-32 pb-6 md:pb-8
+        ${isFestival ? `${styles.fc_page_hero} ${styles.fc_pattern}` : isMint ? `${styles.mc_page_hero} ${styles.mc_pattern}` : isCharcoal ? `${styles.cg_page_hero} ${styles.cg_pattern}` : isCopper ? `${styles.cl_page_hero} ${styles.cl_pattern}` : ""}
       `}
       >
         <div className="container max-w-6xl">

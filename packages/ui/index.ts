@@ -1,3 +1,4 @@
+export * from "./theme-types";
 export * from "./theme-provider";
 export * from "./theme-selector";
 export * from "./site-nav-ecs";

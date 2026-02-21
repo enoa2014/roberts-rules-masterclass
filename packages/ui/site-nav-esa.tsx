@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
   Menu,
   X,
@@ -35,6 +35,7 @@ const navLinks = navLinksCore.map(({ label, href }) => ({
 
 export function SiteNavEsa() {
   const pathname = usePathname();
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -67,13 +68,11 @@ export function SiteNavEsa() {
   const isActive = (path: string) => pathname === path || pathname.startsWith(`${path}/`);
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-      scrolled ? "py-2" : "py-4"
-    }`}>
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? "py-2" : "py-4"
+      }`}>
       <div className="container">
-        <div className={`nav-glass rounded-2xl transition-all duration-500 ${
-          scrolled ? "shadow-political" : "shadow-lg"
-        }`}>
+        <div className={`nav-glass rounded-2xl transition-all duration-500 ${scrolled ? "shadow-political" : "shadow-lg"
+          }`}>
           <div className="flex h-16 items-center justify-between px-6">
             {/* Enhanced Logo */}
             <Link
@@ -102,15 +101,13 @@ export function SiteNavEsa() {
                 <Link
                   key={href}
                   href={href}
-                  className={`group relative flex items-center gap-2 px-4 py-2.5 rounded-xl font-medium text-sm transition-all duration-300 cursor-pointer ${
-                    isActive(href)
+                  className={`group relative flex items-center gap-2 px-4 py-2.5 rounded-xl font-medium text-sm transition-all duration-300 cursor-pointer ${isActive(href)
                       ? "text-white bg-gradient-to-r from-blue-600 to-blue-700 shadow-political"
                       : "text-gray-700 hover:text-blue-600 hover:bg-blue-50"
-                  }`}
+                    }`}
                 >
-                  <Icon className={`h-4 w-4 transition-transform duration-300 ${
-                    isActive(href) ? "scale-110" : "group-hover:scale-110"
-                  }`} />
+                  <Icon className={`h-4 w-4 transition-transform duration-300 ${isActive(href) ? "scale-110" : "group-hover:scale-110"
+                    }`} />
                   <span className="font-mono text-xs uppercase tracking-wide">
                     {label}
                   </span>
@@ -123,7 +120,7 @@ export function SiteNavEsa() {
 
             {/* Desktop Theme */}
             <div className="hidden lg:flex items-center gap-4">
-              <ThemeSelector placement="down" />
+              <ThemeSelector placement="down" onThemeChange={() => router.refresh()} />
             </div>
 
             {/* Mobile Menu Button */}
@@ -156,19 +153,17 @@ export function SiteNavEsa() {
                   <Link
                     key={href}
                     href={href}
-                    className={`flex items-center gap-4 p-4 rounded-xl font-medium transition-all duration-300 cursor-pointer animate-slideInLeft ${
-                      isActive(href)
+                    className={`flex items-center gap-4 p-4 rounded-xl font-medium transition-all duration-300 cursor-pointer animate-slideInLeft ${isActive(href)
                         ? "bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-political"
                         : "text-gray-700 hover:bg-blue-50 hover:text-blue-600"
-                    }`}
+                      }`}
                     style={{ animationDelay: `${index * 50}ms` }}
                     onClick={() => setIsOpen(false)}
                   >
-                    <div className={`p-2 rounded-lg transition-all duration-300 ${
-                      isActive(href)
+                    <div className={`p-2 rounded-lg transition-all duration-300 ${isActive(href)
                         ? "bg-white/20"
                         : "bg-blue-100 text-blue-600"
-                    }`}>
+                      }`}>
                       <Icon className="h-5 w-5" />
                     </div>
                     <div className="flex flex-col">
@@ -183,7 +178,7 @@ export function SiteNavEsa() {
 
               {/* Mobile Theme Selector */}
               <div className="mt-6 pt-6 border-t border-gray-200">
-                <ThemeSelector placement="up" />
+                <ThemeSelector placement="up" onThemeChange={() => router.refresh()} />
               </div>
             </div>
           </div>

@@ -3,7 +3,7 @@ export type E2EAccount = {
   password: string;
 };
 
-export const e2eBaseURL = process.env.E2E_BASE_URL || "http://127.0.0.1:3000";
+export const e2eBaseURL = process.env.E2E_BASE_URL || "http://localhost:3000";
 export const isRemoteE2E = Boolean(process.env.E2E_BASE_URL);
 
 export const e2eAccounts = {
